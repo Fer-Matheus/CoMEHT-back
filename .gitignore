@@ -43,6 +43,4 @@ go.work
 .history
 .ionide
 
-.mise.toml
-
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,go
