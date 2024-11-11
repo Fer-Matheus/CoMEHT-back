@@ -7,8 +7,8 @@ type Result struct {
 }
 
 type Duel struct {
-	Id             int `gorm:"primaryKey;autoIncrement:true"`
-	CommitMessageA CommitMessage
-	CommitMessageB CommitMessage
-	Results        []Result
+	Id               int `gorm:"primaryKey;autoIncrement:true"`
+	CommitMessageAId int
+	CommitMessageBId int
+	Results          []Result
 }
