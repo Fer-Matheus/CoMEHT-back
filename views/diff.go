@@ -25,3 +25,7 @@ func (d *DiffResponse) FormModelToView(diff *models.Diff) {
 		d.CommitMessages = append(d.CommitMessages, commitMessage.Id)
 	}
 }
+
+type DiffsResponse struct {
+	Diffs []DiffResponse `json:"diffs"`
+}
