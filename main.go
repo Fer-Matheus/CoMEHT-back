@@ -3,6 +3,7 @@ package main
 import (
 	"commitinder/controllers"
 	_ "commitinder/docs"
+	"commitinder/seeds"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -17,6 +18,8 @@ var port = ":8080"
 // @description	This is the commitinder server api.
 func main() {
 
+	seeds.SeedDiffs()
+
 	http.Handle("/swagger/", http.StripPrefix("/swagger/", httpSwagger.WrapHandler))
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -27,7 +30,12 @@ func main() {
 	http.HandleFunc("/diffs", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case http.MethodGet:
-			controllers.SaveDiff(w, r)
+			if r.URL.Query().Has("id") {
+				controllers.GetDiff(w, r)
+			} else {
+				controllers.GetAllDiffs(w, r)
+			}
+
 		case http.MethodPost:
 			controllers.SaveDiff(w, r)
 		}
