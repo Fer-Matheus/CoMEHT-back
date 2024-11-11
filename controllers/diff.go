@@ -50,7 +50,7 @@ func SaveDiff(w http.ResponseWriter, r *http.Request) {
 // @Produce json
 // @Param id query string true "id"
 // @Success 201 {object} views.DiffResponse
-// @Router /diffs [get]
+// @Router /diffs/:id [get]
 func GetDiff(w http.ResponseWriter, r *http.Request) {
 	var diff models.Diff
 	var diffResponse views.DiffResponse
@@ -74,4 +74,30 @@ func GetDiff(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(diffResponse)
 }
 
+// GetAllDiffs godoc
+// @Summary Get all diffs
+// @Description A route to get all diffs
+// @Tags Diff
+// @Accept json
+// @Produce json
+// @Success 200 {object} views.DiffsResponse
+// @Router /diffs [get]
+func GetAllDiffs(w http.ResponseWriter, r *http.Request) {
+	var modelDiffs []models.Diff
+	var diffResponse views.DiffResponse
+	var diffs views.DiffsResponse
 
+	err := database.Db.GetAllDiffs(&modelDiffs)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusConflict)
+		return
+	}
+
+	for _, modelDiff := range modelDiffs {
+		diffResponse.FormModelToView(&modelDiff)
+		diffs.Diffs = append(diffs.Diffs, diffResponse)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(diffs)
+}
