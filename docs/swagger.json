@@ -1,0 +1,136 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is the commitinder server api.",
+        "title": "Commitinder Server",
+        "contact": {},
+        "version": "1.0"
+    },
+    "paths": {
+        "/diffs": {
+            "get": {
+                "description": "A route to get all diffs",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Diff"
+                ],
+                "summary": "Get all diffs",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/views.DiffsResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "A route to save a new diff",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Diff"
+                ],
+                "summary": "Save a new diff",
+                "parameters": [
+                    {
+                        "description": "diffRequest",
+                        "name": "diffRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/views.DiffRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/views.DiffResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/diffs/:id": {
+            "get": {
+                "description": "A route to get a diff by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Diff"
+                ],
+                "summary": "Get a diff",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/views.DiffResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "views.DiffRequest": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                }
+            }
+        },
+        "views.DiffResponse": {
+            "type": "object",
+            "properties": {
+                "commit_messages": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "content": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "views.DiffsResponse": {
+            "type": "object",
+            "properties": {
+                "diffs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/views.DiffResponse"
+                    }
+                }
+            }
+        }
+    }
+}
