@@ -13,7 +13,7 @@ func (d *Database) SaveDiff(diff *models.Diff) error {
 	return nil
 }
 func (d *Database) GetDiff(diffId int, diff *models.Diff) error {
-	err := d.db.Preload("CommitMessage").First(&diff, "id = ?", diffId).Error
+	err := d.db.Preload("CommitMessages").First(&diff, "id = ?", diffId).Error
 	if err != nil {
 		return fmt.Errorf("error getting a diff by id: " + err.Error())
 	}
