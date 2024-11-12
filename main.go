@@ -19,6 +19,8 @@ var port = ":8080"
 func main() {
 
 	seeds.SeedDiffs()
+	seeds.SeedModels()
+	seeds.SeedCommitMessages()
 
 	http.Handle("/swagger/", http.StripPrefix("/swagger/", httpSwagger.WrapHandler))
 
@@ -27,19 +29,42 @@ func main() {
 		json.NewEncoder(w).Encode("success")
 	})
 
+	// Diff
+	http.HandleFunc("/diffs/{id}", controllers.GetDiff)
 	http.HandleFunc("/diffs", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case http.MethodGet:
-			if r.URL.Query().Has("id") {
-				controllers.GetDiff(w, r)
-			} else {
-				controllers.GetAllDiffs(w, r)
-			}
-
+			controllers.GetAllDiffs(w, r)
 		case http.MethodPost:
 			controllers.SaveDiff(w, r)
 		}
 	})
+
+	//Model
+	http.HandleFunc("/models/{id}", controllers.GetModel)
+	http.HandleFunc("/models", func(w http.ResponseWriter, r *http.Request) {
+		switch r.Method {
+		case http.MethodGet:
+			controllers.GetAllModels(w, r)
+		case http.MethodPost:
+			controllers.SaveModel(w, r)
+		}
+	})
+
+	// Commit message
+	http.HandleFunc("/commit_messages/{id}", controllers.GetCommitMessage)
+	http.HandleFunc("/commit_messages", func(w http.ResponseWriter, r *http.Request) {
+		switch r.Method {
+		case http.MethodGet:
+			controllers.GetAllCommitMessages(w, r)
+		case http.MethodPost:
+			controllers.SaveCommitMessage(w, r)
+		}
+	})
+
+	// User
+	http.HandleFunc("/register", controllers.Register)
+	
 
 	fmt.Println("Server listen at the port " + port)
 	http.ListenAndServe(port, nil)
