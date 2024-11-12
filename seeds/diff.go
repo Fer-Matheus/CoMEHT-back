@@ -17,10 +17,5 @@ func SeedDiffs() {
 		},
 	}
 	
-	for _, diff := range diffs {
-		err := database.Db.SaveDiff(&diff)
-		if err != nil {
-			continue
-		}
-	}
+	_ = database.Db.SaveDiffs(&diffs)
 }

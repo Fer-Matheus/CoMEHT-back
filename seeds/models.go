@@ -17,10 +17,5 @@ func SeedModels() {
 			Name: "Human",
 		},
 	}
-	for _, model := range models {
-		err := database.Db.SaveModel(&model)
-		if err != nil {
-			continue
-		}
-	}
+	_ = database.Db.SaveModels(&models)
 }
