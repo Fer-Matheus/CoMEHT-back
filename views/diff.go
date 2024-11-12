@@ -17,7 +17,7 @@ type DiffResponse struct {
 	CommitMessages []int  `json:"commit_messages"`
 }
 
-func (d *DiffResponse) FormModelToView(diff *models.Diff) {
+func (d *DiffResponse) FromModelToView(diff *models.Diff) {
 	d.Id = diff.Id
 	d.Content = diff.Content
 
