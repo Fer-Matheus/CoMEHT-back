@@ -12,6 +12,13 @@ func (d *Database) SaveDuel(duel *models.Duel) error {
 	}
 	return nil
 }
+func (d *Database) SaveDuels(duels *[]models.Duel) error {
+	err := d.db.Create(&duels).Error
+	if err != nil {
+		return fmt.Errorf("error saving new duels: " + err.Error())
+	}
+	return nil
+}
 func (d *Database) GetDuel(duelId int, duel *models.Duel) error {
 	err := d.db.Preload("Results").Preload("CommitMessages").First(&duel, "id = ?", duelId).Error
 	if err != nil {

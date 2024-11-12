@@ -12,8 +12,15 @@ func (d *Database) SaveModel(model *models.Model) error {
 	}
 	return nil
 }
+func (d *Database) SaveModels(models *[]models.Model) error {
+	err := d.db.Create(&models).Error
+	if err != nil {
+		return fmt.Errorf("error saving new models: " + err.Error())
+	}
+	return nil
+}
 func (d *Database) GetModel(modelId int, model *models.Model) error {
-	err := d.db.Preload("CommitMessage").First(&model, "id = ?", modelId).Error
+	err := d.db.Preload("CommitMessages").First(&model, "id = ?", modelId).Error
 	if err != nil {
 		return fmt.Errorf("error getting a model by id: " + err.Error())
 	}
@@ -27,7 +34,7 @@ func (d *Database) GetAllModels(models *[]models.Model) error {
 	return nil
 }
 func (d *Database) UpdateModel(model *models.Model) error {
-	err := d.db.Preload("CommitMessage").Updates(&model).Error
+	err := d.db.Preload("CommitMessages").Updates(&model).Error
 	if err != nil {
 		return fmt.Errorf("error updating a model: " + err.Error())
 	}

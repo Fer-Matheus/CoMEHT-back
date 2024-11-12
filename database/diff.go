@@ -12,6 +12,13 @@ func (d *Database) SaveDiff(diff *models.Diff) error {
 	}
 	return nil
 }
+func (d *Database) SaveDiffs(diffs *[]models.Diff) error {
+	err := d.db.Create(&diffs).Error
+	if err != nil {
+		return fmt.Errorf("error saving new diffs: " + err.Error())
+	}
+	return nil
+}
 func (d *Database) GetDiff(diffId int, diff *models.Diff) error {
 	err := d.db.Preload("CommitMessages").First(&diff, "id = ?", diffId).Error
 	if err != nil {
@@ -27,7 +34,7 @@ func (d *Database) GetAllDiffs(diffs *[]models.Diff) error {
 	return nil
 }
 func (d *Database) UpdateDiff(diff *models.Diff) error {
-	err := d.db.Preload("CommitMessage").Updates(&diff).Error
+	err := d.db.Preload("CommitMessages").Updates(&diff).Error
 	if err != nil {
 		return fmt.Errorf("error updating a diff: " + err.Error())
 	}
