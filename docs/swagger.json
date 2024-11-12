@@ -7,6 +7,93 @@
         "version": "1.0"
     },
     "paths": {
+        "/commit_messages": {
+            "get": {
+                "description": "A route to get all commit messages",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Commit Message"
+                ],
+                "summary": "Get all commit messages",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/views.CommitMessagesResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "A route to save a new commit message",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Commit Message"
+                ],
+                "summary": "Save a new commit message",
+                "parameters": [
+                    {
+                        "description": "commitMessageRequest",
+                        "name": "commitMessageRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/views.CommitMessageRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/views.CommitMessageResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/commit_messages/{id}": {
+            "get": {
+                "description": "A route to get a commit message by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Commit Message"
+                ],
+                "summary": "Get a commit message",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/views.CommitMessageResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/diffs": {
             "get": {
                 "description": "A route to get all diffs",
@@ -62,7 +149,7 @@
                 }
             }
         },
-        "/diffs/:id": {
+        "/diffs/{id}": {
             "get": {
                 "description": "A route to get a diff by id",
                 "consumes": [
@@ -80,7 +167,7 @@
                         "type": "string",
                         "description": "id",
                         "name": "id",
-                        "in": "query",
+                        "in": "path",
                         "required": true
                     }
                 ],
@@ -93,9 +180,162 @@
                     }
                 }
             }
+        },
+        "/models": {
+            "get": {
+                "description": "A route to get all models",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Model"
+                ],
+                "summary": "Get all models",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/views.ModelsResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "A route to save a new model",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Model"
+                ],
+                "summary": "Save a new model",
+                "parameters": [
+                    {
+                        "description": "modelRequest",
+                        "name": "modelRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/views.ModelRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/views.ModelResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/models/{id}": {
+            "get": {
+                "description": "A route to get a model by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Model"
+                ],
+                "summary": "Get a model",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/views.ModelResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/register": {
+            "post": {
+                "description": "A route to register a new user",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Register a new user",
+                "parameters": [
+                    {
+                        "description": "userRegistration",
+                        "name": "userRegistration",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/views.UserRegistration"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
         }
     },
     "definitions": {
+        "views.CommitMessageRequest": {
+            "type": "object",
+            "properties": {
+                "diff_id": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "model_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "views.CommitMessageResponse": {
+            "type": "object",
+            "properties": {
+                "diff_id": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "model_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "views.CommitMessagesResponse": {
+            "type": "object",
+            "properties": {
+                "commit_messages": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/views.CommitMessageResponse"
+                    }
+                }
+            }
+        },
         "views.DiffRequest": {
             "type": "object",
             "properties": {
@@ -129,6 +369,53 @@
                     "items": {
                         "$ref": "#/definitions/views.DiffResponse"
                     }
+                }
+            }
+        },
+        "views.ModelRequest": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "views.ModelResponse": {
+            "type": "object",
+            "properties": {
+                "commit_messages": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "views.ModelsResponse": {
+            "type": "object",
+            "properties": {
+                "models": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/views.ModelResponse"
+                    }
+                }
+            }
+        },
+        "views.UserRegistration": {
+            "type": "object",
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
                 }
             }
         }

@@ -1,4 +1,31 @@
 definitions:
+  views.CommitMessageRequest:
+    properties:
+      diff_id:
+        type: integer
+      message:
+        type: string
+      model_id:
+        type: integer
+    type: object
+  views.CommitMessageResponse:
+    properties:
+      diff_id:
+        type: integer
+      id:
+        type: integer
+      message:
+        type: string
+      model_id:
+        type: integer
+    type: object
+  views.CommitMessagesResponse:
+    properties:
+      commit_messages:
+        items:
+          $ref: '#/definitions/views.CommitMessageResponse'
+        type: array
+    type: object
   views.DiffRequest:
     properties:
       content:
@@ -22,12 +49,99 @@ definitions:
           $ref: '#/definitions/views.DiffResponse'
         type: array
     type: object
+  views.ModelRequest:
+    properties:
+      name:
+        type: string
+    type: object
+  views.ModelResponse:
+    properties:
+      commit_messages:
+        items:
+          type: integer
+        type: array
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  views.ModelsResponse:
+    properties:
+      models:
+        items:
+          $ref: '#/definitions/views.ModelResponse'
+        type: array
+    type: object
+  views.UserRegistration:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
 info:
   contact: {}
   description: This is the commitinder server api.
   title: Commitinder Server
   version: "1.0"
 paths:
+  /commit_messages:
+    get:
+      consumes:
+      - application/json
+      description: A route to get all commit messages
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.CommitMessagesResponse'
+      summary: Get all commit messages
+      tags:
+      - Commit Message
+    post:
+      consumes:
+      - application/json
+      description: A route to save a new commit message
+      parameters:
+      - description: commitMessageRequest
+        in: body
+        name: commitMessageRequest
+        required: true
+        schema:
+          $ref: '#/definitions/views.CommitMessageRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/views.CommitMessageResponse'
+      summary: Save a new commit message
+      tags:
+      - Commit Message
+  /commit_messages/{id}:
+    get:
+      consumes:
+      - application/json
+      description: A route to get a commit message by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/views.CommitMessageResponse'
+      summary: Get a commit message
+      tags:
+      - Commit Message
   /diffs:
     get:
       consumes:
@@ -64,14 +178,14 @@ paths:
       summary: Save a new diff
       tags:
       - Diff
-  /diffs/:id:
+  /diffs/{id}:
     get:
       consumes:
       - application/json
       description: A route to get a diff by id
       parameters:
       - description: id
-        in: query
+        in: path
         name: id
         required: true
         type: string
@@ -85,4 +199,77 @@ paths:
       summary: Get a diff
       tags:
       - Diff
+  /models:
+    get:
+      consumes:
+      - application/json
+      description: A route to get all models
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.ModelsResponse'
+      summary: Get all models
+      tags:
+      - Model
+    post:
+      consumes:
+      - application/json
+      description: A route to save a new model
+      parameters:
+      - description: modelRequest
+        in: body
+        name: modelRequest
+        required: true
+        schema:
+          $ref: '#/definitions/views.ModelRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/views.ModelResponse'
+      summary: Save a new model
+      tags:
+      - Model
+  /models/{id}:
+    get:
+      consumes:
+      - application/json
+      description: A route to get a model by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/views.ModelResponse'
+      summary: Get a model
+      tags:
+      - Model
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: A route to register a new user
+      parameters:
+      - description: userRegistration
+        in: body
+        name: userRegistration
+        required: true
+        schema:
+          $ref: '#/definitions/views.UserRegistration'
+      responses: {}
+      summary: Register a new user
+      tags:
+      - User
 swagger: "2.0"
