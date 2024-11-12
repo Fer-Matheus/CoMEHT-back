@@ -5,7 +5,6 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"log"
-
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -23,10 +22,20 @@ func CheckHashPassword(password, hash string) bool {
 	return err == nil
 }
 
-func GenerateToken(length int) string {
-	bytes := make([]byte, length)
-	if _, err := rand.Read(bytes); err != nil {
-		log.Fatalf("Failed to generate token: %v", err)
+	func GenerateToken(length int) string {
+		bytes := make([]byte, length)
+		if _, err := rand.Read(bytes); err != nil {
+			log.Fatalf("Failed to generate token: %v", err)
+		}
+		return base64.URLEncoding.EncodeToString(bytes)
 	}
-	return base64.URLEncoding.EncodeToString(bytes)
-}
+// var secret = []byte("uga")
+
+// func GenerateToken(username string) string {
+// 	token := jwt.NewWithClaims(jwt.SigningMethodEdDSA, jwt.MapClaims{
+// 		"username": username,
+// 		"exp":      time.Now().Add(24 * time.Hour),
+// 	})
+// 	tokenString, _ := token.SignedString(secret)
+// 	return tokenString	
+// }

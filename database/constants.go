@@ -16,7 +16,7 @@ type Database struct {
 
 func Init() Database {
 
-	dsn := "host=postgres user=admin password=admin port=5432"
+	dsn := "host=localhost user=admin password=admin port=5432"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatalln("error connecting with the database: " + err.Error())

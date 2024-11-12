@@ -68,7 +68,7 @@ func main() {
 	http.HandleFunc("/logout", controllers.Logout)
 
 	http.HandleFunc("/duels", controllers.GetDuel)
-	http.HandleFunc("/duels/{id}", controllers.SaveResults)
+	http.HandleFunc("/results", controllers.SaveResults)
 
 	fmt.Println("Server listen at the port " + port)
 	http.ListenAndServe(port, nil)

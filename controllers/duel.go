@@ -12,6 +12,7 @@ import (
 // GetDuel godoc
 // @Summary Get a new duel
 // @Description A route to get a duel for a user
+// @Tags Duel
 // @Produce json
 // @Success 200 {object} views.DuelResponse
 // @Router /duels [get]
@@ -38,9 +39,35 @@ func GetDuel(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var duelResponse views.DuelResponse
+	var commitMessageA models.CommitMessage
 
-	duelResponse.FromModelToView(&duel)
+	err = database.Db.GetCommitMessage(duel.CommitMessageAId, &commitMessageA)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+		return
+	}
+
+	var commitMessageB models.CommitMessage
+	err = database.Db.GetCommitMessage(duel.CommitMessageBId, &commitMessageB)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+		return
+	}
+
+	var diff models.Diff
+
+	err = database.Db.GetDiff(commitMessageA.DiffId, &diff)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+		return
+	}
+
+	duelResponse := &views.DuelResponse{
+		DuelId: duel.Id,
+		DiffContent: diff.Content,
+		CommitMessageA: commitMessageA.Message,
+		CommitMessageB: commitMessageB.Message,
+	}
 
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content_type", "application/json")
@@ -50,6 +77,7 @@ func GetDuel(w http.ResponseWriter, r *http.Request) {
 // SaveResults godoc
 // @Summary Save the duel results
 // @Description A route to save a duel results
+// @Tags Duel
 // @Accept json
 // @Produce json
 // @Param results body views.ResultsRequest true "results"
