@@ -5,5 +5,6 @@ type User struct {
 	Username       string `gorm:"unique"`
 	HashedPassword string
 	SessionToken   string
+	CsrfToken      string
 	CurrentDuelId  int
 }

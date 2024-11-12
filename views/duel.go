@@ -21,7 +21,7 @@ type Options struct {
 	ChoiseTime   string `json:"choise_time"`
 }
 
-type ResultRequets struct {
-	DuelId  int     `json:"duel_id"`
-	Options Options `json:"options"`
+type ResultsRequest struct {
+	DuelId  int       `json:"duel_id"`
+	Options []Options `json:"options"`
 }

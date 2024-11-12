@@ -49,6 +49,17 @@ definitions:
           $ref: '#/definitions/views.DiffResponse'
         type: array
     type: object
+  views.DuelResponse:
+    properties:
+      commit_message_a:
+        type: string
+      commit_message_b:
+        type: string
+      diff_content:
+        type: string
+      duel_id:
+        type: integer
+    type: object
   views.ModelRequest:
     properties:
       name:
@@ -72,7 +83,23 @@ definitions:
           $ref: '#/definitions/views.ModelResponse'
         type: array
     type: object
-  views.UserRegistration:
+  views.Options:
+    properties:
+      choise_time:
+        type: string
+      chosenOption:
+        type: string
+    type: object
+  views.ResultsRequest:
+    properties:
+      duel_id:
+        type: integer
+      options:
+        items:
+          $ref: '#/definitions/views.Options'
+        type: array
+    type: object
+  views.UserRequest:
     properties:
       password:
         type: string
@@ -199,6 +226,40 @@ paths:
       summary: Get a diff
       tags:
       - Diff
+  /duels:
+    get:
+      description: A route to get a duel for a user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.DuelResponse'
+      summary: Get a new duel
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: A route for user login
+      parameters:
+      - description: userRequest
+        in: body
+        name: userRequest
+        required: true
+        schema:
+          $ref: '#/definitions/views.UserRequest'
+      responses: {}
+      summary: Login for a user
+      tags:
+      - User
+  /logout:
+    post:
+      description: A route to logout a user by cookie
+      responses: {}
+      summary: Logout a user
+      tags:
+      - User
   /models:
     get:
       consumes:
@@ -262,14 +323,30 @@ paths:
       - application/json
       description: A route to register a new user
       parameters:
-      - description: userRegistration
+      - description: userRequest
         in: body
-        name: userRegistration
+        name: userRequest
         required: true
         schema:
-          $ref: '#/definitions/views.UserRegistration'
+          $ref: '#/definitions/views.UserRequest'
       responses: {}
       summary: Register a new user
       tags:
       - User
+  /results:
+    post:
+      consumes:
+      - application/json
+      description: A route to save a duel results
+      parameters:
+      - description: results
+        in: body
+        name: results
+        required: true
+        schema:
+          $ref: '#/definitions/views.ResultsRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Save the duel results
 swagger: "2.0"

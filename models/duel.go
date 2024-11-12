@@ -1,6 +1,7 @@
 package models
 
 type Result struct {
+	Id           int `gorm:"primaryKey;autoIncrement"`
 	ChosenOption string
 	ChoiseTime   string
 

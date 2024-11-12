@@ -19,7 +19,7 @@ func (d *Database) SaveUsers(users *[]models.User) error {
 	}
 	return nil
 }
-func (d *Database) GetUSer(username string, user *models.User) error {
+func (d *Database) GetUser(username string, user *models.User) error {
 	err := d.db.First(&user, "username = ?", username).Error
 	if err != nil {
 		return fmt.Errorf("error getting a user by username: " + err.Error())

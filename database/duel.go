@@ -47,3 +47,32 @@ func (d *Database) DeleteDuel(duelId int) error {
 	}
 	return nil
 }
+
+func (d *Database) SaveResult(result *models.Result) error {
+	err := d.db.Create(&result).Error
+	if err != nil {
+		return fmt.Errorf("error saving the result: " + err.Error())
+	}
+	return nil
+}
+func (d *Database) SaveResults(results *[]models.Result) error {
+	err := d.db.Create(&results).Error
+	if err != nil {
+		return fmt.Errorf("error saving new results: " + err.Error())
+	}
+	return nil
+}
+func (d *Database) GetResult(resultId int, result *models.Result) error {
+	err := d.db.Preload("Duels").First(&result, "id = ?", resultId).Error
+	if err != nil {
+		return fmt.Errorf("error getting a result, by id: " + err.Error())
+	}
+	return nil
+}
+func (d *Database) GetAllResults(results *[]models.Result) error {
+	err := d.db.Preload("Duels").Find(&results).Error
+	if err != nil {
+		return fmt.Errorf("error getting all results: " + err.Error())
+	}
+	return nil
+}

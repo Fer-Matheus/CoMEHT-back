@@ -189,6 +189,57 @@ const docTemplate = `{
                 }
             }
         },
+        "/duels": {
+            "get": {
+                "description": "A route to get a duel for a user",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a new duel",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/views.DuelResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "description": "A route for user login",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Login for a user",
+                "parameters": [
+                    {
+                        "description": "userRequest",
+                        "name": "userRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/views.UserRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/logout": {
+            "post": {
+                "description": "A route to logout a user by cookie",
+                "tags": [
+                    "User"
+                ],
+                "summary": "Logout a user",
+                "responses": {}
+            }
+        },
         "/models": {
             "get": {
                 "description": "A route to get all models",
@@ -288,12 +339,36 @@ const docTemplate = `{
                 "summary": "Register a new user",
                 "parameters": [
                     {
-                        "description": "userRegistration",
-                        "name": "userRegistration",
+                        "description": "userRequest",
+                        "name": "userRequest",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/views.UserRegistration"
+                            "$ref": "#/definitions/views.UserRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/results": {
+            "post": {
+                "description": "A route to save a duel results",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Save the duel results",
+                "parameters": [
+                    {
+                        "description": "results",
+                        "name": "results",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/views.ResultsRequest"
                         }
                     }
                 ],
@@ -380,6 +455,23 @@ const docTemplate = `{
                 }
             }
         },
+        "views.DuelResponse": {
+            "type": "object",
+            "properties": {
+                "commit_message_a": {
+                    "type": "string"
+                },
+                "commit_message_b": {
+                    "type": "string"
+                },
+                "diff_content": {
+                    "type": "string"
+                },
+                "duel_id": {
+                    "type": "integer"
+                }
+            }
+        },
         "views.ModelRequest": {
             "type": "object",
             "properties": {
@@ -416,7 +508,32 @@ const docTemplate = `{
                 }
             }
         },
-        "views.UserRegistration": {
+        "views.Options": {
+            "type": "object",
+            "properties": {
+                "choise_time": {
+                    "type": "string"
+                },
+                "chosenOption": {
+                    "type": "string"
+                }
+            }
+        },
+        "views.ResultsRequest": {
+            "type": "object",
+            "properties": {
+                "duel_id": {
+                    "type": "integer"
+                },
+                "options": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/views.Options"
+                    }
+                }
+            }
+        },
+        "views.UserRequest": {
             "type": "object",
             "properties": {
                 "password": {
