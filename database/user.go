@@ -26,6 +26,13 @@ func (d *Database) GetUser(username string, user *models.User) error {
 	}
 	return nil
 }
+func (d *Database) GetUserById(userId int, user *models.User) error {
+	err := d.db.First(&user, "id = ?", userId).Error
+	if err != nil {
+		return fmt.Errorf("error getting a user by username: " + err.Error())
+	}
+	return nil
+}
 func (d *Database) GetAllUser(users *[]models.User) error {
 	err := d.db.Find(&users).Error
 	if err != nil {
@@ -34,7 +41,7 @@ func (d *Database) GetAllUser(users *[]models.User) error {
 	return nil
 }
 func (d *Database) UpdateUser(user *models.User) error {
-	err := d.db.Updates(&user).Error
+	err := d.db.Where("id = ?", user.Id).Updates(&user).Error
 	if err != nil {
 		return fmt.Errorf("error updating a user: " + err.Error())
 	}
