@@ -10,29 +10,29 @@ import (
 )
 
 // GetDuel godoc
-// @Summary Get a new duel
-// @Description A route to get a duel for a user
-// @Tags Duel
-// @Produce json
-// @Success 200 {object} views.DuelResponse
-// @Router /duels [get]
+//
+//	@Summary		Get a new duel
+//	@Description	A route to get a duel for a user
+//	@Tags			Duel
+//	@Produce		json
+//	@Security Bearer
+//	@Success		200				{object}	views.DuelResponse
+//	@Router			/duels [get]
 func GetDuel(w http.ResponseWriter, r *http.Request) {
-	err := authorize(r)
+	userId, err := authorize(r)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusUnauthorized)
 		return
 	}
 
 	var user models.User
-
-	err = getUserByCookie(&user, r)
+	err = database.Db.GetUserById(userId, &user)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusNotFound)
 		return
 	}
 
 	var duel models.Duel
-
 	err = database.Db.GetDuel(user.CurrentDuelId, &duel)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusNotFound)
@@ -63,8 +63,8 @@ func GetDuel(w http.ResponseWriter, r *http.Request) {
 	}
 
 	duelResponse := &views.DuelResponse{
-		DuelId: duel.Id,
-		DiffContent: diff.Content,
+		DuelId:         duel.Id,
+		DiffContent:    diff.Content,
 		CommitMessageA: commitMessageA.Message,
 		CommitMessageB: commitMessageB.Message,
 	}
@@ -75,19 +75,20 @@ func GetDuel(w http.ResponseWriter, r *http.Request) {
 }
 
 // SaveResults godoc
-// @Summary Save the duel results
-// @Description A route to save a duel results
-// @Tags Duel
-// @Accept json
-// @Produce json
-// @Param results body views.ResultsRequest true "results"
-// @Router /results [post]
+//
+//	@Summary		Save the duel results
+//	@Description	A route to save a duel results
+//	@Tags			Duel
+//	@Accept			json
+//	@Produce		json
+//	@Security Bearer
+//	@Param			results	body	views.ResultsRequest	true	"results"
+//	@Router			/results [post]
 func SaveResults(w http.ResponseWriter, r *http.Request) {
 	var results views.ResultsRequest
 	var duel models.Duel
-	var modelResult models.Result
 
-	err := authorize(r)
+	_, err := authorize(r)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusUnauthorized)
 		return
@@ -106,16 +107,11 @@ func SaveResults(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for _, result := range results.Options {
+		var modelResult models.Result
 		modelResult.ChosenOption = result.ChosenOption
 		modelResult.ChoiseTime = result.ChoiseTime
 		modelResult.Duel = duel
 		modelResult.DuelId = duel.Id
-
-		err = database.Db.SaveResult(&modelResult)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusConflict)
-			return
-		}
 
 		duel.Results = append(duel.Results, modelResult)
 	}

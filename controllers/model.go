@@ -10,14 +10,14 @@ import (
 )
 
 // SaveModel godoc
-// @Summary Save a new model
-// @Description A route to save a new model
-// @Tags Model
-// @Accept json
-// @Produce json
-// @Param modelRequest body views.ModelRequest true "modelRequest"
-// @Success 201 {object} views.ModelResponse
-// @Router /models [post]
+//	@Summary		Save a new model
+//	@Description	A route to save a new model
+//	@Tags			Model
+//	@Accept			json
+//	@Produce		json
+//	@Param			modelRequest	body		views.ModelRequest	true	"modelRequest"
+//	@Success		201				{object}	views.ModelResponse
+//	@Router			/models [post]
 func SaveModel(w http.ResponseWriter, r *http.Request) {
 
 	var modelRequest views.ModelRequest
@@ -43,14 +43,14 @@ func SaveModel(w http.ResponseWriter, r *http.Request) {
 }
 
 // GetModel godoc
-// @Summary Get a model
-// @Description A route to get a model by id
-// @Tags Model
-// @Accept json
-// @Produce json
-// @Param id path string true "id"
-// @Success 201 {object} views.ModelResponse
-// @Router /models/{id} [get]
+//	@Summary		Get a model
+//	@Description	A route to get a model by id
+//	@Tags			Model
+//	@Accept			json
+//	@Produce		json
+//	@Param			id	path		string	true	"id"
+//	@Success		201	{object}	views.ModelResponse
+//	@Router			/models/{id} [get]
 func GetModel(w http.ResponseWriter, r *http.Request) {
 	var model models.Model
 	var modelResponse views.ModelResponse
@@ -75,13 +75,13 @@ func GetModel(w http.ResponseWriter, r *http.Request) {
 }
 
 // GetAllModels godoc
-// @Summary Get all models
-// @Description A route to get all models
-// @Tags Model
-// @Accept json
-// @Produce json
-// @Success 200 {object} views.ModelsResponse
-// @Router /models [get]
+//	@Summary		Get all models
+//	@Description	A route to get all models
+//	@Tags			Model
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{object}	views.ModelsResponse
+//	@Router			/models [get]
 func GetAllModels(w http.ResponseWriter, r *http.Request) {
 	var modelModels []models.Model
 	var modelReponse views.ModelResponse

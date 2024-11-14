@@ -10,14 +10,14 @@ import (
 )
 
 // SaveCommitMessage godoc
-// @Summary Save a new commit message
-// @Description A route to save a new commit message
-// @Tags Commit Message
-// @Accept json
-// @Produce json
-// @Param commitMessageRequest body views.CommitMessageRequest true "commitMessageRequest"
-// @Success 201 {object} views.CommitMessageResponse
-// @Router /commit_messages [post]
+//	@Summary		Save a new commit message
+//	@Description	A route to save a new commit message
+//	@Tags			Commit Message
+//	@Accept			json
+//	@Produce		json
+//	@Param			commitMessageRequest	body		views.CommitMessageRequest	true	"commitMessageRequest"
+//	@Success		201						{object}	views.CommitMessageResponse
+//	@Router			/commit_messages [post]
 func SaveCommitMessage(w http.ResponseWriter, r *http.Request) {
 
 	var commitMessageRequest views.CommitMessageRequest
@@ -71,14 +71,14 @@ func SaveCommitMessage(w http.ResponseWriter, r *http.Request) {
 }
 
 // GetCommitMessage godoc
-// @Summary Get a commit message
-// @Description A route to get a commit message by id
-// @Tags Commit Message
-// @Accept json
-// @Produce json
-// @Param id path string true "id"
-// @Success 201 {object} views.CommitMessageResponse
-// @Router /commit_messages/{id} [get]
+//	@Summary		Get a commit message
+//	@Description	A route to get a commit message by id
+//	@Tags			Commit Message
+//	@Accept			json
+//	@Produce		json
+//	@Param			id	path		string	true	"id"
+//	@Success		201	{object}	views.CommitMessageResponse
+//	@Router			/commit_messages/{id} [get]
 func GetCommitMessage(w http.ResponseWriter, r *http.Request) {
 	var commitMessage models.CommitMessage
 	var commitMessageResponse views.CommitMessageResponse
@@ -103,13 +103,13 @@ func GetCommitMessage(w http.ResponseWriter, r *http.Request) {
 }
 
 // GetAllCommitMessages godoc
-// @Summary Get all commit messages
-// @Description A route to get all commit messages
-// @Tags Commit Message
-// @Accept json
-// @Produce json
-// @Success 200 {object} views.CommitMessagesResponse
-// @Router /commit_messages [get]
+//	@Summary		Get all commit messages
+//	@Description	A route to get all commit messages
+//	@Tags			Commit Message
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{object}	views.CommitMessagesResponse
+//	@Router			/commit_messages [get]
 func GetAllCommitMessages(w http.ResponseWriter, r *http.Request) {
 	var modelsCommitMessages []models.CommitMessage
 	var commitMessageResponse views.CommitMessageResponse

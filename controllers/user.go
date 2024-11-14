@@ -7,55 +7,32 @@ import (
 	"commitinder/utils"
 	"commitinder/views"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/http"
-	"strings"
-	"time"
 )
 
-var errorAuth = errors.New("unauthorized")
-
-func authorize(r *http.Request) error {
-	token, err := r.Cookie("commitinder_session_token")
-	if err != nil || token.Value == "" {
-		return errorAuth
+func authorize(r *http.Request) (int, error) {
+	token := r.Header.Get("Authorization")
+	userId, err := utils.VerifyToken(token)
+	if err != nil {
+		return 0, err
 	}
-
-	var user models.User
-
-	getUserByCookie(&user, r)
-
-	if token.Value != user.SessionToken {
-		return errorAuth
-	}
-	// csrf := r.Header.Get("X-CSRF-Token")
-	// if csrf != user.CsrfToken || csrf == "" {
-	// 	return errorAuth
-	// }
-
-	return nil
+	intUserId := int(userId)
+	return intUserId, nil
 }
 
-func getUserByCookie(user *models.User, r *http.Request) error {
-	username, _ := r.Cookie("user")
+func GetAllUsers(w http.ResponseWriter, r *http.Request) {
 
-	username.Value = strings.Replace(username.Value, "'", "", 2)
-
-	err := database.Db.GetUser(username.Value, user)
-	if err != nil {
-		return err
-	}
-	return nil
 }
 
 // Register godoc
-// @Summary Register a new user
-// @Description A route to register a new user
-// @Tags User
-// @Accept json
-// @Param userRequest body views.UserRequest true "userRequest"
-// @Router /register [post]
+//
+//	@Summary		Register a new user
+//	@Description	A route to register a new user
+//	@Tags			User
+//	@Accept			json
+//	@Param			userRequest	body	views.UserRequest	true	"userRequest"
+//	@Router			/register [post]
 func Register(w http.ResponseWriter, r *http.Request) {
 	var userRequest views.UserRequest
 
@@ -87,12 +64,13 @@ func Register(w http.ResponseWriter, r *http.Request) {
 }
 
 // Login godoc
-// @Summary Login for a user
-// @Description A route for user login
-// @Tags User
-// @Accept json
-// @Param userRequest body views.UserRequest true "userRequest"
-// @Router /login [post]
+//
+//	@Summary		Login for a user
+//	@Description	A route for user login
+//	@Tags			User
+//	@Accept			json
+//	@Param			userRequest	body	views.UserRequest	true	"userRequest"
+//	@Router			/login [post]
 func Login(w http.ResponseWriter, r *http.Request) {
 	var userRequest views.UserRequest
 	var user models.User
@@ -109,84 +87,35 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !utils.CheckHashPassword(userRequest.Password, user.HashedPassword) {
-		http.Error(w, "User not authorized", http.StatusUnauthorized)
+		http.Error(w, "password doesn't match", http.StatusUnauthorized)
 		return
 	}
 
-	sessionToken := utils.GenerateToken(32)
-	// csrfToken := utils.GenerateToken(32)
-
-	user.SessionToken = sessionToken
-	// user.CsrfToken = csrfToken
-
-	err = database.Db.UpdateUser(&user)
+	token, err := utils.GenerateToken(user.Id)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusConflict)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	http.SetCookie(w, &http.Cookie{
-		Name:     "commitinder_session_token",
-		Value:    sessionToken,
-		Expires:  time.Now().Add(24 * time.Hour),
-		HttpOnly: true,
-	})
-	// http.SetCookie(w, &http.Cookie{
-	// 	Name:     "csrf_token",
-	// 	Value:    csrfToken,
-	// 	Expires:  time.Now().Add(24 * time.Hour),
-	// 	HttpOnly: false,
-	// })
-	http.SetCookie(w, &http.Cookie{
-		Name:     "user",
-		Value:    user.Username,
-		Expires:  time.Now().Add(24 * time.Hour),
-		HttpOnly: false,
-	})
-
+	w.Header().Set("Authorization", token)
 	fmt.Fprintln(w, "Login successful!")
 }
 
 // Logout godoc
-// @Summary Logout a user
-// @Description A route to logout a user by cookie
-// @Tags User
-// @Router /logout [post]
+//
+//	@Summary		Logout a user
+//	@Description	A route to logout a user by cookie
+//	@Tags			User
+//	@Security Bearer
+//	@Router			/logout [post]
 func Logout(w http.ResponseWriter, r *http.Request) {
-	err := authorize(r)
+	_, err := authorize(r)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusUnauthorized)
 		return
 	}
 
-	var user models.User
+	
 
-	err = getUserByCookie(&user, r)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusUnauthorized)
-		return
-	}
-
-	user.SessionToken = ""
-	// user.CsrfToken = ""
-
-	err = database.Db.UpdateUser(&user)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusConflict)
-		return
-	}
-
-	http.SetCookie(w, &http.Cookie{
-		Name:     "commitinder_session_token",
-		Value:    "",
-		Expires:  time.Now().Add(-time.Hour),
-		HttpOnly: true,
-	})
-	// http.SetCookie(w, &http.Cookie{
-	// 	Name:     "csrf_token",
-	// 	Value:    "",
-	// 	Expires:  time.Now().Add(-time.Hour),
-	// 	HttpOnly: true,
-	// })
 	fmt.Fprintln(w, "Logged out successfully!")
 }
