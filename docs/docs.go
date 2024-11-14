@@ -191,9 +191,17 @@ const docTemplate = `{
         },
         "/duels": {
             "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "description": "A route to get a duel for a user",
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Duel"
                 ],
                 "summary": "Get a new duel",
                 "responses": {
@@ -232,6 +240,11 @@ const docTemplate = `{
         },
         "/logout": {
             "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "description": "A route to logout a user by cookie",
                 "tags": [
                     "User"
@@ -353,12 +366,20 @@ const docTemplate = `{
         },
         "/results": {
             "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "description": "A route to save a duel results",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Duel"
                 ],
                 "summary": "Save the duel results",
                 "parameters": [
@@ -511,10 +532,13 @@ const docTemplate = `{
         "views.Options": {
             "type": "object",
             "properties": {
+                "aspect": {
+                    "type": "string"
+                },
                 "choise_time": {
                     "type": "string"
                 },
-                "chosenOption": {
+                "chosen_option": {
                     "type": "string"
                 }
             }
@@ -543,6 +567,13 @@ const docTemplate = `{
                     "type": "string"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }`

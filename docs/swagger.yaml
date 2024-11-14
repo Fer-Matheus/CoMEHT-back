@@ -85,9 +85,11 @@ definitions:
     type: object
   views.Options:
     properties:
+      aspect:
+        type: string
       choise_time:
         type: string
-      chosenOption:
+      chosen_option:
         type: string
     type: object
   views.ResultsRequest:
@@ -236,7 +238,11 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/views.DuelResponse'
+      security:
+      - Bearer: []
       summary: Get a new duel
+      tags:
+      - Duel
   /login:
     post:
       consumes:
@@ -257,6 +263,8 @@ paths:
     post:
       description: A route to logout a user by cookie
       responses: {}
+      security:
+      - Bearer: []
       summary: Logout a user
       tags:
       - User
@@ -348,5 +356,14 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - Bearer: []
       summary: Save the duel results
+      tags:
+      - Duel
+securityDefinitions:
+  Bearer:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

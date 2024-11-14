@@ -183,9 +183,17 @@
         },
         "/duels": {
             "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "description": "A route to get a duel for a user",
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Duel"
                 ],
                 "summary": "Get a new duel",
                 "responses": {
@@ -224,6 +232,11 @@
         },
         "/logout": {
             "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "description": "A route to logout a user by cookie",
                 "tags": [
                     "User"
@@ -345,12 +358,20 @@
         },
         "/results": {
             "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "description": "A route to save a duel results",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Duel"
                 ],
                 "summary": "Save the duel results",
                 "parameters": [
@@ -503,10 +524,13 @@
         "views.Options": {
             "type": "object",
             "properties": {
+                "aspect": {
+                    "type": "string"
+                },
                 "choise_time": {
                     "type": "string"
                 },
-                "chosenOption": {
+                "chosen_option": {
                     "type": "string"
                 }
             }
@@ -535,6 +559,13 @@
                     "type": "string"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }
