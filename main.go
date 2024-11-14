@@ -6,16 +6,28 @@ import (
 	"commitinder/seeds"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
+	"os"
 
+	"github.com/joho/godotenv"
 	httpSwagger "github.com/swaggo/http-swagger/v2"
 )
 
-var port = ":8080"
+func init() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+}
 
-// @title	Commitinder Server
-// @version 1.0
-// @description	This is the commitinder server api.
+//	@title			Commitinder Server
+//	@version		1.0
+//	@description	This is the commitinder server api.
+// @securityDefinitions.apikey Bearer
+// @in header
+// @name Authorization
+// @Security Bearer
 func main() {
 
 	seeds.SeedDiffs()
@@ -70,6 +82,7 @@ func main() {
 	http.HandleFunc("/duels", controllers.GetDuel)
 	http.HandleFunc("/results", controllers.SaveResults)
 
-	fmt.Println("Server listen at the port " + port)
-	http.ListenAndServe(port, nil)
+	port := os.Getenv("PORT")
+	fmt.Println("Server listen at the port: " + port)
+	http.ListenAndServe(":"+port, nil)
 }
