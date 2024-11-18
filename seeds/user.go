@@ -12,7 +12,6 @@ func SeedUsers() {
 	user := models.User{
 		Username:       "Matheus",
 		HashedPassword: string(password),
-		SessionToken:   "",
 		CurrentDuelId:  1,
 	}
 	_ = database.Db.SaveUser(&user)

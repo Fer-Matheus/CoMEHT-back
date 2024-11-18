@@ -96,9 +96,10 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-
+	
 	w.Header().Set("Authorization", token)
-	fmt.Fprintln(w, "Login successful!")
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(views.LoginResponse{Token: token})
 }
 
 // Logout godoc
@@ -114,8 +115,6 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusUnauthorized)
 		return
 	}
-
-	
 
 	fmt.Fprintln(w, "Logged out successfully!")
 }

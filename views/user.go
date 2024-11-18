@@ -15,3 +15,6 @@ func (u *UserRequest) ToModel() (user models.User) {
 	user.CurrentDuelId = 1
 	return user
 }
+type LoginResponse struct {
+	Token string `json:"token"`
+}
