@@ -46,7 +46,7 @@ func GenerateToken(userId int) (string, error) {
 
 func RemoveBearer(tokenString *string) {
 	if strings.HasPrefix(*tokenString, "Bearer") {
-		*tokenString = strings.TrimPrefix("Bearer", *tokenString)
+		*tokenString = strings.TrimPrefix(*tokenString, "Bearer ")
 	}
 }
 

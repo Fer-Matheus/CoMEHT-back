@@ -18,8 +18,8 @@ func (d *DuelResponse) FromModelToView(duel *models.Duel) {
 
 type Options struct {
 	Aspect       string `gorm:"aspect"`
-	ChosenOption string `json:"chosen_option"`
 	ChoiseTime   string `json:"choise_time"`
+	ChosenOption string `json:"chosen_option"`
 }
 
 type ResultsRequest struct {

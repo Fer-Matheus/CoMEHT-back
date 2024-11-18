@@ -11,6 +11,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+	"github.com/rs/cors"
 	httpSwagger "github.com/swaggo/http-swagger/v2"
 )
 
@@ -34,16 +35,18 @@ func main() {
 	seeds.SeedModels()
 	seeds.SeedCommitMessages()
 
-	http.Handle("/swagger/", http.StripPrefix("/swagger/", httpSwagger.WrapHandler))
+	mux := http.NewServeMux()
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	mux.Handle("/swagger/", http.StripPrefix("/swagger/", httpSwagger.WrapHandler))
+
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode("success")
 	})
 
 	// Diff
-	http.HandleFunc("/diffs/{id}", controllers.GetDiff)
-	http.HandleFunc("/diffs", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/diffs/{id}", controllers.GetDiff)
+	mux.HandleFunc("/diffs", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case http.MethodGet:
 			controllers.GetAllDiffs(w, r)
@@ -53,8 +56,8 @@ func main() {
 	})
 
 	//Model
-	http.HandleFunc("/models/{id}", controllers.GetModel)
-	http.HandleFunc("/models", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/models/{id}", controllers.GetModel)
+	mux.HandleFunc("/models", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case http.MethodGet:
 			controllers.GetAllModels(w, r)
@@ -64,8 +67,8 @@ func main() {
 	})
 
 	// Commit message
-	http.HandleFunc("/commit_messages/{id}", controllers.GetCommitMessage)
-	http.HandleFunc("/commit_messages", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/commit_messages/{id}", controllers.GetCommitMessage)
+	mux.HandleFunc("/commit_messages", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case http.MethodGet:
 			controllers.GetAllCommitMessages(w, r)
@@ -75,14 +78,17 @@ func main() {
 	})
 
 	// User
-	http.HandleFunc("/register", controllers.Register)
-	http.HandleFunc("/login", controllers.Login)
-	http.HandleFunc("/logout", controllers.Logout)
+	mux.HandleFunc("/register", controllers.Register)
+	mux.HandleFunc("/login", controllers.Login)
+	mux.HandleFunc("/logout", controllers.Logout)
 
-	http.HandleFunc("/duels", controllers.GetDuel)
-	http.HandleFunc("/results", controllers.SaveResults)
+	mux.HandleFunc("/duels", controllers.GetDuel)
+	mux.HandleFunc("/results", controllers.SaveResults)
+
+	
+	handler := cors.AllowAll().Handler(mux)
 
 	port := os.Getenv("PORT")
 	fmt.Println("Server listen at the port: " + port)
-	http.ListenAndServe(":"+port, nil)
+	http.ListenAndServe(":"+port, handler)
 }

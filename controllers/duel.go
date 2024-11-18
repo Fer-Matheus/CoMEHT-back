@@ -106,8 +106,22 @@ func SaveResults(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var user models.User
+
+	err = database.Db.GetUserById(duel.UserId, &user)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+		return
+	}
+
+	if user.CurrentDuelId != duel.Id {
+		http.Error(w, "Results already collected", http.StatusConflict)
+		return
+	}
+
 	for _, result := range results.Options {
 		var modelResult models.Result
+		modelResult.Aspect = result.Aspect
 		modelResult.ChosenOption = result.ChosenOption
 		modelResult.ChoiseTime = result.ChoiseTime
 		modelResult.Duel = duel
@@ -122,9 +136,9 @@ func SaveResults(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	duel.User.CurrentDuelId = +1
+	user.CurrentDuelId += 1
 
-	err = database.Db.UpdateUser(&duel.User)
+	err = database.Db.UpdateUser(&user)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusConflict)
 		return
