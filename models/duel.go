@@ -1,10 +1,10 @@
 package models
 
 type Result struct {
-	Id           int    `gorm:"primaryKey;autoIncrement;uniqueIndex:aspect_duel"`
-	Aspect       string 
+	Id           int `gorm:"primaryKey;autoIncrement;uniqueIndex:aspect_duel"`
+	Aspect       string
 	ChosenOption string
-	ChoiseTime   string
+	ChoiseTime   float64
 
 	DuelId int  `gorm:"uniqueIndex:aspect_duel"`
 	Duel   Duel `gorm:"foreignKey:DuelId;constrait:OnDelete:CASCADE"`
