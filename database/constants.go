@@ -20,7 +20,7 @@ func Init() Database {
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatalln("error connecting with the database: " + err.Error())
-	}
+	}	
 	db.AutoMigrate(&models.Diff{}, &models.Model{}, &models.CommitMessage{}, &models.Duel{}, &models.Result{})
 
 	return Database{db: db}

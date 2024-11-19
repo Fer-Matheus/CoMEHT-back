@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 )
 
 // GetDuel godoc
@@ -62,9 +63,11 @@ func GetDuel(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	content, _ := os.ReadFile("diffs/" + diff.ContentPath)
+
 	duelResponse := &views.DuelResponse{
 		DuelId:         duel.Id,
-		DiffContent:    diff.Content,
+		DiffContent:    string(content),
 		CommitMessageA: commitMessageA.Message,
 		CommitMessageB: commitMessageB.Message,
 	}

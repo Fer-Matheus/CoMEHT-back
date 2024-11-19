@@ -9,9 +9,9 @@ type DuelResponse struct {
 	CommitMessageB string `json:"commit_message_b"`
 }
 
-func (d *DuelResponse) FromModelToView(duel *models.Duel) {
+func (d *DuelResponse) FromModelToView(content string, duel *models.Duel) {
 	d.DuelId = duel.Id
-	d.DiffContent = duel.CommitMessageA.Diff.Content
+	d.DiffContent = content
 	d.CommitMessageA = duel.CommitMessageA.Message
 	d.CommitMessageB = duel.CommitMessageB.Message
 }
