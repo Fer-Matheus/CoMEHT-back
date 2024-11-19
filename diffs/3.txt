@@ -1,0 +1,34 @@
+: "diff --git a/libsrc/ffdec_lib/src/com/jpexs/decompiler/flash/types/BUTTONCONDACTION.java b/libsrc/ffdec_lib/src/com/jpexs/decompiler/flash/types/BUTTONCONDACTION.java
+index 7f890411a..a4cddf8b3 100644
+--- a/libsrc/ffdec_lib/src/com/jpexs/decompiler/flash/types/BUTTONCONDACTION.java
++++ b/libsrc/ffdec_lib/src/com/jpexs/decompiler/flash/types/BUTTONCONDACTION.java
+@@ -27,6 +27,7 @@ import com.jpexs.decompiler.flash.helpers.GraphTextWriter;
+ import com.jpexs.decompiler.flash.tags.Tag;
+ import com.jpexs.decompiler.flash.tags.base.ASMSource;
+ import com.jpexs.decompiler.flash.types.annotations.Conditional;
++import com.jpexs.decompiler.flash.types.annotations.HideInRawEdit;
+ import com.jpexs.decompiler.flash.types.annotations.Internal;
+ import com.jpexs.decompiler.flash.types.annotations.SWFType;
+ import com.jpexs.helpers.ByteArrayRange;
+@@ -154,7 +155,7 @@ public class BUTTONCONDACTION implements ASMSource, Serializable {
+     /**
+      * Actions to perform in byte array
+      */
+-    @Internal
++    @HideInRawEdit
+     public ByteArrayRange actionBytes;
+ 
+     /**
+diff --git a/src/com/jpexs/decompiler/flash/gui/PreviewPanel.java b/src/com/jpexs/decompiler/flash/gui/PreviewPanel.java
+index 60171d41b..642b1c874 100644
+--- a/src/com/jpexs/decompiler/flash/gui/PreviewPanel.java
++++ b/src/com/jpexs/decompiler/flash/gui/PreviewPanel.java
+@@ -1211,7 +1211,7 @@ public class PreviewPanel extends JPersistentSplitPane implements TagEditorPanel
+         tag.getTimelined().resetTimeline();
+         swf.assignClassesToSymbols();
+         swf.assignExportNamesToSymbols();
+-        mainPanel.repaintTree();
++        mainPanel.refreshTree(swf);
+         mainPanel.setTagTreeSelectedNode(tag);
+         genericEditButton.setVisible(true);
+         genericSaveButton.setVisible(false);",

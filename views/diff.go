@@ -7,7 +7,7 @@ type DiffRequest struct {
 }
 
 func (d *DiffRequest) ToModel() (diff models.Diff) {
-	diff.Content = d.Content
+	diff.ContentPath = d.Content
 	return diff
 }
 
@@ -19,7 +19,7 @@ type DiffResponse struct {
 
 func (d *DiffResponse) FromModelToView(diff *models.Diff) {
 	d.Id = diff.Id
-	d.Content = diff.Content
+	d.Content = diff.ContentPath
 
 	for _, commitMessage := range diff.CommitMessages {
 		d.CommitMessages = append(d.CommitMessages, commitMessage.Id)
