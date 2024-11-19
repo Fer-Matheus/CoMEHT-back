@@ -70,12 +70,3 @@ func VerifyToken(tokenString string) (float64, error) {
 	}
 	return claims["user_id"].(float64), nil
 }
-
-func BlackList(token *jwt.Token) error {
-	
-	if token.Valid {
-		
-	}
-
-	return nil
-}
