@@ -365,6 +365,19 @@ const docTemplate = `{
             }
         },
         "/results": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Route to get all results",
+                "tags": [
+                    "Results"
+                ],
+                "summary": "Get all results",
+                "responses": {}
+            },
             "post": {
                 "security": [
                     {
@@ -535,8 +548,8 @@ const docTemplate = `{
                 "aspect": {
                     "type": "string"
                 },
-                "choise_time": {
-                    "type": "string"
+                "choice_time": {
+                    "type": "number"
                 },
                 "chosen_option": {
                     "type": "string"

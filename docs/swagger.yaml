@@ -87,8 +87,8 @@ definitions:
     properties:
       aspect:
         type: string
-      choise_time:
-        type: string
+      choice_time:
+        type: number
       chosen_option:
         type: string
     type: object
@@ -342,6 +342,14 @@ paths:
       tags:
       - User
   /results:
+    get:
+      description: Route to get all results
+      responses: {}
+      security:
+      - Bearer: []
+      summary: Get all results
+      tags:
+      - Results
     post:
       consumes:
       - application/json
