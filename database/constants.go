@@ -21,7 +21,14 @@ func Init() Database {
 	if err != nil {
 		log.Fatalln("error connecting with the database: " + err.Error())
 	}	
-	db.AutoMigrate(&models.Diff{}, &models.Model{}, &models.CommitMessage{}, &models.Duel{}, &models.Result{})
+	db.AutoMigrate(
+		&models.Diff{}, 
+		&models.Model{}, 
+		&models.CommitMessage{}, 
+		&models.User{},
+		&models.Duel{})
+	db.AutoMigrate(&models.UserDuel{})
+	db.AutoMigrate(&models.Result{})
 
 	return Database{db: db}
 }

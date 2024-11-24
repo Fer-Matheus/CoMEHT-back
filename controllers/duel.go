@@ -36,7 +36,7 @@ func GetDuel(w http.ResponseWriter, r *http.Request) {
 	var duel models.Duel
 	err = database.Db.GetDuel(user.CurrentDuelId, &duel)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusNotFound)
+		w.WriteHeader(http.StatusNoContent)
 		return
 	}
 
@@ -91,7 +91,7 @@ func SaveResults(w http.ResponseWriter, r *http.Request) {
 	var results views.ResultsRequest
 	var duel models.Duel
 
-	_, err := authorize(r)
+	userId, err := authorize(r)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusUnauthorized)
 		return
@@ -111,7 +111,7 @@ func SaveResults(w http.ResponseWriter, r *http.Request) {
 
 	var user models.User
 
-	err = database.Db.GetUserById(duel.UserId, &user)
+	err = database.Db.GetUserById(userId, &user)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusNotFound)
 		return
@@ -122,18 +122,35 @@ func SaveResults(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	for _, result := range results.Options {
-		var modelResult models.Result
-		modelResult.Aspect = result.Aspect
-		modelResult.ChosenOption = result.ChosenOption
-		modelResult.ChoiseTime = result.ChoiseTime
-		modelResult.Duel = duel
-		modelResult.DuelId = duel.Id
+	var userDuel models.UserDuel
 
-		duel.Results = append(duel.Results, modelResult)
+	userDuel.User = user
+	userDuel.UserId = user.Id
+	userDuel.Duel = duel
+	userDuel.DuelId = duel.Id
+
+	// err = database.Db.SaveUserDuel(&userDuel)
+	// if err != nil {
+	// 	http.Error(w, err.Error(), http.StatusConflict)
+	// 	return
+	// }
+
+	for _, result := range results.Options{
+
+		var modelResult models.Result
+
+		modelResult.Aspect = result.Aspect
+		modelResult.ChoiceTime = result.ChoiceTime
+		modelResult.ChosenOption = result.ChosenOption
+
+		modelResult.DuelId = userDuel.DuelId
+		modelResult.UserId = userDuel.UserId
+		modelResult.UserDuel = userDuel
+
+		userDuel.Results = append(userDuel.Results, modelResult)
 	}
 
-	err = database.Db.UpdateDuel(&duel)
+	err = database.Db.SaveResults(&userDuel)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusConflict)
 		return
