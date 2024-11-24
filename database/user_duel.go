@@ -28,3 +28,13 @@ func (d *Database) SaveResults(userDuel *models.UserDuel) error {
 	}
 	return nil
 }
+
+func (d *Database) GetAllResults(results *[]models.Result) error {
+	
+	err := d.db.Find(&results).Error
+	if err != nil {
+		return fmt.Errorf("error getting all results: %s", err)
+	}
+
+	return nil
+}

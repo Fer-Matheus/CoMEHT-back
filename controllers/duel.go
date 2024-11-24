@@ -129,12 +129,6 @@ func SaveResults(w http.ResponseWriter, r *http.Request) {
 	userDuel.Duel = duel
 	userDuel.DuelId = duel.Id
 
-	// err = database.Db.SaveUserDuel(&userDuel)
-	// if err != nil {
-	// 	http.Error(w, err.Error(), http.StatusConflict)
-	// 	return
-	// }
-
 	for _, result := range results.Options{
 
 		var modelResult models.Result
