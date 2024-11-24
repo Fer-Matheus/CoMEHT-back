@@ -25,6 +25,7 @@ func init() {
 //	@title			Commitinder Server
 //	@version		1.0
 //	@description	This is the commitinder server api.
+//
 // @securityDefinitions.apikey Bearer
 // @in header
 // @name Authorization
@@ -83,9 +84,15 @@ func main() {
 	mux.HandleFunc("/logout", controllers.Logout)
 
 	mux.HandleFunc("/duels", controllers.GetDuel)
-	mux.HandleFunc("/results", controllers.SaveResults)
+	mux.HandleFunc("/results", func(w http.ResponseWriter, r *http.Request) {
+		switch r.Method {
+		case http.MethodGet:
+			controllers.GetAllResults(w, r)
+		case http.MethodPost:
+			controllers.SaveResults(w, r)
+		}
+	})
 
-	
 	handler := cors.AllowAll().Handler(mux)
 
 	port := os.Getenv("PORT")
