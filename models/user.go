@@ -5,4 +5,5 @@ type User struct {
 	Username       string `gorm:"unique"`
 	HashedPassword string
 	CurrentDuelId  int
+	Duels []Duel `gorm:"many2many:user_duels"`
 }
