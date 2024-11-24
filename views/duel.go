@@ -18,7 +18,7 @@ func (d *DuelResponse) FromModelToView(content string, duel *models.Duel) {
 
 type Options struct {
 	Aspect       string  `gorm:"aspect"`
-	ChoiseTime   float64 `json:"choise_time"`
+	ChoiceTime   float64 `json:"choice_time"`
 	ChosenOption string  `json:"chosen_option"`
 }
 
