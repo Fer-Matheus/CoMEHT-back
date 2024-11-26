@@ -32,6 +32,7 @@ func GetAllUsers(w http.ResponseWriter, r *http.Request) {
 //	@Tags			User
 //	@Accept			json
 //	@Param			userRequest	body	views.UserRequest	true	"userRequest"
+//	@Success 		200 		{object} 	views.LoginResponse
 //	@Router			/register [post]
 func Register(w http.ResponseWriter, r *http.Request) {
 	var userRequest views.UserRequest
@@ -58,9 +59,16 @@ func Register(w http.ResponseWriter, r *http.Request) {
 
 	seeds.SeedDuels(user.Id)
 
+	token, err := utils.GenerateToken(user.Id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
 	w.WriteHeader(http.StatusCreated)
+	w.Header().Set("Authorization", token)
 	w.Header().Set("Content-Type", "application/json")
-	fmt.Fprintln(w, "User registered successfully!")
+	json.NewEncoder(w).Encode(views.LoginResponse{Token: token})
 }
 
 // Login godoc
@@ -69,7 +77,8 @@ func Register(w http.ResponseWriter, r *http.Request) {
 //	@Description	A route for user login
 //	@Tags			User
 //	@Accept			json
-//	@Param			userRequest	body	views.UserRequest	true	"userRequest"
+//	@Param			userRequest	body		views.UserRequest	true	"userRequest"
+//	@Success 		200 		{object} 	views.LoginResponse
 //	@Router			/login [post]
 func Login(w http.ResponseWriter, r *http.Request) {
 	var userRequest views.UserRequest
@@ -96,7 +105,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	
+
 	w.Header().Set("Authorization", token)
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(views.LoginResponse{Token: token})
