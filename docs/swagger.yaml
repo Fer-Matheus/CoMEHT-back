@@ -60,6 +60,11 @@ definitions:
       duel_id:
         type: integer
     type: object
+  views.LoginResponse:
+    properties:
+      token:
+        type: string
+    type: object
   views.ModelRequest:
     properties:
       name:
@@ -255,7 +260,11 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/views.UserRequest'
-      responses: {}
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.LoginResponse'
       summary: Login for a user
       tags:
       - User
@@ -337,7 +346,11 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/views.UserRequest'
-      responses: {}
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.LoginResponse'
       summary: Register a new user
       tags:
       - User

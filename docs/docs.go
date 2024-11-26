@@ -235,7 +235,14 @@ const docTemplate = `{
                         }
                     }
                 ],
-                "responses": {}
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/views.LoginResponse"
+                        }
+                    }
+                }
             }
         },
         "/logout": {
@@ -361,7 +368,14 @@ const docTemplate = `{
                         }
                     }
                 ],
-                "responses": {}
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/views.LoginResponse"
+                        }
+                    }
+                }
             }
         },
         "/results": {
@@ -503,6 +517,14 @@ const docTemplate = `{
                 },
                 "duel_id": {
                     "type": "integer"
+                }
+            }
+        },
+        "views.LoginResponse": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
                 }
             }
         },
