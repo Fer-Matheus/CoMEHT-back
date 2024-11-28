@@ -8,13 +8,13 @@ import (
 func SeedModels() {
 	models := []models.Model{
 		{
-			Name: "ChatGPT",
-		},
-		{
-			Name: "NNGen",
-		},
-		{
 			Name: "Human",
+		},
+		{
+			Name: "FIRA",
+		},
+		{
+			Name: "OMG",
 		},
 	}
 	_ = database.Db.SaveModels(&models)
