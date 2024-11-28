@@ -6,6 +6,7 @@ import (
 	"commitinder/views"
 	"encoding/json"
 	"net/http"
+	"os"
 	"strconv"
 )
 
@@ -67,6 +68,10 @@ func GetDiff(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusNotFound)
 		return
 	}
+
+	content, _ := os.ReadFile("diffs/" + diff.ContentPath)
+
+	diff.ContentPath = string(content)
 
 	diffResponse.FromModelToView(&diff)
 

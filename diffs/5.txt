@@ -1,22 +1,13 @@
-: "diff --git a/.ci/bwcVersions b/.ci/bwcVersions
-index 0243adb1a62..b7dd18149fb 100644
---- a/.ci/bwcVersions
-+++ b/.ci/bwcVersions
-@@ -20,4 +20,5 @@ BWC_VERSION:
-   - "7.6.3"
-   - "7.7.0"
-   - "7.8.0"
-+  - "7.9.0"
-   - "8.0.0"
-diff --git a/server/src/main/java/org/elasticsearch/Version.java b/server/src/main/java/org/elasticsearch/Version.java
-index 168c823e3f2..be534164fce 100644
---- a/server/src/main/java/org/elasticsearch/Version.java
-+++ b/server/src/main/java/org/elasticsearch/Version.java
-@@ -78,6 +78,7 @@ public class Version implements Comparable<Version>, ToXContentFragment {
-     public static final Version V_7_6_3 = new Version(7060399, org.apache.lucene.util.Version.LUCENE_8_4_0);
-     public static final Version V_7_7_0 = new Version(7070099, org.apache.lucene.util.Version.LUCENE_8_5_1);
-     public static final Version V_7_8_0 = new Version(7080099, org.apache.lucene.util.Version.LUCENE_8_5_1);
-+    public static final Version V_7_9_0 = new Version(7090099, org.apache.lucene.util.Version.LUCENE_8_5_1);
-     public static final Version V_8_0_0 = new Version(8000099, org.apache.lucene.util.Version.LUCENE_8_5_1);
-     public static final Version CURRENT = V_8_0_0;
- ",
+diff --git a/src/testcases/org/apache/tools/ant/util/DateUtilsTest.java b/src/testcases/org/apache/tools/ant/util/DateUtilsTest.java
+index 0e18a2366..f516fe6c3 100644
+--- a/src/testcases/org/apache/tools/ant/util/DateUtilsTest.java
++++ b/src/testcases/org/apache/tools/ant/util/DateUtilsTest.java
+@@ -92,7 +92,7 @@ public class DateUtilsTest extends TestCase {
+     public void testDateISO(){
+         TimeZone timeZone = TimeZone.getTimeZone("GMT");
+         Calendar cal = Calendar.getInstance(timeZone);
+-        emailtaskcal.set(2002,1,23);
++        cal.set(2002,1,23);
+         String text = DateUtils.format(cal.getTime(),
+                 DateUtils.ISO8601_DATE_PATTERN);
+         assertEquals("2002-02-23", text);

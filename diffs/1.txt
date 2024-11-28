@@ -1,10 +1,17 @@
-: "diff --git a/CHANGELOG.md b/CHANGELOG.md
-index f0762d2a7..b7a7f412a 100644
---- a/CHANGELOG.md
-+++ b/CHANGELOG.md
-@@ -1,4 +1,5 @@
- ## 0.9.3-rc2
-+ * STORM-558: change "swap!" to "reset!" to fix assignment-versions in supervisor
-  * STORM-555: Storm json response should set charset to UTF-8
-  * STORM-513: check heartbeat from multilang subprocess
-  * STORM-549: "topology.enable.message.timeouts" does nothing",
+Revert "Fix unnecessary type casting in Test"
+
+This reverts commit f3ab77ca197f54f6409b33309f398ea7e37e409f.
+
+diff --git a/ambari-server/src/test/java/org/apache/ambari/server/controller/metrics/timeline/cache/TimelineMetricCacheTest.java b/ambari-server/src/test/java/org/apache/ambari/server/controller/metrics/timeline/cache/TimelineMetricCacheTest.java
+index 05f8aeca9b..e520cf3648 100644
+--- a/ambari-server/src/test/java/org/apache/ambari/server/controller/metrics/timeline/cache/TimelineMetricCacheTest.java
++++ b/ambari-server/src/test/java/org/apache/ambari/server/controller/metrics/timeline/cache/TimelineMetricCacheTest.java
+@@ -419,7 +419,7 @@ public class TimelineMetricCacheTest {
+     long year = 365 * day;
+ 
+     //Original Values
+-    Map<String, TimelineMetric> valueMap = new HashMap();
++    Map<String, TimelineMetric> valueMap = new HashMap<String, TimelineMetric>();
+     TimelineMetric timelineMetric = new TimelineMetric();
+     timelineMetric.setMetricName("cpu_user");
+     timelineMetric.setAppId("app1");

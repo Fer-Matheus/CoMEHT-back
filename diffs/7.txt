@@ -1,15 +1,21 @@
-: "diff --git a/config-provisioning/src/main/resources/configdefinitions/config-server-security.def b/config-provisioning/src/main/resources/configdefinitions/config-server-security.def
-deleted file mode 100644
-index cfd5c9c04e5..00000000000
---- a/config-provisioning/src/main/resources/configdefinitions/config-server-security.def
-+++ /dev/null
-@@ -1,9 +0,0 @@
--# Copyright 2019 Oath Inc. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root.
--namespace=config.provisioning
--
--athenzProviderHostname string
--controllerHostIdentity string
--configServerHostIdentity string
--proxyHostIdentity string
--tenantHostIdentity string
--tenantIdentity string",
+diff --git a/src/main/org/apache/tools/ant/ComponentHelper.java b/src/main/org/apache/tools/ant/ComponentHelper.java
+index 5132874d5..560330a97 100644
+--- a/src/main/org/apache/tools/ant/ComponentHelper.java
++++ b/src/main/org/apache/tools/ant/ComponentHelper.java
+@@ -434,7 +434,15 @@ public class ComponentHelper  {
+      */
+     public Task createTask(String taskType) throws BuildException {
+         Task task=createNewTask(taskType);
+-        if(task!=null) {
++        if (task == null && taskType.equals("property")) {
++            // quick fix for Ant.java use of property before
++            // initializeing the project
++            addTaskDefinition("property",
++                              org.apache.tools.ant.taskdefs.Property.class);
++            task = createNewTask(taskType);
++        }
++            
++        if (task != null) {
+             addCreatedTask(taskType, task);
+         }
+         return task;
