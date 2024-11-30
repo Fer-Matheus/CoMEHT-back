@@ -43,7 +43,4 @@ go.work
 .history
 .ionide
 
-# Ignore .env variable
-.env
-
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,go
