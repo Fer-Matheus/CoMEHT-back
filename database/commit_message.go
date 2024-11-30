@@ -20,7 +20,7 @@ func (d *Database) SaveCommitMessages(commitMessages *[]models.CommitMessage) er
 	return nil
 }
 func (d *Database) GetCommitMessage(commitMessageId int, commitMessage *models.CommitMessage) error {
-	err := d.db.First(&commitMessage, "id = ?", commitMessageId).Error
+	err := d.db.Preload("Model").First(&commitMessage, "id = ?", commitMessageId).Error
 	if err != nil {
 		return fmt.Errorf("error getting a commit message by id: " + err.Error())
 	}

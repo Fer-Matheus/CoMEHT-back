@@ -35,6 +35,7 @@ func main() {
 	seeds.SeedDiffs()
 	seeds.SeedModels()
 	seeds.SeedCommitMessages()
+	seeds.SeedUsers()
 
 	mux := http.NewServeMux()
 
@@ -86,7 +87,7 @@ func main() {
 	mux.HandleFunc("/duels", controllers.GetDuel)
 	mux.HandleFunc("/results", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
-		case http.MethodGet:
+		case http.MethodPut:
 			controllers.GetAllResults(w, r)
 		case http.MethodPost:
 			controllers.SaveResults(w, r)
