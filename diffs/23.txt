@@ -1,0 +1,25 @@
+diff --git a/archiva-modules/archiva-maven/archiva-maven-repository/src/main/java/org/apache/archiva/repository/maven2/MavenRepositoryProvider.java b/archiva-modules/archiva-maven/archiva-maven-repository/src/main/java/org/apache/archiva/repository/maven2/MavenRepositoryProvider.java
+index 280cb36de..24216ef86 100644
+--- a/archiva-modules/archiva-maven/archiva-maven-repository/src/main/java/org/apache/archiva/repository/maven2/MavenRepositoryProvider.java
++++ b/archiva-modules/archiva-maven/archiva-maven-repository/src/main/java/org/apache/archiva/repository/maven2/MavenRepositoryProvider.java
+@@ -248,8 +248,10 @@ public void updateRemoteInstance(EditableRemoteRepository repo, RemoteRepository
+     @Override
+     public RepositoryGroup createRepositoryGroup(RepositoryGroupConfiguration configuration) throws RepositoryException {
+         Path repositoryGroupBase = getArchivaConfiguration().getRepositoryGroupBaseDir();
+-        return new MavenRepositoryGroup(configuration.getId(), configuration.getId(),
++        MavenRepositoryGroup newGrp = new MavenRepositoryGroup(configuration.getId(), configuration.getName(),
+                 repositoryGroupBase, fileLockManager);
++        updateRepositoryGroupInstance(newGrp, configuration);
++        return newGrp;
+     }
+ 
+     @Override
+@@ -444,4 +446,8 @@ public void setArchivaConfiguration(ArchivaConfiguration archivaConfiguration) {
+     public <T> void raise(RepositoryEvent<T> event) {
+         //
+     }
++
++    public void setRepositoryRegistry(RepositoryRegistry reg) {
++        this.repositoryRegistry = reg;
++    }
+ }

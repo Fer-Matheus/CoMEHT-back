@@ -1,0 +1,24 @@
+diff --git a/blueprint/blueprint-core/src/main/java/org/apache/aries/blueprint/container/ReferenceRecipe.java b/blueprint/blueprint-core/src/main/java/org/apache/aries/blueprint/container/ReferenceRecipe.java
+index 78dd7861d..8a0baee93 100644
+--- a/blueprint/blueprint-core/src/main/java/org/apache/aries/blueprint/container/ReferenceRecipe.java
++++ b/blueprint/blueprint-core/src/main/java/org/apache/aries/blueprint/container/ReferenceRecipe.java
+@@ -220,11 +220,16 @@ public class ReferenceRecipe extends AbstractServiceReferenceRecipe {
+                   } 
+                   
+                   if (failed) {
+-                    LOGGER.info(""Timeout expired when waiting for OSGi service {}"", getOsgiFilter());
+-                    throw new ServiceUnavailableException(""Timeout expired when waiting for OSGi service"", getOsgiFilter());
++                    if (metadata.getAvailability() == ServiceReferenceMetadata.AVAILABILITY_MANDATORY) {
++                        LOGGER.info(""Timeout expired when waiting for mandatory OSGi service reference {}"", getOsgiFilter());
++                        throw new ServiceUnavailableException(""Timeout expired when waiting for mandatory OSGi service reference: "" + getOsgiFilter(), getOsgiFilter());
++                    } else {
++                        LOGGER.info(""No matching service for optional OSGi service reference {}"", getOsgiFilter());
++                        throw new ServiceUnavailableException(""No matching service for optional OSGi service reference: "" + getOsgiFilter(), getOsgiFilter());
++                    }
+                   }
+                 } else {
+-                    throw new ServiceUnavailableException(""The Blueprint container is being or has been destroyed"", getOsgiFilter());
++                    throw new ServiceUnavailableException(""The Blueprint container is being or has been destroyed: "" + getOsgiFilter(), getOsgiFilter());
+                 }
+             } else {
+             

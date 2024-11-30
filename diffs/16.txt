@@ -1,0 +1,13 @@
+diff --git a/archiva-modules/archiva-database/src/main/java/org/apache/maven/archiva/database/browsing/DefaultRepositoryBrowsing.java b/archiva-modules/archiva-database/src/main/java/org/apache/maven/archiva/database/browsing/DefaultRepositoryBrowsing.java
+index 5e75f059d..7b55a3b0f 100644
+--- a/archiva-modules/archiva-database/src/main/java/org/apache/maven/archiva/database/browsing/DefaultRepositoryBrowsing.java
++++ b/archiva-modules/archiva-database/src/main/java/org/apache/maven/archiva/database/browsing/DefaultRepositoryBrowsing.java
+@@ -212,8 +212,6 @@ private void processSnapshots( List<String> versions )
+     {
+         Map<String, String> snapshots = new HashMap<String, String>();
+ 
+-        log.info( ""Processing snapshots."" );
+-
+         for ( String version : versions )
+         {
+             if ( VersionUtil.isSnapshot( version ) )

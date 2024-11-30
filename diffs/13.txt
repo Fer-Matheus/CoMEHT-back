@@ -1,0 +1,21 @@
+diff --git a/src/main/org/apache/tools/ant/util/ScriptRunner.java b/src/main/org/apache/tools/ant/util/ScriptRunner.java
+index e962bb806..7e876c5c3 100644
+--- a/src/main/org/apache/tools/ant/util/ScriptRunner.java
++++ b/src/main/org/apache/tools/ant/util/ScriptRunner.java
+@@ -139,7 +139,15 @@ public class ScriptRunner {
+             for (Iterator i = beans.keySet().iterator(); i.hasNext();) {
+                 String key = (String) i.next();
+                 Object value = beans.get(key);
+-                manager.declareBean(key, value, value.getClass());
++                if (value != null) {
++                    manager.declareBean(key, value, value.getClass());
++                } else {
++                    // BSF uses a hashtable to store values
++                    // so cannot declareBean with a null value
++                    // So need to remove any bean of this name as
++                    // that bean should not be visible
++                    manager.undeclareBean(key);
++                }
+             }
+ 
+             // execute the script

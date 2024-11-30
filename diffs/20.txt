@@ -1,0 +1,22 @@
+diff --git a/maven-repository-proxy/src/test/java/org/apache/maven/repository/proxy/DefaultProxyManagerTest.java b/maven-repository-proxy/src/test/java/org/apache/maven/repository/proxy/DefaultProxyManagerTest.java
+index 40f982fff..8e1e38b26 100644
+--- a/maven-repository-proxy/src/test/java/org/apache/maven/repository/proxy/DefaultProxyManagerTest.java
++++ b/maven-repository-proxy/src/test/java/org/apache/maven/repository/proxy/DefaultProxyManagerTest.java
+@@ -43,7 +43,7 @@ protected void setUp()
+ 
+         proxy = (ProxyManager) container.lookup( ProxyManager.ROLE );
+ 
+-        configuration = getTestConfiguration();
++        configuration = getProxyConfiguration();
+         proxy.setConfiguration( configuration );
+     }
+ 
+@@ -134,7 +134,7 @@ protected void tearDown()
+         super.tearDown();
+     }
+ 
+-    private ProxyConfiguration getTestConfiguration()
++    private ProxyConfiguration getProxyConfiguration()
+         throws ComponentLookupException
+     {
+         ProxyConfiguration config = new ProxyConfiguration();

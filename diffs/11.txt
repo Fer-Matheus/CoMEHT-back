@@ -1,0 +1,13 @@
+diff --git a/src/testcases/org/apache/tools/ant/taskdefs/StyleTest.java b/src/testcases/org/apache/tools/ant/taskdefs/StyleTest.java
+index 796ec62c9..384ffa40a 100644
+--- a/src/testcases/org/apache/tools/ant/taskdefs/StyleTest.java
++++ b/src/testcases/org/apache/tools/ant/taskdefs/StyleTest.java
+@@ -65,7 +65,7 @@ import java.io.FileWriter;
+ 
+ 
+ /**
+- * TestCases fuer <style> / <xslt> task.
++ * TestCases for <style> / <xslt> task.
+  * @author Jan Materne
+  * @version 2003-08-05
+  */
