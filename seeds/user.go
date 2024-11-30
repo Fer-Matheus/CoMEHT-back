@@ -8,9 +8,9 @@ import (
 )
 
 func SeedUsers() {
-	password, _ := bcrypt.GenerateFromPassword([]byte("uga"), 10)
+	password, _ := bcrypt.GenerateFromPassword([]byte("admin"), 10)
 	user := models.User{
-		Username:       "Matheus",
+		Username:       "admin",
 		HashedPassword: string(password),
 		CurrentDuelId:  1,
 	}
