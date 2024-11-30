@@ -20,7 +20,13 @@ services:
       - commitinder:/var/lib/postgresql
     networks:
       - commitinder
-
+  front:
+    build: 
+      context: ../front/
+    ports:
+        - 3000:3000
+    networks:
+      - commitinder
   api:
     build:
       context: .
