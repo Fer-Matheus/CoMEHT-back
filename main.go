@@ -15,6 +15,14 @@ import (
 	httpSwagger "github.com/swaggo/http-swagger/v2"
 )
 
+func alreadySeeded() bool {
+	_, err := os.ReadFile("alreadySeeded")
+	return err == nil
+}
+func setAlreadySeeded() {
+	os.WriteFile("alreadySeeded", nil, 0600)
+}
+
 func init() {
 	err := godotenv.Load()
 	if err != nil {
@@ -32,10 +40,13 @@ func init() {
 // @Security Bearer
 func main() {
 
-	seeds.SeedDiffs()
-	seeds.SeedModels()
-	seeds.SeedCommitMessages()
-	seeds.SeedUsers()
+	if !alreadySeeded() {
+		seeds.SeedDiffs()
+		seeds.SeedModels()
+		seeds.SeedCommitMessages()
+		seeds.SeedUsers()
+		setAlreadySeeded()
+	}
 
 	mux := http.NewServeMux()
 
