@@ -1,13 +1,22 @@
-diff --git a/src/main/org/apache/tools/ant/taskdefs/optional/net/FTP.java b/src/main/org/apache/tools/ant/taskdefs/optional/net/FTP.java
-index 019a98d8d..43f4c80b2 100644
---- a/src/main/org/apache/tools/ant/taskdefs/optional/net/FTP.java
-+++ b/src/main/org/apache/tools/ant/taskdefs/optional/net/FTP.java
-@@ -291,7 +291,7 @@ public class FTP
-                         } else {
-                             String name = vpath + file.getName();
-                             if (!isFollowSymlinks() && file.isSymbolicLink()) {
--                                dirsExcluded.addElement(name);
-+                                filesExcluded.addElement(name);
-                             } else if (isFunctioningAsFile(ftp, dir, file)) {
-                                 if (isIncluded(name)) {
-                                     if (!isExcluded(name)) {
+diff --git a/src/java/org/apache/cassandra/db/RowIteratorFactory.java b/src/java/org/apache/cassandra/db/RowIteratorFactory.java
+index 331f2575df..dc68a997f1 100644
+--- a/src/java/org/apache/cassandra/db/RowIteratorFactory.java
++++ b/src/java/org/apache/cassandra/db/RowIteratorFactory.java
+@@ -161,17 +161,6 @@ public class RowIteratorFactory
+         return new RowIterator(reduced, iterators);
+     }
+ 
+-    /** 
+-     * Used when locks are required before getting the entry iterator.
+-     * @param memtable Memtable to get iterator from
+-     * @param startWith Start at this key position
+-     * @return entry iterator for the current memtable
+-     */
+-    private static Iterator<Map.Entry<DecoratedKey, ColumnFamily>> memtableEntryIterator(Memtable memtable, DecoratedKey startWith)
+-    {
+-        return memtable.getEntryIterator(startWith);
+-    }
+-
+     /**
+      * Get a ColumnIterator for a specific key in the memtable.
+      */

@@ -1,13 +1,19 @@
-diff --git a/src/testcases/org/apache/tools/ant/util/DateUtilsTest.java b/src/testcases/org/apache/tools/ant/util/DateUtilsTest.java
-index 0e18a2366..f516fe6c3 100644
---- a/src/testcases/org/apache/tools/ant/util/DateUtilsTest.java
-+++ b/src/testcases/org/apache/tools/ant/util/DateUtilsTest.java
-@@ -92,7 +92,7 @@ public class DateUtilsTest extends TestCase {
-     public void testDateISO(){
-         TimeZone timeZone = TimeZone.getTimeZone("GMT");
-         Calendar cal = Calendar.getInstance(timeZone);
--        emailtaskcal.set(2002,1,23);
-+        cal.set(2002,1,23);
-         String text = DateUtils.format(cal.getTime(),
-                 DateUtils.ISO8601_DATE_PATTERN);
-         assertEquals("2002-02-23", text);
+diff --git a/sdks/java/core/src/main/java/org/apache/beam/sdk/schemas/utils/ByteBuddyUtils.java b/sdks/java/core/src/main/java/org/apache/beam/sdk/schemas/utils/ByteBuddyUtils.java
+index 44085c33100..cd951ff8697 100644
+--- a/sdks/java/core/src/main/java/org/apache/beam/sdk/schemas/utils/ByteBuddyUtils.java
++++ b/sdks/java/core/src/main/java/org/apache/beam/sdk/schemas/utils/ByteBuddyUtils.java
+@@ -995,7 +995,13 @@ public class ByteBuddyUtils {
+                   COLLECTION_TYPE
+                       .getDeclaredMethods()
+                       .filter(
+-                          ElementMatchers.named(""toArray"").and(ElementMatchers.takesArguments(1)))
++                          ElementMatchers.named(""toArray"")
++                              .and(
++                                  ElementMatchers.takesArguments(
++                                      TypeDescription.Generic.Builder.rawType(Object.class)
++                                          .asArray()
++                                          .build()
++                                          .asErasure())))
+                       .getOnly()),
+               // Cast the result to T[].
+               TypeCasting.to(arrayType));

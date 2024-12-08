@@ -1,13 +1,13 @@
-diff --git a/src/tests/junit/org/apache/tools/ant/taskdefs/optional/PropertyFileTest.java b/src/tests/junit/org/apache/tools/ant/taskdefs/optional/PropertyFileTest.java
-index b972eaaf5..71af44f66 100644
---- a/src/tests/junit/org/apache/tools/ant/taskdefs/optional/PropertyFileTest.java
-+++ b/src/tests/junit/org/apache/tools/ant/taskdefs/optional/PropertyFileTest.java
-@@ -158,7 +158,7 @@ public class PropertyFileTest {
+diff --git a/src/java/org/apache/cassandra/io/sstable/format/SSTableReader.java b/src/java/org/apache/cassandra/io/sstable/format/SSTableReader.java
+index 4031304bda..1dafea38bb 100644
+--- a/src/java/org/apache/cassandra/io/sstable/format/SSTableReader.java
++++ b/src/java/org/apache/cassandra/io/sstable/format/SSTableReader.java
+@@ -737,7 +737,7 @@ public abstract class SSTableReader extends SSTable implements SelfRefCounted<SS
  
-         Properties props = getTestProperties();
-         LocalDate currentDate = LocalDate.now().plusDays(delta);
--        assertEquals(String.format(""%d/%02d/%d"", currentDate.getYear(), currentDate.getMonthValue(),
-+        assertEquals(String.format(""%d/%02d/%02d"", currentDate.getYear(), currentDate.getMonthValue(),
-                 currentDate.getDayOfMonth()), props.getProperty(""date""));
-     }
- 
+             // Check for an index summary that was downsampled even though the serialization format doesn't support
+             // that.  If it was downsampled, rebuild it.  See CASSANDRA-8993 for details.
+-        if (!descriptor.version.hasSamplingLevel() && !builtSummary && !validateSummarySamplingLevel() && ifile != null)
++        if (ifile != null && !descriptor.version.hasSamplingLevel() && !builtSummary && !validateSummarySamplingLevel())
+             {
+                 indexSummary.close();
+                 ifile.close();

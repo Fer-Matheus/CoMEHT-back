@@ -1,15 +1,31 @@
-diff --git a/src/main/org/apache/tools/bzip2/CBZip2OutputStream.java b/src/main/org/apache/tools/bzip2/CBZip2OutputStream.java
-index 22c20ff8b..63bc3eb7a 100644
---- a/src/main/org/apache/tools/bzip2/CBZip2OutputStream.java
-+++ b/src/main/org/apache/tools/bzip2/CBZip2OutputStream.java
-@@ -411,8 +411,9 @@ public class CBZip2OutputStream extends OutputStream implements BZip2Constants {
- 
-     boolean closed = false;
- 
--    public void finalize() throws Throwable {
-+    protected void finalize() throws Throwable {
-         close();
-+        super.finalize();
+diff --git a/src/java/org/apache/cassandra/db/ColumnFamilyStore.java b/src/java/org/apache/cassandra/db/ColumnFamilyStore.java
+index 468e1d831d..6681c07fa3 100644
+--- a/src/java/org/apache/cassandra/db/ColumnFamilyStore.java
++++ b/src/java/org/apache/cassandra/db/ColumnFamilyStore.java
+@@ -1531,6 +1531,11 @@ public final class ColumnFamilyStore implements ColumnFamilyStoreMBean
+     {
+         return readStats_.mean();
      }
++    
++    public int getPendingTasks()
++    {
++        return memtableLock_.getQueueLength();
++    }
  
-     public void close() throws IOException {
+     /**
+      * @return the number of write operations on this column family in the last minute
+diff --git a/src/java/org/apache/cassandra/db/ColumnFamilyStoreMBean.java b/src/java/org/apache/cassandra/db/ColumnFamilyStoreMBean.java
+index 02be5dd273..414b7d1a56 100644
+--- a/src/java/org/apache/cassandra/db/ColumnFamilyStoreMBean.java
++++ b/src/java/org/apache/cassandra/db/ColumnFamilyStoreMBean.java
+@@ -84,4 +84,10 @@ public interface ColumnFamilyStoreMBean
+      */
+     public double getWriteLatency();
+     
++    /**
++     * 
++     * @return the estimated number of tasks pending for this column family
++     */
++    public int getPendingTasks();
++    
+ }

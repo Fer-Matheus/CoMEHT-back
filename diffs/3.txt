@@ -1,13 +1,21 @@
-diff --git a/src/main/org/apache/tools/ant/taskdefs/ExecTask.java b/src/main/org/apache/tools/ant/taskdefs/ExecTask.java
-index 92e7b461b..374b2c693 100644
---- a/src/main/org/apache/tools/ant/taskdefs/ExecTask.java
-+++ b/src/main/org/apache/tools/ant/taskdefs/ExecTask.java
-@@ -323,7 +323,7 @@ public class ExecTask extends Task {
-             runExecute(exe);
-         } catch (IOException e) {
-             if (failIfExecFails) {
--                throw new BuildException("Execute failed: ",e, location);
-+                throw new BuildException("Execute failed: "+e.toString(),e, location);
-             } else {
-                 log("Execute failed: "+e.toString(), Project.MSG_ERR);
-             }
+diff --git a/sdks/java/extensions/euphoria/euphoria-beam/src/main/java/cz/seznam/euphoria/beam/ReduceByKeyTranslator.java b/sdks/java/extensions/euphoria/euphoria-beam/src/main/java/cz/seznam/euphoria/beam/ReduceByKeyTranslator.java
+index 3d24aa821d5..d8a5ea3551d 100644
+--- a/sdks/java/extensions/euphoria/euphoria-beam/src/main/java/cz/seznam/euphoria/beam/ReduceByKeyTranslator.java
++++ b/sdks/java/extensions/euphoria/euphoria-beam/src/main/java/cz/seznam/euphoria/beam/ReduceByKeyTranslator.java
+@@ -37,6 +37,7 @@ import org.apache.beam.sdk.transforms.GroupByKey;
+ import org.apache.beam.sdk.transforms.MapElements;
+ import org.apache.beam.sdk.transforms.ParDo;
+ import org.apache.beam.sdk.transforms.SimpleFunction;
++import org.apache.beam.sdk.transforms.windowing.AfterWatermark;
+ 
+ /**
+  * Translator for {@code ReduceByKey} operator.
+@@ -70,6 +71,8 @@ class ReduceByKeyTranslator implements OperatorTranslator<ReduceByKey> {
+       input = context.getInput(operator)
+           .apply(org.apache.beam.sdk.transforms.windowing.Window.into(
+               BeamWindowFn.wrap(operator.getWindowing()))
++          // FIXME: trigger
++          .triggering(AfterWatermark.pastEndOfWindow())
+           .discardingFiredPanes()
+           .withAllowedLateness(context.getAllowedLateness(operator)));
+     }

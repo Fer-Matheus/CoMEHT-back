@@ -1,48 +1,13 @@
-diff --git a/proposal/myrmidon/src/main/org/apache/tools/ant/taskdefs/optional/i18n/Translate.java b/proposal/myrmidon/src/main/org/apache/tools/ant/taskdefs/optional/i18n/Translate.java
-index e7170e11d..cee19e50d 100644
---- a/proposal/myrmidon/src/main/org/apache/tools/ant/taskdefs/optional/i18n/Translate.java
-+++ b/proposal/myrmidon/src/main/org/apache/tools/ant/taskdefs/optional/i18n/Translate.java
-@@ -86,10 +86,7 @@ public class Translate
-      * Create new destination file? Defaults to false.
-      */
-     private boolean forceOverwrite;
--    /**
--     * Generated locale based on user attributes
--     */
--    private Locale locale;
-+
-     /**
-      * Source file encoding scheme
-      */
-@@ -564,7 +561,6 @@ public class Translate
-                         String line;
-                         while( ( line = in.readLine() ) != null )
-                         {
--                            StringBuffer newline = new StringBuffer( line );
-                             int startIndex = -1;
-                             int endIndex = -1;
-                             outer :
-diff --git a/proposal/myrmidon/src/todo/org/apache/tools/ant/taskdefs/optional/i18n/Translate.java b/proposal/myrmidon/src/todo/org/apache/tools/ant/taskdefs/optional/i18n/Translate.java
-index e7170e11d..cee19e50d 100644
---- a/proposal/myrmidon/src/todo/org/apache/tools/ant/taskdefs/optional/i18n/Translate.java
-+++ b/proposal/myrmidon/src/todo/org/apache/tools/ant/taskdefs/optional/i18n/Translate.java
-@@ -86,10 +86,7 @@ public class Translate
-      * Create new destination file? Defaults to false.
-      */
-     private boolean forceOverwrite;
--    /**
--     * Generated locale based on user attributes
--     */
--    private Locale locale;
-+
-     /**
-      * Source file encoding scheme
-      */
-@@ -564,7 +561,6 @@ public class Translate
-                         String line;
-                         while( ( line = in.readLine() ) != null )
-                         {
--                            StringBuffer newline = new StringBuffer( line );
-                             int startIndex = -1;
-                             int endIndex = -1;
-                             outer :
+diff --git a/sdks/java/io/google-cloud-platform/src/test/java/org/apache/beam/sdk/io/gcp/GcpApiSurfaceTest.java b/sdks/java/io/google-cloud-platform/src/test/java/org/apache/beam/sdk/io/gcp/GcpApiSurfaceTest.java
+index 1a3e82480b7..b2db12734f8 100644
+--- a/sdks/java/io/google-cloud-platform/src/test/java/org/apache/beam/sdk/io/gcp/GcpApiSurfaceTest.java
++++ b/sdks/java/io/google-cloud-platform/src/test/java/org/apache/beam/sdk/io/gcp/GcpApiSurfaceTest.java
+@@ -85,6 +85,8 @@ public class GcpApiSurfaceTest {
+             Matchers.<Class<?>>equalTo(com.google.cloud.ByteArray.class),
+             Matchers.<Class<?>>equalTo(com.google.cloud.Date.class),
+             Matchers.<Class<?>>equalTo(com.google.cloud.Timestamp.class),
++            // TODO: remove the following classes once spanner updates APIs of AsyncResultSet:
++            // https://github.com/googleapis/java-spanner/issues/410
+             Matchers.<Class<?>>equalTo(com.google.common.collect.ImmutableCollection.class),
+             Matchers.<Class<?>>equalTo(com.google.common.collect.ImmutableCollection.Builder.class),
+             Matchers.<Class<?>>equalTo(com.google.common.collect.ImmutableList.class),

@@ -1,17 +1,22 @@
-Revert "Fix unnecessary type casting in Test"
-
-This reverts commit f3ab77ca197f54f6409b33309f398ea7e37e409f.
-
-diff --git a/ambari-server/src/test/java/org/apache/ambari/server/controller/metrics/timeline/cache/TimelineMetricCacheTest.java b/ambari-server/src/test/java/org/apache/ambari/server/controller/metrics/timeline/cache/TimelineMetricCacheTest.java
-index 05f8aeca9b..e520cf3648 100644
---- a/ambari-server/src/test/java/org/apache/ambari/server/controller/metrics/timeline/cache/TimelineMetricCacheTest.java
-+++ b/ambari-server/src/test/java/org/apache/ambari/server/controller/metrics/timeline/cache/TimelineMetricCacheTest.java
-@@ -419,7 +419,7 @@ public class TimelineMetricCacheTest {
-     long year = 365 * day;
+diff --git a/sdks/java/harness/src/main/java/org/apache/beam/fn/harness/FnApiDoFnRunner.java b/sdks/java/harness/src/main/java/org/apache/beam/fn/harness/FnApiDoFnRunner.java
+index cdcff1c8afa..e57dfae0ee5 100644
+--- a/sdks/java/harness/src/main/java/org/apache/beam/fn/harness/FnApiDoFnRunner.java
++++ b/sdks/java/harness/src/main/java/org/apache/beam/fn/harness/FnApiDoFnRunner.java
+@@ -173,7 +173,7 @@ public class FnApiDoFnRunner<InputT, OutputT>
+     if (rowParameter != null) {
+       checkArgument(schemaCoder != null,
+           ""Cannot access object as a row if the input PCollection does not have a schema .""
+-              + ""DoFn "" + doFn.getClass() + "" Coder "" + inputCoder.getClass());
++              + ""DoFn "" + context.doFn.getClass() + "" Coder "" + context.inputCoder.getClass());
+       String id = rowParameter.fieldAccessId();
+       if (id == null) {
+         // This is the case where no FieldId is defined, just an @Element Row row. Default to all
+@@ -326,7 +326,7 @@ public class FnApiDoFnRunner<InputT, OutputT>
  
-     //Original Values
--    Map<String, TimelineMetric> valueMap = new HashMap();
-+    Map<String, TimelineMetric> valueMap = new HashMap<String, TimelineMetric>();
-     TimelineMetric timelineMetric = new TimelineMetric();
-     timelineMetric.setMetricName("cpu_user");
-     timelineMetric.setAppId("app1");
+     @Override
+     public MultiOutputReceiver taggedOutputReceiver(DoFn<InputT, OutputT> doFn) {
+-      return DoFnOutputReceivers.windowedMultiReceiver(this, outputCoders);
++      return DoFnOutputReceivers.windowedMultiReceiver(this, context.outputCoders);
+     }
+ 
+     @Override

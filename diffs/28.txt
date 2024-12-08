@@ -1,16 +1,14 @@
-diff --git a/sdks/java/io/google-cloud-platform/src/main/java/org/apache/beam/sdk/io/gcp/bigquery/PassThroughThenCleanup.java b/sdks/java/io/google-cloud-platform/src/main/java/org/apache/beam/sdk/io/gcp/bigquery/PassThroughThenCleanup.java
-index 75f7b93b4a1..f49c4e1954f 100644
---- a/sdks/java/io/google-cloud-platform/src/main/java/org/apache/beam/sdk/io/gcp/bigquery/PassThroughThenCleanup.java
-+++ b/sdks/java/io/google-cloud-platform/src/main/java/org/apache/beam/sdk/io/gcp/bigquery/PassThroughThenCleanup.java
-@@ -53,9 +53,9 @@ class PassThroughThenCleanup<T> extends PTransform<PCollection<T>, PCollection<T
-     PCollectionTuple outputs = input.apply(ParDo.of(new IdentityFn<T>())
-         .withOutputTags(mainOutput, TupleTagList.of(cleanupSignal)));
- 
--    PCollectionView<Void> cleanupSignalView = outputs.get(cleanupSignal)
-+    PCollectionView<Iterable<Void>> cleanupSignalView = outputs.get(cleanupSignal)
-         .setCoder(VoidCoder.of())
--        .apply(View.<Void>asSingleton().withDefaultValue(null));
-+        .apply(View.<Void>asIterable());
- 
-     input.getPipeline()
-         .apply(""Create(CleanupOperation)"", Create.of(cleanupOperation))
+diff --git a/src/java/org/apache/cocoon/sitemap/SitemapParameters.java b/src/java/org/apache/cocoon/sitemap/SitemapParameters.java
+index 9430306585..281ab8eb3e 100644
+--- a/src/java/org/apache/cocoon/sitemap/SitemapParameters.java
++++ b/src/java/org/apache/cocoon/sitemap/SitemapParameters.java
+@@ -23,8 +23,7 @@ import org.apache.avalon.framework.parameters.Parameters;
+ /**
+  * Extension to the Avalon Parameters
+  *
+- * @author <a href=""mailto:cziegeler@apache.org"">Carsten Ziegeler</a>
+- * @version CVS $Id: SitemapParameters.java,v 1.2 2004/03/08 12:07:39 cziegeler Exp $
++ * @version CVS $Id: SitemapParameters.java,v 1.3 2004/03/09 11:24:43 cziegeler Exp $
+  */
+ public class SitemapParameters extends Parameters {
+     

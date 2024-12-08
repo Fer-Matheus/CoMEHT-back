@@ -1,14 +1,22 @@
-diff --git a/proposal/myrmidon/src/java/org/apache/antlib/xml/XMLValidateTask.java b/proposal/myrmidon/src/java/org/apache/antlib/xml/XMLValidateTask.java
-index 50181d56c..11af5e7ce 100644
---- a/proposal/myrmidon/src/java/org/apache/antlib/xml/XMLValidateTask.java
-+++ b/proposal/myrmidon/src/java/org/apache/antlib/xml/XMLValidateTask.java
-@@ -243,7 +243,8 @@ public class XMLValidateTask
-         final LocalResolver resolver = new LocalResolver();
-         setupLogger( resolver );
+diff --git a/runners/flink/src/main/java/org/apache/beam/runners/flink/translation/wrappers/streaming/stableinput/BufferedElements.java b/runners/flink/src/main/java/org/apache/beam/runners/flink/translation/wrappers/streaming/stableinput/BufferedElements.java
+index 2208bc89b9a..b0f9304e858 100644
+--- a/runners/flink/src/main/java/org/apache/beam/runners/flink/translation/wrappers/streaming/stableinput/BufferedElements.java
++++ b/runners/flink/src/main/java/org/apache/beam/runners/flink/translation/wrappers/streaming/stableinput/BufferedElements.java
+@@ -20,7 +20,7 @@ package org.apache.beam.runners.flink.translation.wrappers.streaming.stableinput
+ import java.io.IOException;
+ import java.io.InputStream;
+ import java.io.OutputStream;
+-import java.util.Collections;
++import java.util.Arrays;
+ import java.util.List;
+ import java.util.Objects;
+ import org.apache.beam.runners.core.DoFnRunner;
+@@ -158,7 +158,7 @@ class BufferedElements {
  
--        for( int i = 0; i < m_dtdLocations.size(); i++ )
-+        final int size = m_dtdLocations.size();
-+        for( int i = 0; i < size; i++ )
-         {
-             final DTDLocation location = (DTDLocation)m_dtdLocations.get( i );
-             resolver.registerDTD( location );
+     @Override
+     public List<? extends org.apache.beam.sdk.coders.Coder<?>> getCoderArguments() {
+-      return Collections.emptyList();
++      return Arrays.asList(elementCoder, windowCoder);
+     }
+ 
+     @Override

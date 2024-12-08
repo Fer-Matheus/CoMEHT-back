@@ -1,13 +1,13 @@
-diff --git a/archiva-modules/archiva-database/src/main/java/org/apache/maven/archiva/database/browsing/DefaultRepositoryBrowsing.java b/archiva-modules/archiva-database/src/main/java/org/apache/maven/archiva/database/browsing/DefaultRepositoryBrowsing.java
-index 5e75f059d..7b55a3b0f 100644
---- a/archiva-modules/archiva-database/src/main/java/org/apache/maven/archiva/database/browsing/DefaultRepositoryBrowsing.java
-+++ b/archiva-modules/archiva-database/src/main/java/org/apache/maven/archiva/database/browsing/DefaultRepositoryBrowsing.java
-@@ -212,8 +212,6 @@ private void processSnapshots( List<String> versions )
-     {
-         Map<String, String> snapshots = new HashMap<String, String>();
+diff --git a/src/java/org/apache/cassandra/db/commitlog/CommitLogArchiver.java b/src/java/org/apache/cassandra/db/commitlog/CommitLogArchiver.java
+index 1385ea4c92..6161435774 100644
+--- a/src/java/org/apache/cassandra/db/commitlog/CommitLogArchiver.java
++++ b/src/java/org/apache/cassandra/db/commitlog/CommitLogArchiver.java
+@@ -51,7 +51,7 @@ public class CommitLogArchiver
+     }
  
--        log.info( ""Processing snapshots."" );
--
-         for ( String version : versions )
-         {
-             if ( VersionUtil.isSnapshot( version ) )
+     public final Map<String, Future<?>> archivePending = new ConcurrentHashMap<String, Future<?>>();
+-    public final ExecutorService executor = new JMXEnabledThreadPoolExecutor(""commitlog_archiver"");
++    public final ExecutorService executor = new JMXEnabledThreadPoolExecutor(""CommitLogArchiver"");
+     private final String archiveCommand;
+     private final String restoreCommand;
+     private final String restoreDirectories;

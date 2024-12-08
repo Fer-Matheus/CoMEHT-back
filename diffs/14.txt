@@ -1,13 +1,14 @@
-diff --git a/src/main/org/apache/tools/ant/listener/CommonsLoggingListener.java b/src/main/org/apache/tools/ant/listener/CommonsLoggingListener.java
-index 6e6b33f71..bbba7811e 100644
---- a/src/main/org/apache/tools/ant/listener/CommonsLoggingListener.java
-+++ b/src/main/org/apache/tools/ant/listener/CommonsLoggingListener.java
-@@ -130,7 +130,7 @@ public class CommonsLoggingListener implements BuildListener, BuildLogger {
-             // Since task log category includes target, we don't really
-             // need this message
-             realLog(log, ""Start: "" + event.getTarget().getName(),
--                    Project.MSG_DEBUG, null);
-+                    Project.MSG_VERBOSE, null);
-         }
-     }
+diff --git a/src/java/org/apache/cassandra/db/compaction/CompactionManager.java b/src/java/org/apache/cassandra/db/compaction/CompactionManager.java
+index b34856e450..d26a072ce5 100644
+--- a/src/java/org/apache/cassandra/db/compaction/CompactionManager.java
++++ b/src/java/org/apache/cassandra/db/compaction/CompactionManager.java
+@@ -582,8 +582,7 @@ public class CompactionManager implements CompactionManagerMBean
+             SSTableReader newSstable = null;
  
+             logger.info(""Cleaning up "" + sstable);
+-            // Calculate the expected compacted filesize
+-            long expectedRangeFileSize = cfs.getExpectedCompactedFileSize(Arrays.asList(sstable), OperationType.CLEANUP);
++
+             File compactionFileLocation = cfs.directories.getDirectoryForNewSSTables();
+             if (compactionFileLocation == null)
+                 throw new IOException(""disk full"");

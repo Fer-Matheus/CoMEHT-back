@@ -1,12 +1,28 @@
-diff --git a/archiva-modules/archiva-web/archiva-rest/archiva-rest-api/src/main/java/org/apache/archiva/rest/api/services/RepositoriesService.java b/archiva-modules/archiva-web/archiva-rest/archiva-rest-api/src/main/java/org/apache/archiva/rest/api/services/RepositoriesService.java
-index 8272f2701..359f9e73a 100644
---- a/archiva-modules/archiva-web/archiva-rest/archiva-rest-api/src/main/java/org/apache/archiva/rest/api/services/RepositoriesService.java
-+++ b/archiva-modules/archiva-web/archiva-rest/archiva-rest-api/src/main/java/org/apache/archiva/rest/api/services/RepositoriesService.java
-@@ -100,6 +100,7 @@ Boolean scheduleDownloadRemoteIndex( @QueryParam( ""repositoryId"" ) String reposi
-     @RedbackAuthorization( noPermission = true )
-     /**
-      * permission are checked in impl
-+     * @since 1.4-M2
-      */
-     Boolean deleteArtifact( @QueryParam( """" ) Artifact artifact, @QueryParam( ""repositoryId"" ) String repositoryId )
-         throws ArchivaRestServiceException;
+diff --git a/src/java/org/apache/cassandra/db/ColumnFamilyStore.java b/src/java/org/apache/cassandra/db/ColumnFamilyStore.java
+index 9994038942..07f7f53e3f 100644
+--- a/src/java/org/apache/cassandra/db/ColumnFamilyStore.java
++++ b/src/java/org/apache/cassandra/db/ColumnFamilyStore.java
+@@ -2173,16 +2173,18 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
+     private void writeSnapshotManifest(final JSONArray filesJSONArr, final String snapshotName)
+     {
+         final File manifestFile = directories.getSnapshotManifestFile(snapshotName);
+-        final JSONObject manifestJSON = new JSONObject();
+-        manifestJSON.put(""files"", filesJSONArr);
+ 
+         try
+         {
+             if (!manifestFile.getParentFile().exists())
+                 manifestFile.getParentFile().mkdirs();
+-            PrintStream out = new PrintStream(manifestFile);
+-            out.println(manifestJSON.toJSONString());
+-            out.close();
++            
++            try (PrintStream out = new PrintStream(manifestFile))
++            {
++                final JSONObject manifestJSON = new JSONObject();
++                manifestJSON.put(""files"", filesJSONArr);
++                out.println(manifestJSON.toJSONString());
++            }
+         }
+         catch (IOException e)
+         {

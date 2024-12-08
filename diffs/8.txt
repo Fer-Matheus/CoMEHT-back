@@ -1,13 +1,13 @@
-diff --git a/src/main/org/apache/tools/ant/taskdefs/optional/i18n/Translate.java b/src/main/org/apache/tools/ant/taskdefs/optional/i18n/Translate.java
-index 358a0c79a..1e29c8c17 100644
---- a/src/main/org/apache/tools/ant/taskdefs/optional/i18n/Translate.java
-+++ b/src/main/org/apache/tools/ant/taskdefs/optional/i18n/Translate.java
-@@ -372,7 +372,7 @@ public class Translate extends MatchingTask {
-         processBundle(bundleFile, 5, false);
+diff --git a/runners/google-cloud-dataflow-java/src/main/java/org/apache/beam/runners/dataflow/options/DataflowPipelineOptions.java b/runners/google-cloud-dataflow-java/src/main/java/org/apache/beam/runners/dataflow/options/DataflowPipelineOptions.java
+index e8c3708aa06..8434ff7de84 100644
+--- a/runners/google-cloud-dataflow-java/src/main/java/org/apache/beam/runners/dataflow/options/DataflowPipelineOptions.java
++++ b/runners/google-cloud-dataflow-java/src/main/java/org/apache/beam/runners/dataflow/options/DataflowPipelineOptions.java
+@@ -95,8 +95,6 @@ public interface DataflowPipelineOptions
+   void setUpdate(boolean value);
  
-         bundleFile = bundle + language;
--        processBundle(bundleFile, 6, false);
-+        processBundle(bundleFile, 6, true);
-     }
+   /** If set, the snapshot from which the job should be created. */
+-  @Hidden
+-  @Experimental
+   @Description(""If set, the snapshot from which the job should be created."")
+   String getCreateFromSnapshot();
  
-     /**

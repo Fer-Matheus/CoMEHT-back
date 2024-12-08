@@ -1,29 +1,15 @@
-diff --git a/src/main/org/apache/tools/ant/taskdefs/condition/Os.java b/src/main/org/apache/tools/ant/taskdefs/condition/Os.java
-index 616d5790a..f8feeb16e 100644
---- a/src/main/org/apache/tools/ant/taskdefs/condition/Os.java
-+++ b/src/main/org/apache/tools/ant/taskdefs/condition/Os.java
-@@ -65,8 +65,24 @@ import org.apache.tools.ant.BuildException;
- public class Os implements Condition {
-     private String family;
+diff --git a/sdks/java/io/synthetic/src/main/java/org/apache/beam/sdk/io/synthetic/SyntheticStep.java b/sdks/java/io/synthetic/src/main/java/org/apache/beam/sdk/io/synthetic/SyntheticStep.java
+index ba67187d525..6a1ada939e3 100644
+--- a/sdks/java/io/synthetic/src/main/java/org/apache/beam/sdk/io/synthetic/SyntheticStep.java
++++ b/sdks/java/io/synthetic/src/main/java/org/apache/beam/sdk/io/synthetic/SyntheticStep.java
+@@ -58,8 +58,9 @@ public class SyntheticStep extends DoFn<KV<byte[], byte[]>, KV<byte[], byte[]>>
+   public SyntheticStep(Options options) {
+     options.validate();
+     this.options = options;
++    Random rand = new Random();
+     // use a random id so that a pipeline could have multiple SyntheticSteps
+-    this.idAndThroughput = KV.of(new Random().nextLong(), options.maxWorkerThroughput);
++    this.idAndThroughput = KV.of(rand.nextLong(), options.maxWorkerThroughput);
+   }
  
-+    /**
-+     * Sets the desired OS family type
-+     * 
-+     * @param f      The OS family type desired<br />
-+     *               Possible values:<br />
-+     *               <ul><li>dos</li>
-+     *               <li>mac</li>
-+     *               <li>netware</li>
-+     *               <li>unix</li>
-+     *               <li>windows</li></ul>
-+     */
-     public void setFamily(String f) {family = f.toLowerCase();}
- 
-+    /**
-+     * Determines if the OS on which Ant is executing matches the type of 
-+     * that set in setFamily.
-+     * @see Os#setFamily(String)
-+     */
-     public boolean eval() throws BuildException {
-         String osName = System.getProperty("os.name").toLowerCase();
-         String pathSep = System.getProperty("path.separator");
+   private KV<byte[], byte[]> outputElement(

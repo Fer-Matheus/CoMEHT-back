@@ -1,22 +1,13 @@
-diff --git a/maven-repository-proxy/src/test/java/org/apache/maven/repository/proxy/DefaultProxyManagerTest.java b/maven-repository-proxy/src/test/java/org/apache/maven/repository/proxy/DefaultProxyManagerTest.java
-index 40f982fff..8e1e38b26 100644
---- a/maven-repository-proxy/src/test/java/org/apache/maven/repository/proxy/DefaultProxyManagerTest.java
-+++ b/maven-repository-proxy/src/test/java/org/apache/maven/repository/proxy/DefaultProxyManagerTest.java
-@@ -43,7 +43,7 @@ protected void setUp()
+diff --git a/src/java/org/apache/cassandra/config/DatabaseDescriptor.java b/src/java/org/apache/cassandra/config/DatabaseDescriptor.java
+index 5b3e57d88a..e17a2bce17 100644
+--- a/src/java/org/apache/cassandra/config/DatabaseDescriptor.java
++++ b/src/java/org/apache/cassandra/config/DatabaseDescriptor.java
+@@ -593,7 +593,7 @@ public class DatabaseDescriptor
+             }
+         }
  
-         proxy = (ProxyManager) container.lookup( ProxyManager.ROLE );
- 
--        configuration = getTestConfiguration();
-+        configuration = getProxyConfiguration();
-         proxy.setConfiguration( configuration );
-     }
- 
-@@ -134,7 +134,7 @@ protected void tearDown()
-         super.tearDown();
-     }
- 
--    private ProxyConfiguration getTestConfiguration()
-+    private ProxyConfiguration getProxyConfiguration()
-         throws ComponentLookupException
-     {
-         ProxyConfiguration config = new ProxyConfiguration();
+-        if (conf.cdc_enabled != null)
++        if (conf.cdc_enabled == true)
+         {
+             logger.info(""cdc_enabled is true. Starting casssandra node with Change-Data-Capture enabled."");
+         }

@@ -1,24 +1,28 @@
-diff --git a/blueprint/blueprint-core/src/main/java/org/apache/aries/blueprint/container/ReferenceRecipe.java b/blueprint/blueprint-core/src/main/java/org/apache/aries/blueprint/container/ReferenceRecipe.java
-index 78dd7861d..8a0baee93 100644
---- a/blueprint/blueprint-core/src/main/java/org/apache/aries/blueprint/container/ReferenceRecipe.java
-+++ b/blueprint/blueprint-core/src/main/java/org/apache/aries/blueprint/container/ReferenceRecipe.java
-@@ -220,11 +220,16 @@ public class ReferenceRecipe extends AbstractServiceReferenceRecipe {
-                   } 
-                   
-                   if (failed) {
--                    LOGGER.info(""Timeout expired when waiting for OSGi service {}"", getOsgiFilter());
--                    throw new ServiceUnavailableException(""Timeout expired when waiting for OSGi service"", getOsgiFilter());
-+                    if (metadata.getAvailability() == ServiceReferenceMetadata.AVAILABILITY_MANDATORY) {
-+                        LOGGER.info(""Timeout expired when waiting for mandatory OSGi service reference {}"", getOsgiFilter());
-+                        throw new ServiceUnavailableException(""Timeout expired when waiting for mandatory OSGi service reference: "" + getOsgiFilter(), getOsgiFilter());
-+                    } else {
-+                        LOGGER.info(""No matching service for optional OSGi service reference {}"", getOsgiFilter());
-+                        throw new ServiceUnavailableException(""No matching service for optional OSGi service reference: "" + getOsgiFilter(), getOsgiFilter());
-+                    }
-                   }
-                 } else {
--                    throw new ServiceUnavailableException(""The Blueprint container is being or has been destroyed"", getOsgiFilter());
-+                    throw new ServiceUnavailableException(""The Blueprint container is being or has been destroyed: "" + getOsgiFilter(), getOsgiFilter());
-                 }
-             } else {
-             
+diff --git a/src/java/org/apache/cocoon/components/modules/input/XMLFileModule.java b/src/java/org/apache/cocoon/components/modules/input/XMLFileModule.java
+index 6520de0208..6372872f15 100644
+--- a/src/java/org/apache/cocoon/components/modules/input/XMLFileModule.java
++++ b/src/java/org/apache/cocoon/components/modules/input/XMLFileModule.java
+@@ -86,7 +86,7 @@ import java.util.Map;
+  *
+  * @author <a href=""mailto:jefft@apache.org"">Jeff Turner</a>
+  * @author <a href=""mailto:haul@apache.org"">Christian Haul</a>
+- * @version CVS $Id: XMLFileModule.java,v 1.8 2003/05/19 00:25:51 jefft Exp $
++ * @version CVS $Id: XMLFileModule.java,v 1.9 2003/05/20 09:17:57 jefft Exp $
+  */
+ public class XMLFileModule extends AbstractJXPathModule
+     implements Composable, ThreadSafe {
+@@ -276,11 +276,12 @@ public class XMLFileModule extends AbstractJXPathModule
+                         ""missing 'file' child element at "" + 
+                         modeConf.getLocation());
+                 */
++            } else {
++              hasDynamicConf = true;
+             }
+-            hasDynamicConf = true;
+         }
+ 
+-        if (hasDynamicConf && fileConf != null) {
++        if (hasDynamicConf) {
+             src = fileConf.getAttribute(""src"");
+         }
+ 
