@@ -1,0 +1,21 @@
+diff --git a/modules/axis/src/java/org/apache/geronimo/axis/client/SEIFactoryImpl.java b/modules/axis/src/java/org/apache/geronimo/axis/client/SEIFactoryImpl.java
+index ca15c41b3a..bc3975971a 100644
+--- a/modules/axis/src/java/org/apache/geronimo/axis/client/SEIFactoryImpl.java
++++ b/modules/axis/src/java/org/apache/geronimo/axis/client/SEIFactoryImpl.java
+@@ -120,15 +120,10 @@ public class SEIFactoryImpl implements SEIFactory, Serializable {
+                 new SimpleSerializerFactory(URI.class, Constants.XSD_ANYURI),
+                 new SimpleDeserializerFactory(URI.class, Constants.XSD_ANYURI));
+ 
++        TypeInfo.register(typeInfo, typeMapping);
+         for (Iterator iter = typeInfo.iterator(); iter.hasNext();) {
+             TypeInfo info = (TypeInfo) iter.next();
+             TypeDesc.registerTypeDescForClass(info.getClazz(), info.buildTypeDesc());
+-
+-            SerializerFactory sf =
+-                    BaseSerializerFactory.createFactory(info.getSerFactoryClass(), info.getClazz(), info.getqName());
+-            DeserializerFactory df =
+-                    BaseDeserializerFactory.createFactory(info.getDeserFactoryClass(), info.getClazz(), info.getqName());
+-            typeMapping.register(info.getClazz(), info.getqName(), sf, df);
+         }
+     }
+ 

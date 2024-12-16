@@ -1,22 +1,17 @@
-diff --git a/src/java/org/apache/cassandra/db/RowIteratorFactory.java b/src/java/org/apache/cassandra/db/RowIteratorFactory.java
-index 331f2575df..dc68a997f1 100644
---- a/src/java/org/apache/cassandra/db/RowIteratorFactory.java
-+++ b/src/java/org/apache/cassandra/db/RowIteratorFactory.java
-@@ -161,17 +161,6 @@ public class RowIteratorFactory
-         return new RowIterator(reduced, iterators);
-     }
+diff --git a/protocol-kerberos/src/main/java/org/apache/directory/server/kerberos/kdc/authentication/MonitorContext.java b/protocol-kerberos/src/main/java/org/apache/directory/server/kerberos/kdc/authentication/MonitorContext.java
+index 06c9fee80b..0fc79c3c62 100644
+--- a/protocol-kerberos/src/main/java/org/apache/directory/server/kerberos/kdc/authentication/MonitorContext.java
++++ b/protocol-kerberos/src/main/java/org/apache/directory/server/kerberos/kdc/authentication/MonitorContext.java
+@@ -96,9 +96,9 @@ public class MonitorContext implements IoHandlerCommand
+                 EncryptionType encryptionType = authContext.getEncryptionType();
+                 int clientKeyVersion = clientEntry.getKeyMap().get( encryptionType ).getKeyVersion();
+                 int serverKeyVersion = serverEntry.getKeyMap().get( encryptionType ).getKeyVersion();
+-                sb.append( ""\n\t"" + ""Request key type        "" + encryptionType );
+-                sb.append( ""\n\t"" + ""Client key version    "" + clientKeyVersion );
+-                sb.append( ""\n\t"" + ""Server key version    "" + serverKeyVersion );
++                sb.append( ""\n\t"" + ""Request key type       "" + encryptionType );
++                sb.append( ""\n\t"" + ""Client key version     "" + clientKeyVersion );
++                sb.append( ""\n\t"" + ""Server key version     "" + serverKeyVersion );
  
--    /** 
--     * Used when locks are required before getting the entry iterator.
--     * @param memtable Memtable to get iterator from
--     * @param startWith Start at this key position
--     * @return entry iterator for the current memtable
--     */
--    private static Iterator<Map.Entry<DecoratedKey, ColumnFamily>> memtableEntryIterator(Memtable memtable, DecoratedKey startWith)
--    {
--        return memtable.getEntryIterator(startWith);
--    }
--
-     /**
-      * Get a ColumnIterator for a specific key in the memtable.
-      */
+                 log.debug( sb.toString() );
+             }

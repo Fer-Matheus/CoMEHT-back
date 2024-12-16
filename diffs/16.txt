@@ -1,13 +1,47 @@
-diff --git a/src/java/org/apache/cassandra/db/commitlog/CommitLogArchiver.java b/src/java/org/apache/cassandra/db/commitlog/CommitLogArchiver.java
-index 1385ea4c92..6161435774 100644
---- a/src/java/org/apache/cassandra/db/commitlog/CommitLogArchiver.java
-+++ b/src/java/org/apache/cassandra/db/commitlog/CommitLogArchiver.java
-@@ -51,7 +51,7 @@ public class CommitLogArchiver
-     }
+diff --git a/protocol-dns/src/main/java/org/apache/directory/server/dns/store/jndi/DnsOperation.java b/protocol-dns/src/main/java/org/apache/directory/server/dns/store/jndi/DnsOperation.java
+index ff6c7988ee..9f161ae4b4 100644
+--- a/protocol-dns/src/main/java/org/apache/directory/server/dns/store/jndi/DnsOperation.java
++++ b/protocol-dns/src/main/java/org/apache/directory/server/dns/store/jndi/DnsOperation.java
+@@ -20,7 +20,6 @@
+ package org.apache.directory.server.dns.store.jndi;
  
-     public final Map<String, Future<?>> archivePending = new ConcurrentHashMap<String, Future<?>>();
--    public final ExecutorService executor = new JMXEnabledThreadPoolExecutor(""commitlog_archiver"");
-+    public final ExecutorService executor = new JMXEnabledThreadPoolExecutor(""CommitLogArchiver"");
-     private final String archiveCommand;
-     private final String restoreCommand;
-     private final String restoreDirectories;
+ 
+-import java.io.Serializable;
+ import java.util.Set;
+ 
+ import javax.naming.Name;
+@@ -34,7 +33,7 @@ import org.apache.directory.server.dns.messages.ResourceRecord;
+  *
+  * @author <a href=""mailto:dev@directory.apache.org"">Apache Directory Project</a>
+  */
+-public interface DnsOperation extends Serializable
++public interface DnsOperation
+ {
+     /**
+      * The command pattern execute method.
+diff --git a/protocol-dns/src/main/java/org/apache/directory/server/dns/store/jndi/operations/GetFlatRecord.java b/protocol-dns/src/main/java/org/apache/directory/server/dns/store/jndi/operations/GetFlatRecord.java
+index 576eb14111..81d5f87cb8 100644
+--- a/protocol-dns/src/main/java/org/apache/directory/server/dns/store/jndi/operations/GetFlatRecord.java
++++ b/protocol-dns/src/main/java/org/apache/directory/server/dns/store/jndi/operations/GetFlatRecord.java
+@@ -49,8 +49,6 @@ import org.apache.directory.server.dns.store.jndi.DnsOperation;
+  */
+ public class GetFlatRecord implements DnsOperation
+ {
+-    private static final long serialVersionUID = 4931303293468915435L;
+-
+     /** The name of the question to get. */
+     private final QuestionRecord question;
+ 
+diff --git a/protocol-dns/src/main/java/org/apache/directory/server/dns/store/jndi/operations/GetRecords.java b/protocol-dns/src/main/java/org/apache/directory/server/dns/store/jndi/operations/GetRecords.java
+index 6d1dc9630c..7f3bf41ea1 100644
+--- a/protocol-dns/src/main/java/org/apache/directory/server/dns/store/jndi/operations/GetRecords.java
++++ b/protocol-dns/src/main/java/org/apache/directory/server/dns/store/jndi/operations/GetRecords.java
+@@ -56,8 +56,6 @@ import org.apache.directory.shared.ldap.model.constants.SchemaConstants;
+  */
+ public class GetRecords implements DnsOperation
+ {
+-    private static final long serialVersionUID = 1077580995617778894L;
+-
+     /** The name of the question to get. */
+     private final QuestionRecord question;
+ 

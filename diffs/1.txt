@@ -1,22 +1,12 @@
-diff --git a/sdks/java/harness/src/main/java/org/apache/beam/fn/harness/FnApiDoFnRunner.java b/sdks/java/harness/src/main/java/org/apache/beam/fn/harness/FnApiDoFnRunner.java
-index cdcff1c8afa..e57dfae0ee5 100644
---- a/sdks/java/harness/src/main/java/org/apache/beam/fn/harness/FnApiDoFnRunner.java
-+++ b/sdks/java/harness/src/main/java/org/apache/beam/fn/harness/FnApiDoFnRunner.java
-@@ -173,7 +173,7 @@ public class FnApiDoFnRunner<InputT, OutputT>
-     if (rowParameter != null) {
-       checkArgument(schemaCoder != null,
-           ""Cannot access object as a row if the input PCollection does not have a schema .""
--              + ""DoFn "" + doFn.getClass() + "" Coder "" + inputCoder.getClass());
-+              + ""DoFn "" + context.doFn.getClass() + "" Coder "" + context.inputCoder.getClass());
-       String id = rowParameter.fieldAccessId();
-       if (id == null) {
-         // This is the case where no FieldId is defined, just an @Element Row row. Default to all
-@@ -326,7 +326,7 @@ public class FnApiDoFnRunner<InputT, OutputT>
+diff --git a/src/blocks/scratchpad/java/org/apache/cocoon/transformation/IncludeTransformer.java b/src/blocks/scratchpad/java/org/apache/cocoon/transformation/IncludeTransformer.java
+index 709ce4b1ff..e3562b7001 100644
+--- a/src/blocks/scratchpad/java/org/apache/cocoon/transformation/IncludeTransformer.java
++++ b/src/blocks/scratchpad/java/org/apache/cocoon/transformation/IncludeTransformer.java
+@@ -49,6 +49,7 @@ import java.util.HashMap;
+ import java.util.Map;
  
-     @Override
-     public MultiOutputReceiver taggedOutputReceiver(DoFn<InputT, OutputT> doFn) {
--      return DoFnOutputReceivers.windowedMultiReceiver(this, outputCoders);
-+      return DoFnOutputReceivers.windowedMultiReceiver(this, context.outputCoders);
-     }
- 
-     @Override
+ /**
++ * @cocoon.sitemap.component.documentation
+  * <p>A simple transformer including resolvable sources (accessed through
+  * Cocoon's {@link SourceResolver} from its input.</p>
+  *

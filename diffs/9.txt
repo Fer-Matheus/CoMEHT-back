@@ -1,31 +1,26 @@
-diff --git a/src/java/org/apache/cassandra/db/ColumnFamilyStore.java b/src/java/org/apache/cassandra/db/ColumnFamilyStore.java
-index 468e1d831d..6681c07fa3 100644
---- a/src/java/org/apache/cassandra/db/ColumnFamilyStore.java
-+++ b/src/java/org/apache/cassandra/db/ColumnFamilyStore.java
-@@ -1531,6 +1531,11 @@ public final class ColumnFamilyStore implements ColumnFamilyStoreMBean
-     {
-         return readStats_.mean();
-     }
-+    
-+    public int getPendingTasks()
-+    {
-+        return memtableLock_.getQueueLength();
-+    }
+diff --git a/protocol-dns/src/main/java/org/apache/directory/server/dns/store/RecordStore.java b/protocol-dns/src/main/java/org/apache/directory/server/dns/store/RecordStore.java
+index fd00b7f13a..81e6c5e7aa 100644
+--- a/protocol-dns/src/main/java/org/apache/directory/server/dns/store/RecordStore.java
++++ b/protocol-dns/src/main/java/org/apache/directory/server/dns/store/RecordStore.java
+@@ -23,6 +23,7 @@ package org.apache.directory.server.dns.store;
+ import java.util.Set;
  
-     /**
-      * @return the number of write operations on this column family in the last minute
-diff --git a/src/java/org/apache/cassandra/db/ColumnFamilyStoreMBean.java b/src/java/org/apache/cassandra/db/ColumnFamilyStoreMBean.java
-index 02be5dd273..414b7d1a56 100644
---- a/src/java/org/apache/cassandra/db/ColumnFamilyStoreMBean.java
-+++ b/src/java/org/apache/cassandra/db/ColumnFamilyStoreMBean.java
-@@ -84,4 +84,10 @@ public interface ColumnFamilyStoreMBean
-      */
-     public double getWriteLatency();
-     
+ import org.apache.directory.server.dns.messages.QuestionRecord;
++import org.apache.directory.server.dns.messages.ResourceRecord;
+ 
+ 
+ /**
+@@ -33,5 +34,12 @@ import org.apache.directory.server.dns.messages.QuestionRecord;
+  */
+ public interface RecordStore
+ {
+-    public Set getRecords( QuestionRecord question ) throws Exception;
 +    /**
-+     * 
-+     * @return the estimated number of tasks pending for this column family
++     * Returns a set of {@link ResourceRecord}s, given a DNS {@link QuestionRecord}.
++     *
++     * @param question
++     * @return The set of {@link ResourceRecord}s.
++     * @throws Exception
 +     */
-+    public int getPendingTasks();
-+    
++    public Set<ResourceRecord> getRecords( QuestionRecord question ) throws Exception;
  }

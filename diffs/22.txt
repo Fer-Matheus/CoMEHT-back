@@ -1,12 +1,18 @@
-diff --git a/test/unit/org/apache/cassandra/config/DatabaseDescriptorRefTest.java b/test/unit/org/apache/cassandra/config/DatabaseDescriptorRefTest.java
-index b91585411d..b50a050bba 100644
---- a/test/unit/org/apache/cassandra/config/DatabaseDescriptorRefTest.java
-+++ b/test/unit/org/apache/cassandra/config/DatabaseDescriptorRefTest.java
-@@ -70,6 +70,7 @@ public class DatabaseDescriptorRefTest
-     ""org.apache.cassandra.config.Config$DiskOptimizationStrategy"",
-     ""org.apache.cassandra.config.Config$InternodeCompression"",
-     ""org.apache.cassandra.config.Config$MemtableAllocationType"",
-+    ""org.apache.cassandra.config.Config$RepairCommandPoolFullStrategy"",
-     ""org.apache.cassandra.config.Config$UserFunctionTimeoutPolicy"",
-     ""org.apache.cassandra.config.ParameterizedClass"",
-     ""org.apache.cassandra.config.EncryptionOptions"",
+diff --git a/pact/pact-compiler/src/main/java/eu/stratosphere/pact/compiler/plan/MatchNode.java b/pact/pact-compiler/src/main/java/eu/stratosphere/pact/compiler/plan/MatchNode.java
+index e86a01a9b92..df6dd45de35 100644
+--- a/pact/pact-compiler/src/main/java/eu/stratosphere/pact/compiler/plan/MatchNode.java
++++ b/pact/pact-compiler/src/main/java/eu/stratosphere/pact/compiler/plan/MatchNode.java
+@@ -1031,11 +1031,11 @@ public class MatchNode extends TwoInputNode {
+ 		double callsPerKey = 1;
+ 		
+ 		if(numKey1 != -1) {
+-			callsPerKey *= numKey1 / (double)numRecords1;
++			callsPerKey *= (double)numRecords1 / numKey1;
+ 		}
+ 		
+ 		if(numKey2 != -1) {
+-			callsPerKey *= numKey2 / (double)numRecords2;
++			callsPerKey *= (double)numRecords2 / numKey2;
+ 		}
+ 
+ 		return callsPerKey;

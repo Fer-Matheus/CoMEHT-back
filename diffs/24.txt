@@ -1,28 +1,13 @@
-diff --git a/src/java/org/apache/cocoon/components/modules/input/XMLFileModule.java b/src/java/org/apache/cocoon/components/modules/input/XMLFileModule.java
-index 6520de0208..6372872f15 100644
---- a/src/java/org/apache/cocoon/components/modules/input/XMLFileModule.java
-+++ b/src/java/org/apache/cocoon/components/modules/input/XMLFileModule.java
-@@ -86,7 +86,7 @@ import java.util.Map;
-  *
-  * @author <a href=""mailto:jefft@apache.org"">Jeff Turner</a>
-  * @author <a href=""mailto:haul@apache.org"">Christian Haul</a>
-- * @version CVS $Id: XMLFileModule.java,v 1.8 2003/05/19 00:25:51 jefft Exp $
-+ * @version CVS $Id: XMLFileModule.java,v 1.9 2003/05/20 09:17:57 jefft Exp $
-  */
- public class XMLFileModule extends AbstractJXPathModule
-     implements Composable, ThreadSafe {
-@@ -276,11 +276,12 @@ public class XMLFileModule extends AbstractJXPathModule
-                         ""missing 'file' child element at "" + 
-                         modeConf.getLocation());
-                 */
-+            } else {
-+              hasDynamicConf = true;
-             }
--            hasDynamicConf = true;
-         }
- 
--        if (hasDynamicConf && fileConf != null) {
-+        if (hasDynamicConf) {
-             src = fileConf.getAttribute(""src"");
-         }
- 
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/state/ManagedSnapshotContext.java b/flink-runtime/src/main/java/org/apache/flink/runtime/state/ManagedSnapshotContext.java
+index de65c5d48ec..3109521a959 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/state/ManagedSnapshotContext.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/state/ManagedSnapshotContext.java
+@@ -33,7 +33,7 @@ public interface ManagedSnapshotContext {
+ 	 * 
+ 	 * <p>The checkpoint ID is guaranteed to be strictly monotonously increasing across checkpoints.
+ 	 * For two completed checkpoints <i>A</i> and <i>B</i>, {@code ID_B > ID_A} means that checkpoint
+-	 * <i>B</i> subsumes checkpoint <i>A</i>, i.e., checkpoint <i>B</i>it contains a later state
++	 * <i>B</i> subsumes checkpoint <i>A</i>, i.e., checkpoint <i>B</i> contains a later state
+ 	 * than checkpoint <i>A</i>.
+ 	 */
+ 	long getCheckpointId();

@@ -1,13 +1,32 @@
-diff --git a/src/java/org/apache/cassandra/config/DatabaseDescriptor.java b/src/java/org/apache/cassandra/config/DatabaseDescriptor.java
-index 5b3e57d88a..e17a2bce17 100644
---- a/src/java/org/apache/cassandra/config/DatabaseDescriptor.java
-+++ b/src/java/org/apache/cassandra/config/DatabaseDescriptor.java
-@@ -593,7 +593,7 @@ public class DatabaseDescriptor
+diff --git a/interceptors/hash/src/main/java/org/apache/directory/server/core/hash/PasswordHashingInterceptor.java b/interceptors/hash/src/main/java/org/apache/directory/server/core/hash/PasswordHashingInterceptor.java
+index 1569813713..e85d0e4907 100644
+--- a/interceptors/hash/src/main/java/org/apache/directory/server/core/hash/PasswordHashingInterceptor.java
++++ b/interceptors/hash/src/main/java/org/apache/directory/server/core/hash/PasswordHashingInterceptor.java
+@@ -30,6 +30,7 @@ import org.apache.directory.api.ldap.model.entry.BinaryValue;
+ import org.apache.directory.api.ldap.model.entry.DefaultAttribute;
+ import org.apache.directory.api.ldap.model.entry.Entry;
+ import org.apache.directory.api.ldap.model.entry.Modification;
++import org.apache.directory.api.ldap.model.entry.ModificationOperation;
+ import org.apache.directory.api.ldap.model.entry.Value;
+ import org.apache.directory.api.ldap.model.exception.LdapException;
+ import org.apache.directory.api.ldap.model.password.PasswordUtil;
+@@ -113,14 +114,17 @@ public abstract class PasswordHashingInterceptor extends BaseInterceptor
+             // check for modification on 'userPassword' AT
+             if ( SchemaConstants.USER_PASSWORD_AT_OID.equals( oid ) )
+             {
++                if ( mod.getOperation() == ModificationOperation.REMOVE_ATTRIBUTE )
++                {
++                   continue; 
++                }
++                
+                 Attribute newPwd = includeHashedPassword( mod.getAttribute() );
+ 
+                 if ( newPwd != null )
+                 {
+                     mod.setAttribute( newPwd );
+                 }
+-
+-                break;
              }
          }
  
--        if (conf.cdc_enabled != null)
-+        if (conf.cdc_enabled == true)
-         {
-             logger.info(""cdc_enabled is true. Starting casssandra node with Change-Data-Capture enabled."");
-         }

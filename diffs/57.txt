@@ -1,0 +1,13 @@
+diff --git a/gogrid/src/main/java/org/jclouds/gogrid/compute/config/GoGridComputeServiceContextModule.java b/gogrid/src/main/java/org/jclouds/gogrid/compute/config/GoGridComputeServiceContextModule.java
+index 0b61a3df4c..266fe4b54c 100755
+--- a/gogrid/src/main/java/org/jclouds/gogrid/compute/config/GoGridComputeServiceContextModule.java
++++ b/gogrid/src/main/java/org/jclouds/gogrid/compute/config/GoGridComputeServiceContextModule.java
+@@ -209,7 +209,7 @@ public class GoGridComputeServiceContextModule extends GoGridContextModule {
+       public boolean execute(String id) {
+          Server server = Iterables.getOnlyElement(client.getServerServices().getServersById(
+                   new Long(id)));
+-         client.getServerServices().deleteByName(server.getName());
++         client.getServerServices().deleteById(server.getId());
+          return serverLatestJobCompleted.apply(server);
+       }
+ 

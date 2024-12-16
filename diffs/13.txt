@@ -1,13 +1,13 @@
-diff --git a/src/java/org/apache/cassandra/service/StorageService.java b/src/java/org/apache/cassandra/service/StorageService.java
-index 2298315c67..9f22318ebd 100644
---- a/src/java/org/apache/cassandra/service/StorageService.java
-+++ b/src/java/org/apache/cassandra/service/StorageService.java
-@@ -3660,7 +3660,7 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
-         return latch;
-     }
+diff --git a/core-integ/src/main/java/org/apache/directory/server/core/integ/IntegrationUtils.java b/core-integ/src/main/java/org/apache/directory/server/core/integ/IntegrationUtils.java
+index bbe2fcf77b..834486915e 100644
+--- a/core-integ/src/main/java/org/apache/directory/server/core/integ/IntegrationUtils.java
++++ b/core-integ/src/main/java/org/apache/directory/server/core/integ/IntegrationUtils.java
+@@ -99,8 +99,6 @@ public class IntegrationUtils
  
--    class CountingDownStreamCallback implements IStreamCallback
-+    static class CountingDownStreamCallback implements IStreamCallback
-     {
-         private final CountDownLatch latch;
-         private final InetAddress targetAddr;
+         for ( LdifEntry entry : entries )
+         {
+-            service.getAdminSession().add( 
+-                new DefaultServerEntry( service.getRegistries(), entry.getEntry() ) ); 
+             if ( entry.isChangeAdd() )
+             {
+                 service.getAdminSession().add( 

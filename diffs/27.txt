@@ -1,38 +1,14 @@
-diff --git a/src/blocks/portal/java/org/apache/cocoon/portal/pluto/test/TestPortlet.java b/src/blocks/portal/java/org/apache/cocoon/portal/pluto/test/TestPortlet.java
-index a0d82ac06d..13a026ebc4 100644
---- a/src/blocks/portal/java/org/apache/cocoon/portal/pluto/test/TestPortlet.java
-+++ b/src/blocks/portal/java/org/apache/cocoon/portal/pluto/test/TestPortlet.java
-@@ -61,7 +61,7 @@ import javax.portlet.RenderResponse;
-  *
-  * @author <a href=""mailto:cziegeler@apache.org"">Carsten Ziegeler</a>
-  * 
-- * @version CVS $Id: TestPortlet.java,v 1.1 2004/01/27 08:05:35 cziegeler Exp $
-+ * @version CVS $Id: TestPortlet.java,v 1.2 2004/02/10 08:42:45 cziegeler Exp $
-  */
- public class TestPortlet implements Portlet  {
-     
-@@ -69,14 +69,14 @@ public class TestPortlet implements Portlet  {
-      * @see javax.portlet.Portlet#destroy()
-      */
-     public void destroy() {
--        System.out.println(""Destroying TestPortlet"");
-+        // nothing to do
-     }
+diff --git a/flink-core/src/main/java/org/apache/flink/util/InstantiationUtil.java b/flink-core/src/main/java/org/apache/flink/util/InstantiationUtil.java
+index d98ba9351a6..9e455ed3e94 100644
+--- a/flink-core/src/main/java/org/apache/flink/util/InstantiationUtil.java
++++ b/flink-core/src/main/java/org/apache/flink/util/InstantiationUtil.java
+@@ -590,7 +590,8 @@ public final class InstantiationUtil {
+ 	}
  
-     /* (non-Javadoc)
-      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
-      */
-     public void init(PortletConfig config) throws PortletException {
--        System.out.println(""Initializing TestPortlet"");
-+        // nothing to do
-     }
+ 	public static void serializeObject(OutputStream out, Object o) throws IOException {
+-		ObjectOutputStream oos = new ObjectOutputStream(out);
++		ObjectOutputStream oos =
++			out instanceof ObjectOutputStream ? (ObjectOutputStream) out : new ObjectOutputStream(out);
+ 		oos.writeObject(o);
+ 	}
  
-     /* (non-Javadoc)
-@@ -84,6 +84,7 @@ public class TestPortlet implements Portlet  {
-      */
-     public void processAction(ActionRequest req, ActionResponse res)
-     throws PortletException, IOException {
-+        // nothing to do
-     }
- 
-     /* (non-Javadoc)

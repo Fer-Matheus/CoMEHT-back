@@ -1,21 +1,12 @@
-diff --git a/sdks/java/extensions/euphoria/euphoria-beam/src/main/java/cz/seznam/euphoria/beam/ReduceByKeyTranslator.java b/sdks/java/extensions/euphoria/euphoria-beam/src/main/java/cz/seznam/euphoria/beam/ReduceByKeyTranslator.java
-index 3d24aa821d5..d8a5ea3551d 100644
---- a/sdks/java/extensions/euphoria/euphoria-beam/src/main/java/cz/seznam/euphoria/beam/ReduceByKeyTranslator.java
-+++ b/sdks/java/extensions/euphoria/euphoria-beam/src/main/java/cz/seznam/euphoria/beam/ReduceByKeyTranslator.java
-@@ -37,6 +37,7 @@ import org.apache.beam.sdk.transforms.GroupByKey;
- import org.apache.beam.sdk.transforms.MapElements;
- import org.apache.beam.sdk.transforms.ParDo;
- import org.apache.beam.sdk.transforms.SimpleFunction;
-+import org.apache.beam.sdk.transforms.windowing.AfterWatermark;
- 
- /**
-  * Translator for {@code ReduceByKey} operator.
-@@ -70,6 +71,8 @@ class ReduceByKeyTranslator implements OperatorTranslator<ReduceByKey> {
-       input = context.getInput(operator)
-           .apply(org.apache.beam.sdk.transforms.windowing.Window.into(
-               BeamWindowFn.wrap(operator.getWindowing()))
-+          // FIXME: trigger
-+          .triggering(AfterWatermark.pastEndOfWindow())
-           .discardingFiredPanes()
-           .withAllowedLateness(context.getAllowedLateness(operator)));
-     }
+diff --git a/blocks/cocoon-xsp/cocoon-xsp-impl/src/main/java/org/apache/cocoon/components/language/markup/xsp/XSPSessionFwHelper.java b/blocks/cocoon-xsp/cocoon-xsp-impl/src/main/java/org/apache/cocoon/components/language/markup/xsp/XSPSessionFwHelper.java
+index b51fcdce2e..befbcb05c3 100644
+--- a/blocks/cocoon-xsp/cocoon-xsp-impl/src/main/java/org/apache/cocoon/components/language/markup/xsp/XSPSessionFwHelper.java
++++ b/blocks/cocoon-xsp/cocoon-xsp-impl/src/main/java/org/apache/cocoon/components/language/markup/xsp/XSPSessionFwHelper.java
+@@ -28,6 +28,7 @@ import org.w3c.dom.DocumentFragment;
+  * The <code>Session-fw</code> object helper
+  *
+  * @version $Id$
++ * @deprecated This class is deprecated and will be removed in future versions.
+  * @since 2.1.1
+  */
+ public class XSPSessionFwHelper {

@@ -1,22 +1,41 @@
-diff --git a/src/java/org/apache/cassandra/net/IncomingTcpConnection.java b/src/java/org/apache/cassandra/net/IncomingTcpConnection.java
-index f6768d6213..ee44a1c443 100644
---- a/src/java/org/apache/cassandra/net/IncomingTcpConnection.java
-+++ b/src/java/org/apache/cassandra/net/IncomingTcpConnection.java
-@@ -98,7 +98,7 @@ public class IncomingTcpConnection extends Thread
-             {
-                 // save the endpoint so gossip will reconnect to it
-                 Gossiper.instance.addSavedEndpoint(from);
--                logger.info(""Received "" + (isStream ? ""streaming "" : """") + ""connection from newer protocol version. Ignorning"");
-+                logger.info(""Received "" + (isStream ? ""streaming "" : """") + ""connection from newer protocol version. Ignoring"");
-             }
-             else if (msg != null)
-             {
-@@ -160,7 +160,7 @@ public class IncomingTcpConnection extends Thread
-             MessagingService.instance().receive(message, id);
-             return message;
-         }
--        logger.debug(""Received connection from newer protocol version {}. Ignorning message"", version);
-+        logger.debug(""Received connection from newer protocol version {}. Ignoring message"", version);
-         return null;
+diff --git a/core/src/test/java/org/apache/directory/server/core/changelog/MemoryChangeLogStoreTest.java b/core/src/test/java/org/apache/directory/server/core/changelog/MemoryChangeLogStoreTest.java
+index c431121789..05661c804c 100644
+--- a/core/src/test/java/org/apache/directory/server/core/changelog/MemoryChangeLogStoreTest.java
++++ b/core/src/test/java/org/apache/directory/server/core/changelog/MemoryChangeLogStoreTest.java
+@@ -54,7 +54,7 @@ public class MemoryChangeLogStoreTest extends TestCase
      }
  
+ 
+-    public void testLogCheckRevision() throws NamingException
++    public void testLogCheckRevision() throws Exception
+     {
+         assertEquals( ""first revision is always 0"", 0, store.getCurrentRevision() );
+ 
+diff --git a/server-unit/src/test/java/org/apache/directory/server/ssl/ConfidentialityRequiredITest.java b/server-unit/src/test/java/org/apache/directory/server/ssl/ConfidentialityRequiredITest.java
+index af848be1ce..341eb8710a 100644
+--- a/server-unit/src/test/java/org/apache/directory/server/ssl/ConfidentialityRequiredITest.java
++++ b/server-unit/src/test/java/org/apache/directory/server/ssl/ConfidentialityRequiredITest.java
+@@ -131,7 +131,12 @@ public class ConfidentialityRequiredITest extends AbstractServerTest
+     protected void configureLdapServer()
+     {
+     	super.configureLdapServer();
++    	/*
++    	 * TODO un-comment and enable tests after adding this feature to 1.5.4
++    	 * see https://issues.apache.org/jira/browse/DIRSERVER-1194
++    	 *
+     	ldapServer.setConfidentialityRequired( true );
++    	*/
+     }
+ 
+     
+@@ -181,7 +186,9 @@ public class ConfidentialityRequiredITest extends AbstractServerTest
+     	try
+     	{
+     		getWiredContext();
+-    		fail( ""Should not get here due to violation of confidentiality requirements"" );
++    		// TODO un comment when confidentiality requirement feature is enabled
++    		// see https://issues.apache.org/jira/browse/DIRSERVER-1194
++//    		fail( ""Should not get here due to violation of confidentiality requirements"" );
+     	}
+     	catch( AuthenticationNotSupportedException e )
+     	{

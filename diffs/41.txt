@@ -1,0 +1,13 @@
+diff --git a/modules/geronimo-cxf/src/main/java/org/apache/geronimo/cxf/ejb/EJBMethodInvoker.java b/modules/geronimo-cxf/src/main/java/org/apache/geronimo/cxf/ejb/EJBMethodInvoker.java
+index e0716f39e8..1d7010fd3e 100644
+--- a/modules/geronimo-cxf/src/main/java/org/apache/geronimo/cxf/ejb/EJBMethodInvoker.java
++++ b/modules/geronimo-cxf/src/main/java/org/apache/geronimo/cxf/ejb/EJBMethodInvoker.java
+@@ -67,6 +67,8 @@ public class EJBMethodInvoker extends JAXWSMethodInvoker {
+         try {
+             result = container.invoke(this.deploymentInfo.getDeploymentID(), m, paramArray, null, null);
+         } catch (OpenEJBException e) {
++            throw new Fault(e);           
++        } catch (RuntimeException e) {
+             throw new Fault(e);
+         }
+         

@@ -1,19 +1,24 @@
-diff --git a/sdks/java/core/src/main/java/org/apache/beam/sdk/schemas/utils/ByteBuddyUtils.java b/sdks/java/core/src/main/java/org/apache/beam/sdk/schemas/utils/ByteBuddyUtils.java
-index 44085c33100..cd951ff8697 100644
---- a/sdks/java/core/src/main/java/org/apache/beam/sdk/schemas/utils/ByteBuddyUtils.java
-+++ b/sdks/java/core/src/main/java/org/apache/beam/sdk/schemas/utils/ByteBuddyUtils.java
-@@ -995,7 +995,13 @@ public class ByteBuddyUtils {
-                   COLLECTION_TYPE
-                       .getDeclaredMethods()
-                       .filter(
--                          ElementMatchers.named(""toArray"").and(ElementMatchers.takesArguments(1)))
-+                          ElementMatchers.named(""toArray"")
-+                              .and(
-+                                  ElementMatchers.takesArguments(
-+                                      TypeDescription.Generic.Builder.rawType(Object.class)
-+                                          .asArray()
-+                                          .build()
-+                                          .asErasure())))
-                       .getOnly()),
-               // Cast the result to T[].
-               TypeCasting.to(arrayType));
+diff --git a/core/src/main/java/org/apache/ldap/server/jndi/ContextFactoryConfiguration.java b/core/src/main/java/org/apache/ldap/server/jndi/ContextFactoryConfiguration.java
+index 1748e0afa5..7baf918ecd 100644
+--- a/core/src/main/java/org/apache/ldap/server/jndi/ContextFactoryConfiguration.java
++++ b/core/src/main/java/org/apache/ldap/server/jndi/ContextFactoryConfiguration.java
+@@ -27,6 +27,7 @@ import org.apache.ldap.server.configuration.StartupConfiguration;
+ import org.apache.ldap.server.invocation.Invocation;
+ import org.apache.ldap.server.schema.GlobalRegistries;
+ 
++/** FIXME Rename to ContextFactoryContext */
+ public interface ContextFactoryConfiguration
+ {
+     /**
+diff --git a/core/src/main/java/org/apache/ldap/server/jndi/DefaultContextFactoryConfiguration.java b/core/src/main/java/org/apache/ldap/server/jndi/DefaultContextFactoryConfiguration.java
+index bc9954a1d2..4b9b91369f 100644
+--- a/core/src/main/java/org/apache/ldap/server/jndi/DefaultContextFactoryConfiguration.java
++++ b/core/src/main/java/org/apache/ldap/server/jndi/DefaultContextFactoryConfiguration.java
+@@ -66,6 +66,7 @@ import org.apache.ldap.server.schema.bootstrap.BootstrapSchemaLoader;
+ 
+ /**
+  * Provides everything required to {@link AbstractContextFactory}.
++ * FIXME Rename to DefaultContextFactoryContext
+  * 
+  * @author <a href=""mailto:dev@directory.apache.org"">Apache Directory Project</a>
+  * @version $Rev$

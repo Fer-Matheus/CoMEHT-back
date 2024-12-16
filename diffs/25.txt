@@ -1,21 +1,23 @@
-diff --git a/src/blocks/webdav/java/org/apache/cocoon/components/source/impl/WebDAVSource.java b/src/blocks/webdav/java/org/apache/cocoon/components/source/impl/WebDAVSource.java
-index cc594b4313..af2812f2ae 100644
---- a/src/blocks/webdav/java/org/apache/cocoon/components/source/impl/WebDAVSource.java
-+++ b/src/blocks/webdav/java/org/apache/cocoon/components/source/impl/WebDAVSource.java
-@@ -103,7 +103,7 @@ import org.w3c.dom.Document;
-  *  @author <a href=""mailto:g.casper@s-und-n.de"">Guido Casper</a>
-  *  @author <a href=""mailto:gianugo@apache.org"">Gianugo Rabellino</a>
-  *  @author <a href=""mailto:d.madama@pro-netics.com"">Daniele Madama</a>
-- *  @version $Id: WebDAVSource.java,v 1.5 2003/08/22 12:23:41 gcasper Exp $
-+ *  @version $Id: WebDAVSource.java,v 1.6 2003/08/22 21:33:56 joerg Exp $
- */
- public class WebDAVSource implements Composable, Source,
-     RestrictableSource, ModifiableTraversableSource, InspectableSource {
-@@ -765,7 +765,6 @@ public class WebDAVSource implements Composable, Source,
-     public SourceProperty getSourceProperty (String namespace, String name)
-     throws SourceException {
- 
--          Vector sourceproperties = new Vector();
-           DOMParser parser = null;
-           String xml = """";
-           Enumeration props= null;
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/api/writer/RecordWriter.java b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/api/writer/RecordWriter.java
+index fa6fbd3ed2a..801e6eb5502 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/api/writer/RecordWriter.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/api/writer/RecordWriter.java
+@@ -130,13 +130,12 @@ public class RecordWriter<T extends IOReadableWritable> {
+ 					if (result.isFullRecord()) {
+ 						break;
+ 					}
+-				} else {
+-					BufferBuilder bufferBuilder =
+-						targetPartition.getBufferProvider().requestBufferBuilderBlocking();
+-					checkState(!bufferConsumers[targetChannel].isPresent());
+-					bufferConsumers[targetChannel] = Optional.of(bufferBuilder.createBufferConsumer());
+-					result = serializer.setNextBufferBuilder(bufferBuilder);
+ 				}
++				BufferBuilder bufferBuilder =
++					targetPartition.getBufferProvider().requestBufferBuilderBlocking();
++				checkState(!bufferConsumers[targetChannel].isPresent());
++				bufferConsumers[targetChannel] = Optional.of(bufferBuilder.createBufferConsumer());
++				result = serializer.setNextBufferBuilder(bufferBuilder);
+ 			}
+ 			checkState(!serializer.hasSerializedData(), ""All data should be written at once"");
+ 		}

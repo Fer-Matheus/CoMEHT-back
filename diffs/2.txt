@@ -1,15 +1,31 @@
-diff --git a/sdks/java/io/synthetic/src/main/java/org/apache/beam/sdk/io/synthetic/SyntheticStep.java b/sdks/java/io/synthetic/src/main/java/org/apache/beam/sdk/io/synthetic/SyntheticStep.java
-index ba67187d525..6a1ada939e3 100644
---- a/sdks/java/io/synthetic/src/main/java/org/apache/beam/sdk/io/synthetic/SyntheticStep.java
-+++ b/sdks/java/io/synthetic/src/main/java/org/apache/beam/sdk/io/synthetic/SyntheticStep.java
-@@ -58,8 +58,9 @@ public class SyntheticStep extends DoFn<KV<byte[], byte[]>, KV<byte[], byte[]>>
-   public SyntheticStep(Options options) {
-     options.validate();
-     this.options = options;
-+    Random rand = new Random();
-     // use a random id so that a pipeline could have multiple SyntheticSteps
--    this.idAndThroughput = KV.of(new Random().nextLong(), options.maxWorkerThroughput);
-+    this.idAndThroughput = KV.of(rand.nextLong(), options.maxWorkerThroughput);
-   }
+diff --git a/src/java/org/apache/cocoon/components/modules/input/RealPathModule.java b/src/java/org/apache/cocoon/components/modules/input/RealPathModule.java
+index 7980db8ee6..6f700e7047 100644
+--- a/src/java/org/apache/cocoon/components/modules/input/RealPathModule.java
++++ b/src/java/org/apache/cocoon/components/modules/input/RealPathModule.java
+@@ -33,7 +33,7 @@ import java.util.Vector;
+  * running in a .war file), <code>null</code> will be returned.
+  *
+  * @author <a href=""mailto:jefft@apache.org"">Jeff Turner</a>
+- * @version CVS $Id: RealPathModule.java,v 1.3 2004/03/05 13:02:48 bdelacretaz Exp $
++ * @version CVS $Id$
+  */
  
-   private KV<byte[], byte[]> outputElement(
+ /*
+@@ -59,7 +59,7 @@ import java.util.Vector;
+  */
+ public class RealPathModule extends AbstractInputModule implements ThreadSafe {
+ 
+-    final static Vector returnNames;
++    private final static Vector returnNames;
+     static {
+         Vector tmp = new Vector();
+         tmp.add(""realPath"");
+@@ -79,7 +79,7 @@ public class RealPathModule extends AbstractInputModule implements ThreadSafe {
+ 
+     public Iterator getAttributeNames( Configuration modeConf, Map objectModel ) throws ConfigurationException {
+ 
+-        return RequestURIModule.returnNames.iterator();
++        return RealPathModule.returnNames.iterator();
+     }
+ 
+ 

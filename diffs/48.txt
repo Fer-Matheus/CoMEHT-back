@@ -1,0 +1,13 @@
+diff --git a/modules/core/src/main/java/org/apache/ignite/internal/processors/cache/CachePartialUpdateCheckedException.java b/modules/core/src/main/java/org/apache/ignite/internal/processors/cache/CachePartialUpdateCheckedException.java
+index f430d12806..c2259df611 100644
+--- a/modules/core/src/main/java/org/apache/ignite/internal/processors/cache/CachePartialUpdateCheckedException.java
++++ b/modules/core/src/main/java/org/apache/ignite/internal/processors/cache/CachePartialUpdateCheckedException.java
+@@ -34,7 +34,7 @@ public class CachePartialUpdateCheckedException extends IgniteCheckedException {
+     private final Collection<Object> failedKeys = new ArrayList<>();
+ 
+     /** */
+-    private AffinityTopologyVersion topVer;
++    private transient AffinityTopologyVersion topVer;
+ 
+     /**
+      * @param msg Error message.

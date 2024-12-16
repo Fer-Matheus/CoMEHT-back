@@ -1,46 +1,36 @@
-diff --git a/src/java/org/apache/cassandra/cql3/statements/AlterViewStatement.java b/src/java/org/apache/cassandra/cql3/statements/AlterViewStatement.java
-index ea87cfdc25..91c54629a6 100644
---- a/src/java/org/apache/cassandra/cql3/statements/AlterViewStatement.java
-+++ b/src/java/org/apache/cassandra/cql3/statements/AlterViewStatement.java
-@@ -79,9 +79,10 @@ public class AlterViewStatement extends SchemaAlteringStatement
+diff --git a/flink-runtime/src/test/java/org/apache/flink/runtime/jobmanager/scheduler/SchedulerIsolatedTasksTest.java b/flink-runtime/src/test/java/org/apache/flink/runtime/jobmanager/scheduler/SchedulerIsolatedTasksTest.java
+index 25a2d28f1c3..34e9f6817ea 100644
+--- a/flink-runtime/src/test/java/org/apache/flink/runtime/jobmanager/scheduler/SchedulerIsolatedTasksTest.java
++++ b/flink-runtime/src/test/java/org/apache/flink/runtime/jobmanager/scheduler/SchedulerIsolatedTasksTest.java
+@@ -22,7 +22,6 @@ import static org.apache.flink.runtime.jobmanager.scheduler.SchedulerTestUtils.a
+ import static org.apache.flink.runtime.jobmanager.scheduler.SchedulerTestUtils.getDummyTask;
+ import static org.apache.flink.runtime.jobmanager.scheduler.SchedulerTestUtils.getTestVertex;
+ import static org.apache.flink.runtime.jobmanager.scheduler.SchedulerTestUtils.getRandomInstance;
+-
+ import static org.junit.Assert.*;
  
-         if (params.defaultTimeToLive > 0)
-         {
--            throw new InvalidRequestException(""Cannot set or alter default_time_to_live for a materialized view. "" +
-+            throw new InvalidRequestException(""Forbidden default_time_to_live detected for a materialized view. "" +
-                                               ""Data in a materialized view always expire at the same time than "" +
--                                              ""the corresponding data in the parent table."");
-+                                              ""the corresponding data in the parent table. default_time_to_live "" +
-+                                              ""must be set to zero, see CASSANDRA-12868 for more information"");
-         }
+ import org.junit.Test;
+@@ -34,10 +33,12 @@ import java.util.HashSet;
+ import java.util.Iterator;
+ import java.util.List;
+ import java.util.Set;
++import java.util.concurrent.Executors;
+ import java.util.concurrent.atomic.AtomicBoolean;
  
-         viewCopy.metadata.params(params);
-diff --git a/test/unit/org/apache/cassandra/cql3/ViewTest.java b/test/unit/org/apache/cassandra/cql3/ViewTest.java
-index db742f7b72..6dd6a850b7 100644
---- a/test/unit/org/apache/cassandra/cql3/ViewTest.java
-+++ b/test/unit/org/apache/cassandra/cql3/ViewTest.java
-@@ -1380,16 +1380,23 @@ public class ViewTest extends CQLTester
-                     ""c int, "" +
-                     ""val int) WITH default_time_to_live = 60"");
+ import org.apache.flink.runtime.instance.AllocatedSlot;
+ import org.apache.flink.runtime.instance.Instance;
++import org.apache.flink.runtime.util.ExecutorThreadFactory;
  
-+        execute(""USE "" + keyspace());
-+        executeNet(protocolVersion, ""USE "" + keyspace());
-+
-         createView(""mv_ttl2"", ""CREATE MATERIALIZED VIEW %s AS SELECT * FROM %%s WHERE k IS NOT NULL AND c IS NOT NULL PRIMARY KEY (k,c)"");
- 
-         // Must NOT include ""default_time_to_live"" on alter Materialized View
-         try
-         {
--            executeNet(protocolVersion, ""ALTER MATERIALIZED VIEW %s WITH default_time_to_live = 30"");
-+            executeNet(protocolVersion, ""ALTER MATERIALIZED VIEW "" + keyspace() + "".mv_ttl2 WITH default_time_to_live = 30"");
-             fail(""Should fail if TTL is provided while altering materialized view"");
-         }
-         catch (Exception e)
-         {
-+            // Make sure the message is clear. See CASSANDRA-16960
-+            assertEquals(""Forbidden default_time_to_live detected for a materialized view. Data in a materialized view always expire at the same time than the corresponding ""
-+                         + ""data in the parent table. default_time_to_live must be set to zero, see CASSANDRA-12868 for more information"",
-+                         e.getMessage());
-         }
-     }
- 
+ /**
+  * Tests for the {@link Scheduler} when scheduling individual tasks.
+@@ -181,7 +182,9 @@ public class SchedulerIsolatedTasksTest {
+ 		final int NUM_TASKS_TO_SCHEDULE = 2000;
+ 		
+ 		try {
+-			Scheduler scheduler = new Scheduler();
++			// note: since this test asynchronously releases slots, the executor needs release workers.
++			// doing the release call synchronous can lead to a deadlock
++			Scheduler scheduler = new Scheduler(Executors.newFixedThreadPool(4, ExecutorThreadFactory.INSTANCE));
+ 			
+ 			for (int i = 0;i < NUM_INSTANCES; i++) {
+ 				scheduler.newInstanceAvailable(getRandomInstance((int) (Math.random() * NUM_SLOTS_PER_INSTANCE) + 1));

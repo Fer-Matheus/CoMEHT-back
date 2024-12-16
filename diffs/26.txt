@@ -1,20 +1,33 @@
-diff --git a/src/blocks/woody/java/org/apache/cocoon/woody/samples/Sex.java b/src/blocks/woody/java/org/apache/cocoon/woody/samples/Sex.java
-index 7ef358bfaa..f66960acc0 100644
---- a/src/blocks/woody/java/org/apache/cocoon/woody/samples/Sex.java
-+++ b/src/blocks/woody/java/org/apache/cocoon/woody/samples/Sex.java
-@@ -52,14 +52,13 @@ package org.apache.cocoon.woody.samples;
+diff --git a/flink-connectors/flink-connector-kafka-0.11/src/test/java/org/apache/flink/streaming/connectors/kafka/KafkaTestEnvironmentImpl.java b/flink-connectors/flink-connector-kafka-0.11/src/test/java/org/apache/flink/streaming/connectors/kafka/KafkaTestEnvironmentImpl.java
+index 40728baac23..57dc663c9b3 100644
+--- a/flink-connectors/flink-connector-kafka-0.11/src/test/java/org/apache/flink/streaming/connectors/kafka/KafkaTestEnvironmentImpl.java
++++ b/flink-connectors/flink-connector-kafka-0.11/src/test/java/org/apache/flink/streaming/connectors/kafka/KafkaTestEnvironmentImpl.java
+@@ -295,7 +295,7 @@ public class KafkaTestEnvironmentImpl extends KafkaTestEnvironment {
+ 	}
  
- import java.util.ArrayList;
- import java.util.Collection;
--import java.util.List;
- import java.util.Locale;
+ 	@Override
+-	public void shutdown() {
++	public void shutdown() throws Exception {
+ 		for (KafkaServer broker : brokers) {
+ 			if (broker != null) {
+ 				broker.shutdown();
+@@ -331,6 +331,7 @@ public class KafkaTestEnvironmentImpl extends KafkaTestEnvironment {
+ 				// ignore
+ 			}
+ 		}
++		super.shutdown();
+ 	}
  
- import org.apache.cocoon.woody.datatype.Enum;
+ 	public ZkUtils getZkUtils() {
+diff --git a/flink-connectors/flink-connector-kafka/src/test/java/org/apache/flink/streaming/connectors/kafka/KafkaTestEnvironmentImpl.java b/flink-connectors/flink-connector-kafka/src/test/java/org/apache/flink/streaming/connectors/kafka/KafkaTestEnvironmentImpl.java
+index 90e9e5de6d3..0e9036d6947 100644
+--- a/flink-connectors/flink-connector-kafka/src/test/java/org/apache/flink/streaming/connectors/kafka/KafkaTestEnvironmentImpl.java
++++ b/flink-connectors/flink-connector-kafka/src/test/java/org/apache/flink/streaming/connectors/kafka/KafkaTestEnvironmentImpl.java
+@@ -359,6 +359,7 @@ public class KafkaTestEnvironmentImpl extends KafkaTestEnvironment {
+ 				// ignore
+ 			}
+ 		}
++		super.shutdown();
+ 	}
  
- /**
-  * Description of Sex.
-- * @version CVS $Id: Sex.java,v 1.3 2003/11/07 22:04:38 ugo Exp $
-+ * @version CVS $Id: Sex.java,v 1.4 2003/11/08 14:27:03 joerg Exp $
-  */
- public class Sex implements Enum {
- 
+ 	protected KafkaServer getKafkaServer(int brokerId, File tmpFolder) throws Exception {

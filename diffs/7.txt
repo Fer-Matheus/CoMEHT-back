@@ -1,36 +1,13 @@
-diff --git a/runners/direct-java/src/test/java/org/apache/beam/runners/direct/DirectRunnerApiSurfaceTest.java b/runners/direct-java/src/test/java/org/apache/beam/runners/direct/DirectRunnerApiSurfaceTest.java
-index 6ef93010293..9b8cde168d5 100644
---- a/runners/direct-java/src/test/java/org/apache/beam/runners/direct/DirectRunnerApiSurfaceTest.java
-+++ b/runners/direct-java/src/test/java/org/apache/beam/runners/direct/DirectRunnerApiSurfaceTest.java
-@@ -65,6 +65,7 @@ public class DirectRunnerApiSurfaceTest {
-                 WatermarkManager.class /* TODO: BEAM-4237 Consider moving to local-java */)
-             .pruningPattern(""org[.]apache[.]beam[.].*Test.*"")
-             .pruningPattern(""org[.]apache[.]beam[.].*IT"")
-+            .pruningPattern(""org[.]checkerframework[.].*[.]qual[.].*"")
-             .pruningPattern(""java[.]io.*"")
-             .pruningPattern(""java[.]lang.*"")
-             .pruningPattern(""java[.]util.*"");
-diff --git a/sdks/java/extensions/google-cloud-platform-core/src/test/java/org/apache/beam/sdk/extensions/gcp/GcpCoreApiSurfaceTest.java b/sdks/java/extensions/google-cloud-platform-core/src/test/java/org/apache/beam/sdk/extensions/gcp/GcpCoreApiSurfaceTest.java
-index e16e521e867..bb2d4e07b7a 100644
---- a/sdks/java/extensions/google-cloud-platform-core/src/test/java/org/apache/beam/sdk/extensions/gcp/GcpCoreApiSurfaceTest.java
-+++ b/sdks/java/extensions/google-cloud-platform-core/src/test/java/org/apache/beam/sdk/extensions/gcp/GcpCoreApiSurfaceTest.java
-@@ -44,6 +44,7 @@ public class GcpCoreApiSurfaceTest {
-         ApiSurface.ofPackage(thisPackage, thisClassLoader)
-             .pruningPattern(""org[.]apache[.]beam[.].*Test.*"")
-             .pruningPattern(""org[.]apache[.]beam[.].*IT"")
-+            .pruningPattern(""org[.]checkerframework[.].*[.]qual[.].*"")
-             .pruningPattern(""java[.]lang.*"")
-             .pruningPattern(""java[.]util.*"");
+diff --git a/core/src/main/java/org/apache/directory/server/core/referral/ReferralLut.java b/core/src/main/java/org/apache/directory/server/core/referral/ReferralLut.java
+index 15321bd07f..e1ab28d7f0 100644
+--- a/core/src/main/java/org/apache/directory/server/core/referral/ReferralLut.java
++++ b/core/src/main/java/org/apache/directory/server/core/referral/ReferralLut.java
+@@ -99,7 +99,7 @@ public class ReferralLut
+         
+         for ( int ii = 0; ii < dn.size(); ii++ )
+         {
+-            farthest.add( dn.getRdn( ii ) );
++            farthest.addNormalized( dn.getRdn( ii ) );
  
-diff --git a/sdks/java/io/google-cloud-platform/src/test/java/org/apache/beam/sdk/io/gcp/GcpApiSurfaceTest.java b/sdks/java/io/google-cloud-platform/src/test/java/org/apache/beam/sdk/io/gcp/GcpApiSurfaceTest.java
-index 704212b1bcc..825542a87ad 100644
---- a/sdks/java/io/google-cloud-platform/src/test/java/org/apache/beam/sdk/io/gcp/GcpApiSurfaceTest.java
-+++ b/sdks/java/io/google-cloud-platform/src/test/java/org/apache/beam/sdk/io/gcp/GcpApiSurfaceTest.java
-@@ -51,6 +51,7 @@ public class GcpApiSurfaceTest {
-             .pruningPattern(BigqueryClient.class.getName())
-             .pruningPattern(""org[.]apache[.]beam[.].*Test.*"")
-             .pruningPattern(""org[.]apache[.]beam[.].*IT"")
-+            .pruningPattern(""org[.]checkerframework[.].*[.]qual[.].*"")
-             .pruningPattern(""java[.]lang.*"")
-             .pruningPattern(""java[.]util.*"");
- 
+             // do not return dn if it is the farthest referral
+             if ( isReferral( farthest ) && ( farthest.size() != dn.size() ) )

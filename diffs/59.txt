@@ -1,0 +1,13 @@
+diff --git a/demos/tweetstore/runatcloud-tweetstore/src/test/java/org/jclouds/demo/tweetstore/integration/TweetStoreLiveTest.java b/demos/tweetstore/runatcloud-tweetstore/src/test/java/org/jclouds/demo/tweetstore/integration/TweetStoreLiveTest.java
+index 929537c037..174b2e95fc 100644
+--- a/demos/tweetstore/runatcloud-tweetstore/src/test/java/org/jclouds/demo/tweetstore/integration/TweetStoreLiveTest.java
++++ b/demos/tweetstore/runatcloud-tweetstore/src/test/java/org/jclouds/demo/tweetstore/integration/TweetStoreLiveTest.java
+@@ -202,7 +202,7 @@ public class TweetStoreLiveTest {
+       for (String context : blobstores) {
+          System.out.println(""storing at context: "" + context);
+          HttpURLConnection connection = (HttpURLConnection) gurl.openConnection();
+-         connection.addRequestProperty(""X-AppEngine-QueueName"", ""twitter"");
++         connection.addRequestProperty(""X-RUN@cloud-Submitter"", ""twitter"");
+          connection.addRequestProperty(""context"", context);
+          InputStream i = connection.getInputStream();
+          String string = Strings2.toStringAndClose(i);
