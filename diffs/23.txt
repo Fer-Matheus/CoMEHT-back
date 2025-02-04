@@ -1,36 +1,25 @@
-diff --git a/flink-runtime/src/test/java/org/apache/flink/runtime/jobmanager/scheduler/SchedulerIsolatedTasksTest.java b/flink-runtime/src/test/java/org/apache/flink/runtime/jobmanager/scheduler/SchedulerIsolatedTasksTest.java
-index 25a2d28f1c3..34e9f6817ea 100644
---- a/flink-runtime/src/test/java/org/apache/flink/runtime/jobmanager/scheduler/SchedulerIsolatedTasksTest.java
-+++ b/flink-runtime/src/test/java/org/apache/flink/runtime/jobmanager/scheduler/SchedulerIsolatedTasksTest.java
-@@ -22,7 +22,6 @@ import static org.apache.flink.runtime.jobmanager.scheduler.SchedulerTestUtils.a
- import static org.apache.flink.runtime.jobmanager.scheduler.SchedulerTestUtils.getDummyTask;
- import static org.apache.flink.runtime.jobmanager.scheduler.SchedulerTestUtils.getTestVertex;
- import static org.apache.flink.runtime.jobmanager.scheduler.SchedulerTestUtils.getRandomInstance;
--
- import static org.junit.Assert.*;
+diff --git a/archiva-modules/archiva-maven/archiva-maven-repository/src/main/java/org/apache/archiva/repository/maven2/MavenRepositoryProvider.java b/archiva-modules/archiva-maven/archiva-maven-repository/src/main/java/org/apache/archiva/repository/maven2/MavenRepositoryProvider.java
+index 280cb36de..24216ef86 100644
+--- a/archiva-modules/archiva-maven/archiva-maven-repository/src/main/java/org/apache/archiva/repository/maven2/MavenRepositoryProvider.java
++++ b/archiva-modules/archiva-maven/archiva-maven-repository/src/main/java/org/apache/archiva/repository/maven2/MavenRepositoryProvider.java
+@@ -248,8 +248,10 @@ public void updateRemoteInstance(EditableRemoteRepository repo, RemoteRepository
+     @Override
+     public RepositoryGroup createRepositoryGroup(RepositoryGroupConfiguration configuration) throws RepositoryException {
+         Path repositoryGroupBase = getArchivaConfiguration().getRepositoryGroupBaseDir();
+-        return new MavenRepositoryGroup(configuration.getId(), configuration.getId(),
++        MavenRepositoryGroup newGrp = new MavenRepositoryGroup(configuration.getId(), configuration.getName(),
+                 repositoryGroupBase, fileLockManager);
++        updateRepositoryGroupInstance(newGrp, configuration);
++        return newGrp;
+     }
  
- import org.junit.Test;
-@@ -34,10 +33,12 @@ import java.util.HashSet;
- import java.util.Iterator;
- import java.util.List;
- import java.util.Set;
-+import java.util.concurrent.Executors;
- import java.util.concurrent.atomic.AtomicBoolean;
- 
- import org.apache.flink.runtime.instance.AllocatedSlot;
- import org.apache.flink.runtime.instance.Instance;
-+import org.apache.flink.runtime.util.ExecutorThreadFactory;
- 
- /**
-  * Tests for the {@link Scheduler} when scheduling individual tasks.
-@@ -181,7 +182,9 @@ public class SchedulerIsolatedTasksTest {
- 		final int NUM_TASKS_TO_SCHEDULE = 2000;
- 		
- 		try {
--			Scheduler scheduler = new Scheduler();
-+			// note: since this test asynchronously releases slots, the executor needs release workers.
-+			// doing the release call synchronous can lead to a deadlock
-+			Scheduler scheduler = new Scheduler(Executors.newFixedThreadPool(4, ExecutorThreadFactory.INSTANCE));
- 			
- 			for (int i = 0;i < NUM_INSTANCES; i++) {
- 				scheduler.newInstanceAvailable(getRandomInstance((int) (Math.random() * NUM_SLOTS_PER_INSTANCE) + 1));
+     @Override
+@@ -444,4 +446,8 @@ public void setArchivaConfiguration(ArchivaConfiguration archivaConfiguration) {
+     public <T> void raise(RepositoryEvent<T> event) {
+         //
+     }
++
++    public void setRepositoryRegistry(RepositoryRegistry reg) {
++        this.repositoryRegistry = reg;
++    }
+ }

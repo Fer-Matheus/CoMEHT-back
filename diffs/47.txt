@@ -1,17 +1,28 @@
-diff --git a/modules/core/src/test/java/org/apache/ignite/internal/IgniteClientReconnectFailoverTest.java b/modules/core/src/test/java/org/apache/ignite/internal/IgniteClientReconnectFailoverTest.java
-index b7de3eb23e..ab0e7260aa 100644
---- a/modules/core/src/test/java/org/apache/ignite/internal/IgniteClientReconnectFailoverTest.java
-+++ b/modules/core/src/test/java/org/apache/ignite/internal/IgniteClientReconnectFailoverTest.java
-@@ -148,6 +148,12 @@ public class IgniteClientReconnectFailoverTest extends IgniteClientReconnectFail
+diff --git a/src/java/org/apache/cassandra/db/ColumnFamilyStore.java b/src/java/org/apache/cassandra/db/ColumnFamilyStore.java
+index 9994038942..07f7f53e3f 100644
+--- a/src/java/org/apache/cassandra/db/ColumnFamilyStore.java
++++ b/src/java/org/apache/cassandra/db/ColumnFamilyStore.java
+@@ -2173,16 +2173,18 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
+     private void writeSnapshotManifest(final JSONArray filesJSONArr, final String snapshotName)
+     {
+         final File manifestFile = directories.getSnapshotManifestFile(snapshotName);
+-        final JSONObject manifestJSON = new JSONObject();
+-        manifestJSON.put(""files"", filesJSONArr);
  
-                     assertEquals(map, res);
-                 }
-+                catch (IgniteClientDisconnectedException e) {
-+                    throw e;
-+                }
-+                catch (IgniteException e) {
-+                    log.info(""Ignore error: "" + e);
-+                }
-                 catch (CacheException e) {
-                     if (e.getCause() instanceof IgniteClientDisconnectedException)
-                         throw e;
+         try
+         {
+             if (!manifestFile.getParentFile().exists())
+                 manifestFile.getParentFile().mkdirs();
+-            PrintStream out = new PrintStream(manifestFile);
+-            out.println(manifestJSON.toJSONString());
+-            out.close();
++            
++            try (PrintStream out = new PrintStream(manifestFile))
++            {
++                final JSONObject manifestJSON = new JSONObject();
++                manifestJSON.put(""files"", filesJSONArr);
++                out.println(manifestJSON.toJSONString());
++            }
+         }
+         catch (IOException e)
+         {

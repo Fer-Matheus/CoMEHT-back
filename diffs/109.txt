@@ -1,0 +1,24 @@
+diff --git a/modules/core/src/main/java/org/apache/ignite/internal/processors/cache/distributed/dht/GridDhtLocalPartition.java b/modules/core/src/main/java/org/apache/ignite/internal/processors/cache/distributed/dht/GridDhtLocalPartition.java
+index df1fc9e483..f2f911fd5c 100644
+--- a/modules/core/src/main/java/org/apache/ignite/internal/processors/cache/distributed/dht/GridDhtLocalPartition.java
++++ b/modules/core/src/main/java/org/apache/ignite/internal/processors/cache/distributed/dht/GridDhtLocalPartition.java
+@@ -282,12 +282,17 @@ public class GridDhtLocalPartition implements Comparable<GridDhtLocalPartition>,
+         return (int)storageSize.get();
+     }
+ 
+-    /** {@inheritDoc} */
++
++    /**
++     *
++     */
+     public void onInsert() {
+         storageSize.incrementAndGet();
+     }
+ 
+-    /** {@inheritDoc} */
++    /**
++     * 
++     */
+     public void onRemove() {
+         storageSize.decrementAndGet();
+     }

@@ -1,16 +1,22 @@
-diff --git a/modules/transaction/src/java/org/apache/geronimo/transaction/context/TransactionContextManager.java b/modules/transaction/src/java/org/apache/geronimo/transaction/context/TransactionContextManager.java
-index c145c68761..07db2eb0ac 100644
---- a/modules/transaction/src/java/org/apache/geronimo/transaction/context/TransactionContextManager.java
-+++ b/modules/transaction/src/java/org/apache/geronimo/transaction/context/TransactionContextManager.java
-@@ -259,9 +259,11 @@ public class TransactionContextManager implements XATerminator, XAWork {
-             containerTransactionContext.resume();
-         }
-         importer.setTransactionTimeout(txTimeoutMillis);
-+        TransactionContext.setContext(containerTransactionContext);
+diff --git a/runners/flink/src/main/java/org/apache/beam/runners/flink/translation/wrappers/streaming/stableinput/BufferedElements.java b/runners/flink/src/main/java/org/apache/beam/runners/flink/translation/wrappers/streaming/stableinput/BufferedElements.java
+index 2208bc89b9a..b0f9304e858 100644
+--- a/runners/flink/src/main/java/org/apache/beam/runners/flink/translation/wrappers/streaming/stableinput/BufferedElements.java
++++ b/runners/flink/src/main/java/org/apache/beam/runners/flink/translation/wrappers/streaming/stableinput/BufferedElements.java
+@@ -20,7 +20,7 @@ package org.apache.beam.runners.flink.translation.wrappers.streaming.stableinput
+ import java.io.IOException;
+ import java.io.InputStream;
+ import java.io.OutputStream;
+-import java.util.Collections;
++import java.util.Arrays;
+ import java.util.List;
+ import java.util.Objects;
+ import org.apache.beam.runners.core.DoFnRunner;
+@@ -158,7 +158,7 @@ class BufferedElements {
+ 
+     @Override
+     public List<? extends org.apache.beam.sdk.coders.Coder<?>> getCoderArguments() {
+-      return Collections.emptyList();
++      return Arrays.asList(elementCoder, windowCoder);
      }
  
-     public void end(Xid xid) throws XAException, SystemException {
-+        TransactionContext.setContext(null);
-         synchronized (importedTransactions) {
-             ContainerTransactionContext containerTransactionContext = (ContainerTransactionContext) importedTransactions.get(xid);
-             if (containerTransactionContext == null) {
+     @Override

@@ -1,26 +1,15 @@
-diff --git a/protocol-dns/src/main/java/org/apache/directory/server/dns/store/RecordStore.java b/protocol-dns/src/main/java/org/apache/directory/server/dns/store/RecordStore.java
-index fd00b7f13a..81e6c5e7aa 100644
---- a/protocol-dns/src/main/java/org/apache/directory/server/dns/store/RecordStore.java
-+++ b/protocol-dns/src/main/java/org/apache/directory/server/dns/store/RecordStore.java
-@@ -23,6 +23,7 @@ package org.apache.directory.server.dns.store;
- import java.util.Set;
+diff --git a/src/main/org/apache/tools/bzip2/CBZip2OutputStream.java b/src/main/org/apache/tools/bzip2/CBZip2OutputStream.java
+index 22c20ff8b..63bc3eb7a 100644
+--- a/src/main/org/apache/tools/bzip2/CBZip2OutputStream.java
++++ b/src/main/org/apache/tools/bzip2/CBZip2OutputStream.java
+@@ -411,8 +411,9 @@ public class CBZip2OutputStream extends OutputStream implements BZip2Constants {
  
- import org.apache.directory.server.dns.messages.QuestionRecord;
-+import org.apache.directory.server.dns.messages.ResourceRecord;
+     boolean closed = false;
  
+-    public void finalize() throws Throwable {
++    protected void finalize() throws Throwable {
+         close();
++        super.finalize();
+     }
  
- /**
-@@ -33,5 +34,12 @@ import org.apache.directory.server.dns.messages.QuestionRecord;
-  */
- public interface RecordStore
- {
--    public Set getRecords( QuestionRecord question ) throws Exception;
-+    /**
-+     * Returns a set of {@link ResourceRecord}s, given a DNS {@link QuestionRecord}.
-+     *
-+     * @param question
-+     * @return The set of {@link ResourceRecord}s.
-+     * @throws Exception
-+     */
-+    public Set<ResourceRecord> getRecords( QuestionRecord question ) throws Exception;
- }
+     public void close() throws IOException {

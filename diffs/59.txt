@@ -1,13 +1,28 @@
-diff --git a/demos/tweetstore/runatcloud-tweetstore/src/test/java/org/jclouds/demo/tweetstore/integration/TweetStoreLiveTest.java b/demos/tweetstore/runatcloud-tweetstore/src/test/java/org/jclouds/demo/tweetstore/integration/TweetStoreLiveTest.java
-index 929537c037..174b2e95fc 100644
---- a/demos/tweetstore/runatcloud-tweetstore/src/test/java/org/jclouds/demo/tweetstore/integration/TweetStoreLiveTest.java
-+++ b/demos/tweetstore/runatcloud-tweetstore/src/test/java/org/jclouds/demo/tweetstore/integration/TweetStoreLiveTest.java
-@@ -202,7 +202,7 @@ public class TweetStoreLiveTest {
-       for (String context : blobstores) {
-          System.out.println(""storing at context: "" + context);
-          HttpURLConnection connection = (HttpURLConnection) gurl.openConnection();
--         connection.addRequestProperty(""X-AppEngine-QueueName"", ""twitter"");
-+         connection.addRequestProperty(""X-RUN@cloud-Submitter"", ""twitter"");
-          connection.addRequestProperty(""context"", context);
-          InputStream i = connection.getInputStream();
-          String string = Strings2.toStringAndClose(i);
+diff --git a/src/test/org/apache/cocoon/xml/dom/DOMBuilderTestCase.java b/src/test/org/apache/cocoon/xml/dom/DOMBuilderTestCase.java
+index ba1fa93cc1..21a643e66c 100644
+--- a/src/test/org/apache/cocoon/xml/dom/DOMBuilderTestCase.java
++++ b/src/test/org/apache/cocoon/xml/dom/DOMBuilderTestCase.java
+@@ -26,7 +26,7 @@ import org.xml.sax.helpers.AttributesImpl;
+ /**
+  * JUnit Testcase for {@link DOMBuilder}.
+  * 
+- * @version CVS $Id: DOMBuilderTestCase.java,v 1.2 2004/05/07 13:11:26 ugo Exp $
++ * @version CVS $Id: DOMBuilderTestCase.java,v 1.3 2004/05/18 12:36:52 ugo Exp $
+  */
+ public class DOMBuilderTestCase extends TestCase {
+ 
+@@ -57,8 +57,11 @@ public class DOMBuilderTestCase extends TestCase {
+         builder.endElement("""", ""test"", ""test"");
+         builder.endDocument();
+         Document dom = builder.getDocument();
+-        assertEquals(""Content of root element not what expected"", ""ABCDEF"", 
+-                dom.getDocumentElement().getFirstChild().getNodeValue()
+-                + dom.getDocumentElement().getLastChild().getNodeValue());
++        StringBuffer value = new StringBuffer();
++        for (int i = 0 ; i < dom.getDocumentElement().getChildNodes().getLength() ; ++i) {
++            value.append(dom.getDocumentElement().getChildNodes().item(i).getNodeValue());
++        }
++        assertEquals(""Content of root element not what expected"",
++                ""ABCDEF"", value.toString()); 
+     }
+ }

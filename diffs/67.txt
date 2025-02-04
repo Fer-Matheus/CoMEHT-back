@@ -1,0 +1,13 @@
+diff --git a/core/src/main/java/org/apache/directory/server/core/referral/ReferralLut.java b/core/src/main/java/org/apache/directory/server/core/referral/ReferralLut.java
+index 15321bd07f..e1ab28d7f0 100644
+--- a/core/src/main/java/org/apache/directory/server/core/referral/ReferralLut.java
++++ b/core/src/main/java/org/apache/directory/server/core/referral/ReferralLut.java
+@@ -99,7 +99,7 @@ public class ReferralLut
+         
+         for ( int ii = 0; ii < dn.size(); ii++ )
+         {
+-            farthest.add( dn.getRdn( ii ) );
++            farthest.addNormalized( dn.getRdn( ii ) );
+ 
+             // do not return dn if it is the farthest referral
+             if ( isReferral( farthest ) && ( farthest.size() != dn.size() ) )

@@ -1,12 +1,13 @@
-diff --git a/apis/vcloud/src/main/java/org/jclouds/vcloud/VCloudAsyncClient.java b/apis/vcloud/src/main/java/org/jclouds/vcloud/VCloudAsyncClient.java
-index f0d2a5c4b6..6e978a7479 100644
---- a/apis/vcloud/src/main/java/org/jclouds/vcloud/VCloudAsyncClient.java
-+++ b/apis/vcloud/src/main/java/org/jclouds/vcloud/VCloudAsyncClient.java
-@@ -616,6 +616,7 @@ public interface VCloudAsyncClient {
-     */
-    @Deprecated
-    @DELETE
-+   @Consumes(TASK_XML)
-    @ExceptionParser(ReturnVoidOnNotFoundOr404.class)
-    @XMLResponseParser(TaskHandler.class)
-    ListenableFuture<? extends Task> deleteVApp(@EndpointParam URI id);
+diff --git a/src/java/org/apache/cocoon/transformation/SourceWritingTransformer.java b/src/java/org/apache/cocoon/transformation/SourceWritingTransformer.java
+index 2e47459199..ec8b8a7633 100644
+--- a/src/java/org/apache/cocoon/transformation/SourceWritingTransformer.java
++++ b/src/java/org/apache/cocoon/transformation/SourceWritingTransformer.java
+@@ -49,7 +49,7 @@ import org.xml.sax.SAXException;
+  * @cocoon.sitemap.component.documentation
+  * This transformer allows you to output to a ModifiableSource.
+  *
+- * @cocoon.sitemap.component.name   write-source
++ * @cocoon.sitemap.component.name   sourcewriting
+  * @cocoon.sitemap.component.logger sitemap.transformer.write-source
+  *
+  * This transformer allows you to output to a ModifiableSource.

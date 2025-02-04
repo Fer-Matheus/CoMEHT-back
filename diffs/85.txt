@@ -1,0 +1,23 @@
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/api/writer/RecordWriter.java b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/api/writer/RecordWriter.java
+index fa6fbd3ed2a..801e6eb5502 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/api/writer/RecordWriter.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/api/writer/RecordWriter.java
+@@ -130,13 +130,12 @@ public class RecordWriter<T extends IOReadableWritable> {
+ 					if (result.isFullRecord()) {
+ 						break;
+ 					}
+-				} else {
+-					BufferBuilder bufferBuilder =
+-						targetPartition.getBufferProvider().requestBufferBuilderBlocking();
+-					checkState(!bufferConsumers[targetChannel].isPresent());
+-					bufferConsumers[targetChannel] = Optional.of(bufferBuilder.createBufferConsumer());
+-					result = serializer.setNextBufferBuilder(bufferBuilder);
+ 				}
++				BufferBuilder bufferBuilder =
++					targetPartition.getBufferProvider().requestBufferBuilderBlocking();
++				checkState(!bufferConsumers[targetChannel].isPresent());
++				bufferConsumers[targetChannel] = Optional.of(bufferBuilder.createBufferConsumer());
++				result = serializer.setNextBufferBuilder(bufferBuilder);
+ 			}
+ 			checkState(!serializer.hasSerializedData(), ""All data should be written at once"");
+ 		}

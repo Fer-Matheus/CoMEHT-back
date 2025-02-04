@@ -1,13 +1,22 @@
-diff --git a/flink-table/flink-table-planner/src/test/java/org/apache/flink/table/planner/functions/BuiltInFunctionTestBase.java b/flink-table/flink-table-planner/src/test/java/org/apache/flink/table/planner/functions/BuiltInFunctionTestBase.java
-index 161e9925374..c4586afc67d 100644
---- a/flink-table/flink-table-planner/src/test/java/org/apache/flink/table/planner/functions/BuiltInFunctionTestBase.java
-+++ b/flink-table/flink-table-planner/src/test/java/org/apache/flink/table/planner/functions/BuiltInFunctionTestBase.java
-@@ -411,7 +411,7 @@ public abstract class BuiltInFunctionTestBase {
-             return ""[API] ""
-                     + expression.stream()
-                             .map(Expression::asSummaryString)
--                            .collect(Collectors.joining());
-+                            .collect(Collectors.joining("", ""));
-         }
+diff --git a/sdks/java/harness/src/main/java/org/apache/beam/fn/harness/FnApiDoFnRunner.java b/sdks/java/harness/src/main/java/org/apache/beam/fn/harness/FnApiDoFnRunner.java
+index cdcff1c8afa..e57dfae0ee5 100644
+--- a/sdks/java/harness/src/main/java/org/apache/beam/fn/harness/FnApiDoFnRunner.java
++++ b/sdks/java/harness/src/main/java/org/apache/beam/fn/harness/FnApiDoFnRunner.java
+@@ -173,7 +173,7 @@ public class FnApiDoFnRunner<InputT, OutputT>
+     if (rowParameter != null) {
+       checkArgument(schemaCoder != null,
+           ""Cannot access object as a row if the input PCollection does not have a schema .""
+-              + ""DoFn "" + doFn.getClass() + "" Coder "" + inputCoder.getClass());
++              + ""DoFn "" + context.doFn.getClass() + "" Coder "" + context.inputCoder.getClass());
+       String id = rowParameter.fieldAccessId();
+       if (id == null) {
+         // This is the case where no FieldId is defined, just an @Element Row row. Default to all
+@@ -326,7 +326,7 @@ public class FnApiDoFnRunner<InputT, OutputT>
+ 
+     @Override
+     public MultiOutputReceiver taggedOutputReceiver(DoFn<InputT, OutputT> doFn) {
+-      return DoFnOutputReceivers.windowedMultiReceiver(this, outputCoders);
++      return DoFnOutputReceivers.windowedMultiReceiver(this, context.outputCoders);
      }
  
+     @Override

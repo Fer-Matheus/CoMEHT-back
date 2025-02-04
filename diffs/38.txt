@@ -1,14 +1,13 @@
-diff --git a/plugins/geronimo-packaging-plugin/src/java/org/apache/geronimo/plugin/packaging/MavenConfigStore.java b/plugins/geronimo-packaging-plugin/src/java/org/apache/geronimo/plugin/packaging/MavenConfigStore.java
-index 81e80ffef8..35b4ba0213 100644
---- a/plugins/geronimo-packaging-plugin/src/java/org/apache/geronimo/plugin/packaging/MavenConfigStore.java
-+++ b/plugins/geronimo-packaging-plugin/src/java/org/apache/geronimo/plugin/packaging/MavenConfigStore.java
-@@ -133,6 +133,9 @@ public class MavenConfigStore implements ConfigurationStore {
-         URI configId = configurationData.getId();
-         URL targetURL = repository.getURL(configId);
-         File targetFile = new File(targetURL.getPath());
-+        File parentFile = targetFile.getParentFile();
-+        parentFile.mkdirs();
-+        targetFile.createNewFile();
-         ExecutableConfigurationUtil.createExecutableConfiguration(configurationData, null, source, targetFile);
-     }
+diff --git a/runners/google-cloud-dataflow-java/src/main/java/org/apache/beam/runners/dataflow/options/DataflowPipelineOptions.java b/runners/google-cloud-dataflow-java/src/main/java/org/apache/beam/runners/dataflow/options/DataflowPipelineOptions.java
+index e8c3708aa06..8434ff7de84 100644
+--- a/runners/google-cloud-dataflow-java/src/main/java/org/apache/beam/runners/dataflow/options/DataflowPipelineOptions.java
++++ b/runners/google-cloud-dataflow-java/src/main/java/org/apache/beam/runners/dataflow/options/DataflowPipelineOptions.java
+@@ -95,8 +95,6 @@ public interface DataflowPipelineOptions
+   void setUpdate(boolean value);
+ 
+   /** If set, the snapshot from which the job should be created. */
+-  @Hidden
+-  @Experimental
+   @Description(""If set, the snapshot from which the job should be created."")
+   String getCreateFromSnapshot();
  

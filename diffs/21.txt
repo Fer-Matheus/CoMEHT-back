@@ -1,44 +1,20 @@
-diff --git a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bytebuffered/OutgoingConnection.java b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bytebuffered/OutgoingConnection.java
-index cb41bf59f75..acd9289b8ec 100644
---- a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bytebuffered/OutgoingConnection.java
-+++ b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bytebuffered/OutgoingConnection.java
-@@ -20,9 +20,7 @@ import java.net.InetSocketAddress;
- import java.nio.channels.SelectionKey;
- import java.nio.channels.SocketChannel;
- import java.nio.channels.WritableByteChannel;
--import java.util.ArrayDeque;
- import java.util.Iterator;
--import java.util.Queue;
+diff --git a/archiva-modules/archiva-scheduler/archiva-scheduler-repository/src/test/java/org/apache/archiva/scheduler/repository/ArchivaRepositoryScanningTaskExecutorAbstractTest.java b/archiva-modules/archiva-scheduler/archiva-scheduler-repository/src/test/java/org/apache/archiva/scheduler/repository/ArchivaRepositoryScanningTaskExecutorAbstractTest.java
+index adb1c36de..554287c83 100644
+--- a/archiva-modules/archiva-scheduler/archiva-scheduler-repository/src/test/java/org/apache/archiva/scheduler/repository/ArchivaRepositoryScanningTaskExecutorAbstractTest.java
++++ b/archiva-modules/archiva-scheduler/archiva-scheduler-repository/src/test/java/org/apache/archiva/scheduler/repository/ArchivaRepositoryScanningTaskExecutorAbstractTest.java
+@@ -40,6 +40,7 @@
+ import org.apache.archiva.test.utils.ArchivaSpringJUnit4ClassRunner;
  
- import org.apache.commons.logging.Log;
- import org.apache.commons.logging.LogFactory;
-@@ -65,7 +63,7 @@ public class OutgoingConnection {
- 	/**
- 	 * The queue of transfer envelopes to be transmitted.
- 	 */
--	private final Queue<TransferEnvelope> queuedEnvelopes = new ArrayDeque<TransferEnvelope>();
-+	private final TransferEnvelopeQueue queuedEnvelopes = new TransferEnvelopeQueue();
+ import static org.mockito.Mockito.mock;
++import org.springframework.test.annotation.DirtiesContext;
  
- 	/**
- 	 * The {@link DefaultSerializer} object used to transform the envelopes into a byte stream.
-@@ -548,7 +546,9 @@ public class OutgoingConnection {
- 	 */
- 	void registerSpillingQueue(final SpillingQueue spillingQueue) {
- 
--		System.out.println(""Registering spilling queue"");
-+		synchronized (this.queuedEnvelopes) {
-+			this.queuedEnvelopes.registerSpillingQueue(spillingQueue);
-+		}
- 	}
- 
- 	/**
-@@ -560,6 +560,8 @@ public class OutgoingConnection {
- 	 */
- 	void unregisterSpillingQueue(final SpillingQueue spillingQueue) {
- 
--		System.out.println(""Unregistering spilling queue"");
-+		synchronized (this.queuedEnvelopes) {
-+			this.queuedEnvelopes.unregisterSpillingQueue(spillingQueue);
-+		}
- 	}
- }
+ /**
+  * ArchivaRepositoryScanningTaskExecutorPhase1Test
+@@ -48,6 +49,7 @@
+  */
+ @RunWith( ArchivaSpringJUnit4ClassRunner.class )
+ @ContextConfiguration( locations = { ""classpath*:/META-INF/spring-context.xml"", ""classpath:/spring-context.xml"" } )
++@DirtiesContext( classMode= DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD )
+ public abstract class ArchivaRepositoryScanningTaskExecutorAbstractTest
+     extends TestCase
+ {

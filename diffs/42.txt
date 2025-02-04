@@ -1,13 +1,26 @@
-diff --git a/plugins/clustering/geronimo-clustering-wadi/src/test/java/org/apache/geronimo/clustering/wadi/WADISessionAdaptorTest.java b/plugins/clustering/geronimo-clustering-wadi/src/test/java/org/apache/geronimo/clustering/wadi/WADISessionAdaptorTest.java
-index 52f130dac5..f02503ffac 100644
---- a/plugins/clustering/geronimo-clustering-wadi/src/test/java/org/apache/geronimo/clustering/wadi/WADISessionAdaptorTest.java
-+++ b/plugins/clustering/geronimo-clustering-wadi/src/test/java/org/apache/geronimo/clustering/wadi/WADISessionAdaptorTest.java
-@@ -26,8 +26,6 @@ import org.codehaus.wadi.core.session.Session;
- 
- import com.agical.rmock.extension.junit.RMockTestCase;
- 
--import junit.framework.TestCase;
--
- /**
-  *
-  * @version $Rev:$ $Date:$
+diff --git a/src/java/org/apache/cassandra/db/columniterator/SSTableNamesIterator.java b/src/java/org/apache/cassandra/db/columniterator/SSTableNamesIterator.java
+index 6a8cb33606..1225e600a3 100644
+--- a/src/java/org/apache/cassandra/db/columniterator/SSTableNamesIterator.java
++++ b/src/java/org/apache/cassandra/db/columniterator/SSTableNamesIterator.java
+@@ -202,11 +202,18 @@ public class SSTableNamesIterator extends SimpleAbstractColumnIterator implement
+         for (int i = 0; i < columns; i++)
+         {
+             OnDiskAtom column = atomSerializer.deserializeFromSSTable(file, sstable.descriptor.version);
+-            if (columnNames.contains(column.name()))
++            if (column instanceof IColumn)
++            {
++                if (columnNames.contains(column.name()))
++                {
++                    result.add(column);
++                    if (n++ > filteredColumnNames.size())
++                        break;
++                }
++            }
++            else
+             {
+                 result.add(column);
+-                if (n++ > filteredColumnNames.size())
+-                    break;
+             }
+         }
+     }

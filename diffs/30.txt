@@ -1,13 +1,25 @@
-diff --git a/flink-runtime/src/test/java/org/apache/flink/runtime/jobmaster/slotpool/DefaultDeclarativeSlotPoolTest.java b/flink-runtime/src/test/java/org/apache/flink/runtime/jobmaster/slotpool/DefaultDeclarativeSlotPoolTest.java
-index 77773e98d4d..37216d25cd6 100644
---- a/flink-runtime/src/test/java/org/apache/flink/runtime/jobmaster/slotpool/DefaultDeclarativeSlotPoolTest.java
-+++ b/flink-runtime/src/test/java/org/apache/flink/runtime/jobmaster/slotpool/DefaultDeclarativeSlotPoolTest.java
-@@ -195,7 +195,7 @@ public class DefaultDeclarativeSlotPoolTest extends TestLogger {
-     }
+diff --git a/sdks/java/core/src/main/java/org/apache/beam/sdk/transforms/Regex.java b/sdks/java/core/src/main/java/org/apache/beam/sdk/transforms/Regex.java
+index a494fc95e87..690d321c77b 100644
+--- a/sdks/java/core/src/main/java/org/apache/beam/sdk/transforms/Regex.java
++++ b/sdks/java/core/src/main/java/org/apache/beam/sdk/transforms/Regex.java
+@@ -710,7 +710,8 @@ public class Regex {
  
-     @Test
--    public void testOfferingTooManySlots() {
-+    public void testOfferingTooManySlotsWillRejectSuperfluousSlots() {
-         final NewSlotsService notifyNewSlots = new NewSlotsService();
-         final DefaultDeclarativeSlotPool slotPool =
-                 createDefaultDeclarativeSlotPoolWithNewSlotsListener(notifyNewSlots);
+   /**
+    * {@code Regex.Find<String>} takes a {@code PCollection<String>} and returns a {@code
+-   * PCollection<String>} representing the value extracted from the Regex groups of the input {@code
++   * PCollection<List<String>>} representing the value extracted from the
++   * Regex groups of the input {@code
+    * PCollection} to the number of times that element occurs in the input.
+    *
+    * <p>This transform runs a Regex on the entire input line. If a portion of the line does not
+@@ -721,8 +722,8 @@ public class Regex {
+    *
+    * <pre>{@code
+    * PCollection<String> words = ...;
+-   * PCollection<String> values =
+-   *     words.apply(Regex.find(""myregex (mygroup)""));
++   * PCollection<List<String>> values =
++   *     words.apply(Regex.findAll(""myregex (mygroup)""));
+    * }</pre>
+    */
+   public static class FindAll extends PTransform<PCollection<String>, PCollection<List<String>>> {

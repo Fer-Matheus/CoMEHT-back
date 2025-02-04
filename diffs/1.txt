@@ -1,12 +1,17 @@
-diff --git a/src/blocks/scratchpad/java/org/apache/cocoon/transformation/IncludeTransformer.java b/src/blocks/scratchpad/java/org/apache/cocoon/transformation/IncludeTransformer.java
-index 709ce4b1ff..e3562b7001 100644
---- a/src/blocks/scratchpad/java/org/apache/cocoon/transformation/IncludeTransformer.java
-+++ b/src/blocks/scratchpad/java/org/apache/cocoon/transformation/IncludeTransformer.java
-@@ -49,6 +49,7 @@ import java.util.HashMap;
- import java.util.Map;
+Revert "Fix unnecessary type casting in Test"
+
+This reverts commit f3ab77ca197f54f6409b33309f398ea7e37e409f.
+
+diff --git a/ambari-server/src/test/java/org/apache/ambari/server/controller/metrics/timeline/cache/TimelineMetricCacheTest.java b/ambari-server/src/test/java/org/apache/ambari/server/controller/metrics/timeline/cache/TimelineMetricCacheTest.java
+index 05f8aeca9b..e520cf3648 100644
+--- a/ambari-server/src/test/java/org/apache/ambari/server/controller/metrics/timeline/cache/TimelineMetricCacheTest.java
++++ b/ambari-server/src/test/java/org/apache/ambari/server/controller/metrics/timeline/cache/TimelineMetricCacheTest.java
+@@ -419,7 +419,7 @@ public class TimelineMetricCacheTest {
+     long year = 365 * day;
  
- /**
-+ * @cocoon.sitemap.component.documentation
-  * <p>A simple transformer including resolvable sources (accessed through
-  * Cocoon's {@link SourceResolver} from its input.</p>
-  *
+     //Original Values
+-    Map<String, TimelineMetric> valueMap = new HashMap();
++    Map<String, TimelineMetric> valueMap = new HashMap<String, TimelineMetric>();
+     TimelineMetric timelineMetric = new TimelineMetric();
+     timelineMetric.setMetricName("cpu_user");
+     timelineMetric.setAppId("app1");

@@ -1,33 +1,23 @@
-diff --git a/flink-connectors/flink-connector-kafka-0.11/src/test/java/org/apache/flink/streaming/connectors/kafka/KafkaTestEnvironmentImpl.java b/flink-connectors/flink-connector-kafka-0.11/src/test/java/org/apache/flink/streaming/connectors/kafka/KafkaTestEnvironmentImpl.java
-index 40728baac23..57dc663c9b3 100644
---- a/flink-connectors/flink-connector-kafka-0.11/src/test/java/org/apache/flink/streaming/connectors/kafka/KafkaTestEnvironmentImpl.java
-+++ b/flink-connectors/flink-connector-kafka-0.11/src/test/java/org/apache/flink/streaming/connectors/kafka/KafkaTestEnvironmentImpl.java
-@@ -295,7 +295,7 @@ public class KafkaTestEnvironmentImpl extends KafkaTestEnvironment {
- 	}
- 
- 	@Override
--	public void shutdown() {
-+	public void shutdown() throws Exception {
- 		for (KafkaServer broker : brokers) {
- 			if (broker != null) {
- 				broker.shutdown();
-@@ -331,6 +331,7 @@ public class KafkaTestEnvironmentImpl extends KafkaTestEnvironment {
- 				// ignore
- 			}
- 		}
-+		super.shutdown();
- 	}
- 
- 	public ZkUtils getZkUtils() {
-diff --git a/flink-connectors/flink-connector-kafka/src/test/java/org/apache/flink/streaming/connectors/kafka/KafkaTestEnvironmentImpl.java b/flink-connectors/flink-connector-kafka/src/test/java/org/apache/flink/streaming/connectors/kafka/KafkaTestEnvironmentImpl.java
-index 90e9e5de6d3..0e9036d6947 100644
---- a/flink-connectors/flink-connector-kafka/src/test/java/org/apache/flink/streaming/connectors/kafka/KafkaTestEnvironmentImpl.java
-+++ b/flink-connectors/flink-connector-kafka/src/test/java/org/apache/flink/streaming/connectors/kafka/KafkaTestEnvironmentImpl.java
-@@ -359,6 +359,7 @@ public class KafkaTestEnvironmentImpl extends KafkaTestEnvironment {
- 				// ignore
- 			}
- 		}
-+		super.shutdown();
- 	}
- 
- 	protected KafkaServer getKafkaServer(int brokerId, File tmpFolder) throws Exception {
+diff --git a/sdk/src/main/java/com/google/cloud/dataflow/sdk/io/BigQueryIO.java b/sdk/src/main/java/com/google/cloud/dataflow/sdk/io/BigQueryIO.java
+index 5da265e6d7c..b5919823797 100644
+--- a/sdk/src/main/java/com/google/cloud/dataflow/sdk/io/BigQueryIO.java
++++ b/sdk/src/main/java/com/google/cloud/dataflow/sdk/io/BigQueryIO.java
+@@ -31,6 +31,8 @@ import com.google.cloud.dataflow.sdk.coders.StringUtf8Coder;
+ import com.google.cloud.dataflow.sdk.coders.TableRowJsonCoder;
+ import com.google.cloud.dataflow.sdk.coders.VarIntCoder;
+ import com.google.cloud.dataflow.sdk.coders.VoidCoder;
++import com.google.cloud.dataflow.sdk.io.BigQueryIO.Write.CreateDisposition;
++import com.google.cloud.dataflow.sdk.io.BigQueryIO.Write.WriteDisposition;
+ import com.google.cloud.dataflow.sdk.options.BigQueryOptions;
+ import com.google.cloud.dataflow.sdk.options.GcpOptions;
+ import com.google.cloud.dataflow.sdk.runners.DirectPipelineRunner;
+@@ -1086,7 +1088,8 @@ public class BigQueryIO {
+             TableSchema tableSchema = JSON_FACTORY.fromString(jsonTableSchema, TableSchema.class);
+             Bigquery client = Transport.newBigQueryClient(options).build();
+             BigQueryTableInserter inserter = new BigQueryTableInserter(client);
+-            inserter.tryCreateTable(tableReference, tableSchema);
++            inserter.getOrCreateTable(tableReference, WriteDisposition.WRITE_APPEND,
++                CreateDisposition.CREATE_IF_NEEDED, tableSchema);
+             createdTables.add(tableSpec);
+           }
+         }

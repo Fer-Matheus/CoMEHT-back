@@ -1,55 +1,19 @@
-diff --git a/core-integ/src/test/java/org/apache/directory/server/core/trigger/TriggerInterceptorIT.java b/core-integ/src/test/java/org/apache/directory/server/core/trigger/TriggerInterceptorIT.java
-index bd80d7dd73..e0eca663ba 100644
---- a/core-integ/src/test/java/org/apache/directory/server/core/trigger/TriggerInterceptorIT.java
-+++ b/core-integ/src/test/java/org/apache/directory/server/core/trigger/TriggerInterceptorIT.java
-@@ -32,9 +32,9 @@ import javax.naming.directory.BasicAttributes;
- import javax.naming.ldap.LdapContext;
- 
- import org.apache.directory.api.ldap.model.entry.AttributeUtils;
-+import org.apache.directory.api.ldap.sp.JavaStoredProcUtils;
- import org.apache.directory.server.core.integ.AbstractLdapTestUnit;
- import org.apache.directory.server.core.integ.FrameworkRunner;
--import org.apache.directory.shared.ldap.sp.JavaStoredProcUtils;
- import org.apache.directory.shared.ldap.trigger.TriggerUtils;
- import org.junit.Ignore;
- import org.junit.Test;
-diff --git a/protocol-ldap/src/main/java/org/apache/directory/server/ldap/handlers/extended/StoredProcedureExtendedOperationHandler.java b/protocol-ldap/src/main/java/org/apache/directory/server/ldap/handlers/extended/StoredProcedureExtendedOperationHandler.java
-index 4cb7522f7b..86953808ff 100644
---- a/protocol-ldap/src/main/java/org/apache/directory/server/ldap/handlers/extended/StoredProcedureExtendedOperationHandler.java
-+++ b/protocol-ldap/src/main/java/org/apache/directory/server/ldap/handlers/extended/StoredProcedureExtendedOperationHandler.java
-@@ -31,6 +31,7 @@ import org.apache.commons.lang.SerializationUtils;
- import org.apache.directory.api.ldap.codec.api.LdapApiServiceFactory;
- import org.apache.directory.api.ldap.model.entry.Entry;
- import org.apache.directory.api.ldap.model.name.Dn;
-+import org.apache.directory.api.ldap.sp.LdapContextParameter;
- import org.apache.directory.server.core.api.sp.StoredProcEngine;
- import org.apache.directory.server.core.api.sp.StoredProcEngineConfig;
- import org.apache.directory.server.core.api.sp.StoredProcExecutionManager;
-@@ -40,7 +41,6 @@ import org.apache.directory.server.ldap.LdapServer;
- import org.apache.directory.server.ldap.LdapSession;
- import org.apache.directory.shared.ldap.extras.extended.StoredProcedureRequest;
- import org.apache.directory.shared.ldap.extras.extended.StoredProcedureResponse;
--import org.apache.directory.shared.ldap.sp.LdapContextParameter;
- 
- 
- /**
-diff --git a/server-integ/src/test/java/org/apache/directory/server/operations/extended/StoredProcedureIT.java b/server-integ/src/test/java/org/apache/directory/server/operations/extended/StoredProcedureIT.java
-index c7a72e8a90..b04a26de61 100644
---- a/server-integ/src/test/java/org/apache/directory/server/operations/extended/StoredProcedureIT.java
-+++ b/server-integ/src/test/java/org/apache/directory/server/operations/extended/StoredProcedureIT.java
-@@ -35,6 +35,7 @@ import javax.naming.ldap.LdapContext;
- import org.apache.directory.api.ldap.model.constants.SupportedSaslMechanisms;
- import org.apache.directory.api.ldap.model.schema.normalizers.DeepTrimToLowerNormalizer;
- import org.apache.directory.api.ldap.model.schema.normalizers.OidNormalizer;
-+import org.apache.directory.api.ldap.sp.JavaStoredProcUtils;
- import org.apache.directory.junit.tools.MultiThreadedMultiInvoker;
- import org.apache.directory.server.annotations.CreateLdapServer;
- import org.apache.directory.server.annotations.CreateTransport;
-@@ -47,7 +48,6 @@ import org.apache.directory.server.ldap.handlers.bind.gssapi.GssapiMechanismHand
- import org.apache.directory.server.ldap.handlers.bind.ntlm.NtlmMechanismHandler;
- import org.apache.directory.server.ldap.handlers.bind.plain.PlainMechanismHandler;
- import org.apache.directory.server.ldap.handlers.extended.StoredProcedureExtendedOperationHandler;
--import org.apache.directory.shared.ldap.sp.JavaStoredProcUtils;
- import org.junit.Before;
- import org.junit.Rule;
- import org.junit.Test;
+diff --git a/src/main/org/apache/tools/ant/util/JavaEnvUtils.java b/src/main/org/apache/tools/ant/util/JavaEnvUtils.java
+index 7c980c89e..359174a75 100644
+--- a/src/main/org/apache/tools/ant/util/JavaEnvUtils.java
++++ b/src/main/org/apache/tools/ant/util/JavaEnvUtils.java
+@@ -187,8 +187,12 @@ public final class JavaEnvUtils {
+             javaVersionNumber = VERSION_9;
+             // at least Java9 and this should properly support the purely numeric version property
+             String v = System.getProperty(""java.specification.version"");
+-            javaVersionNumber = Integer.parseInt(v) * 10;
+-            javaVersion = v;
++            DeweyDecimal pv = new DeweyDecimal(v);
++            javaVersionNumber = pv.get(0) * 10;
++            if (pv.getSize() > 1) {
++                javaVersionNumber += pv.get(1);
++            }
++            javaVersion = pv.toString();
+         } catch (Throwable t) {
+             // swallow as we've hit the max class version that
+             // we have

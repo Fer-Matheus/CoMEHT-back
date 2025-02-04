@@ -1,0 +1,13 @@
+diff --git a/plugins/clustering/geronimo-clustering-wadi/src/test/java/org/apache/geronimo/clustering/wadi/WADISessionAdaptorTest.java b/plugins/clustering/geronimo-clustering-wadi/src/test/java/org/apache/geronimo/clustering/wadi/WADISessionAdaptorTest.java
+index 52f130dac5..f02503ffac 100644
+--- a/plugins/clustering/geronimo-clustering-wadi/src/test/java/org/apache/geronimo/clustering/wadi/WADISessionAdaptorTest.java
++++ b/plugins/clustering/geronimo-clustering-wadi/src/test/java/org/apache/geronimo/clustering/wadi/WADISessionAdaptorTest.java
+@@ -26,8 +26,6 @@ import org.codehaus.wadi.core.session.Session;
+ 
+ import com.agical.rmock.extension.junit.RMockTestCase;
+ 
+-import junit.framework.TestCase;
+-
+ /**
+  *
+  * @version $Rev:$ $Date:$

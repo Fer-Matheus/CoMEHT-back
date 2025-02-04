@@ -1,13 +1,20 @@
-diff --git a/viewer-skylark/src/org/nakedobjects/viewer/skylark/InteractionHandler.java b/viewer-skylark/src/org/nakedobjects/viewer/skylark/InteractionHandler.java
-index 545deb7381f..a8aef3a8f84 100644
---- a/viewer-skylark/src/org/nakedobjects/viewer/skylark/InteractionHandler.java
-+++ b/viewer-skylark/src/org/nakedobjects/viewer/skylark/InteractionHandler.java
-@@ -242,7 +242,7 @@ public void mouseMoved(MouseEvent me) {
-                 viewer.mouseMoved(location);
-                 spy.addTrace(overView, "" mouse location"", location);
+diff --git a/src/blocks/woody/java/org/apache/cocoon/woody/samples/Sex.java b/src/blocks/woody/java/org/apache/cocoon/woody/samples/Sex.java
+index 7ef358bfaa..f66960acc0 100644
+--- a/src/blocks/woody/java/org/apache/cocoon/woody/samples/Sex.java
++++ b/src/blocks/woody/java/org/apache/cocoon/woody/samples/Sex.java
+@@ -52,14 +52,13 @@ package org.apache.cocoon.woody.samples;
  
--  //              redraw();
-+                redraw();
-             }
-         }
-     }
+ import java.util.ArrayList;
+ import java.util.Collection;
+-import java.util.List;
+ import java.util.Locale;
+ 
+ import org.apache.cocoon.woody.datatype.Enum;
+ 
+ /**
+  * Description of Sex.
+- * @version CVS $Id: Sex.java,v 1.3 2003/11/07 22:04:38 ugo Exp $
++ * @version CVS $Id: Sex.java,v 1.4 2003/11/08 14:27:03 joerg Exp $
+  */
+ public class Sex implements Enum {
+ 

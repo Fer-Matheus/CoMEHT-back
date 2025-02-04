@@ -1,0 +1,14 @@
+diff --git a/flink-core/src/main/java/org/apache/flink/util/InstantiationUtil.java b/flink-core/src/main/java/org/apache/flink/util/InstantiationUtil.java
+index d98ba9351a6..9e455ed3e94 100644
+--- a/flink-core/src/main/java/org/apache/flink/util/InstantiationUtil.java
++++ b/flink-core/src/main/java/org/apache/flink/util/InstantiationUtil.java
+@@ -590,7 +590,8 @@ public final class InstantiationUtil {
+ 	}
+ 
+ 	public static void serializeObject(OutputStream out, Object o) throws IOException {
+-		ObjectOutputStream oos = new ObjectOutputStream(out);
++		ObjectOutputStream oos =
++			out instanceof ObjectOutputStream ? (ObjectOutputStream) out : new ObjectOutputStream(out);
+ 		oos.writeObject(o);
+ 	}
+ 

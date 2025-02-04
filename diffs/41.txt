@@ -1,13 +1,22 @@
-diff --git a/modules/geronimo-cxf/src/main/java/org/apache/geronimo/cxf/ejb/EJBMethodInvoker.java b/modules/geronimo-cxf/src/main/java/org/apache/geronimo/cxf/ejb/EJBMethodInvoker.java
-index e0716f39e8..1d7010fd3e 100644
---- a/modules/geronimo-cxf/src/main/java/org/apache/geronimo/cxf/ejb/EJBMethodInvoker.java
-+++ b/modules/geronimo-cxf/src/main/java/org/apache/geronimo/cxf/ejb/EJBMethodInvoker.java
-@@ -67,6 +67,8 @@ public class EJBMethodInvoker extends JAXWSMethodInvoker {
-         try {
-             result = container.invoke(this.deploymentInfo.getDeploymentID(), m, paramArray, null, null);
-         } catch (OpenEJBException e) {
-+            throw new Fault(e);           
-+        } catch (RuntimeException e) {
-             throw new Fault(e);
+diff --git a/src/java/org/apache/cassandra/net/IncomingTcpConnection.java b/src/java/org/apache/cassandra/net/IncomingTcpConnection.java
+index f6768d6213..ee44a1c443 100644
+--- a/src/java/org/apache/cassandra/net/IncomingTcpConnection.java
++++ b/src/java/org/apache/cassandra/net/IncomingTcpConnection.java
+@@ -98,7 +98,7 @@ public class IncomingTcpConnection extends Thread
+             {
+                 // save the endpoint so gossip will reconnect to it
+                 Gossiper.instance.addSavedEndpoint(from);
+-                logger.info(""Received "" + (isStream ? ""streaming "" : """") + ""connection from newer protocol version. Ignorning"");
++                logger.info(""Received "" + (isStream ? ""streaming "" : """") + ""connection from newer protocol version. Ignoring"");
+             }
+             else if (msg != null)
+             {
+@@ -160,7 +160,7 @@ public class IncomingTcpConnection extends Thread
+             MessagingService.instance().receive(message, id);
+             return message;
          }
-         
+-        logger.debug(""Received connection from newer protocol version {}. Ignorning message"", version);
++        logger.debug(""Received connection from newer protocol version {}. Ignoring message"", version);
+         return null;
+     }
+ 

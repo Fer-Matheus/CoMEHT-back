@@ -1,23 +1,21 @@
-diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/api/writer/RecordWriter.java b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/api/writer/RecordWriter.java
-index fa6fbd3ed2a..801e6eb5502 100644
---- a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/api/writer/RecordWriter.java
-+++ b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/api/writer/RecordWriter.java
-@@ -130,13 +130,12 @@ public class RecordWriter<T extends IOReadableWritable> {
- 					if (result.isFullRecord()) {
- 						break;
- 					}
--				} else {
--					BufferBuilder bufferBuilder =
--						targetPartition.getBufferProvider().requestBufferBuilderBlocking();
--					checkState(!bufferConsumers[targetChannel].isPresent());
--					bufferConsumers[targetChannel] = Optional.of(bufferBuilder.createBufferConsumer());
--					result = serializer.setNextBufferBuilder(bufferBuilder);
- 				}
-+				BufferBuilder bufferBuilder =
-+					targetPartition.getBufferProvider().requestBufferBuilderBlocking();
-+				checkState(!bufferConsumers[targetChannel].isPresent());
-+				bufferConsumers[targetChannel] = Optional.of(bufferBuilder.createBufferConsumer());
-+				result = serializer.setNextBufferBuilder(bufferBuilder);
- 			}
- 			checkState(!serializer.hasSerializedData(), ""All data should be written at once"");
- 		}
+diff --git a/sdk/src/test/java/com/google/cloud/dataflow/sdk/io/AvroSourceTest.java b/sdk/src/test/java/com/google/cloud/dataflow/sdk/io/AvroSourceTest.java
+index 7a1b13d2422..30c6321f3f5 100644
+--- a/sdk/src/test/java/com/google/cloud/dataflow/sdk/io/AvroSourceTest.java
++++ b/sdk/src/test/java/com/google/cloud/dataflow/sdk/io/AvroSourceTest.java
+@@ -47,7 +47,6 @@ import java.io.File;
+ import java.io.FileOutputStream;
+ import java.io.IOException;
+ import java.io.PushbackInputStream;
+-import java.nio.file.Paths;
+ import java.util.ArrayList;
+ import java.util.List;
+ import java.util.Random;
+@@ -231,7 +230,7 @@ public class AvroSourceTest {
+     }
+ 
+     AvroSource<Bird> source =
+-        AvroSource.from(Paths.get(tmpFolder.getRoot().toString(), baseName + ""*"").toString())
++        AvroSource.from(new File(tmpFolder.getRoot().toString(), baseName + ""*"").toString())
+             .withSchema(Bird.class);
+     List<Bird> actual = SourceTestUtils.readFromSource(source, null);
+     assertThat(actual, containsInAnyOrder(expected.toArray()));

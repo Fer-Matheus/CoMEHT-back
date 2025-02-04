@@ -1,0 +1,13 @@
+diff --git a/flink-runtime/src/test/java/org/apache/flink/runtime/jobmaster/slotpool/DefaultDeclarativeSlotPoolTest.java b/flink-runtime/src/test/java/org/apache/flink/runtime/jobmaster/slotpool/DefaultDeclarativeSlotPoolTest.java
+index 77773e98d4d..37216d25cd6 100644
+--- a/flink-runtime/src/test/java/org/apache/flink/runtime/jobmaster/slotpool/DefaultDeclarativeSlotPoolTest.java
++++ b/flink-runtime/src/test/java/org/apache/flink/runtime/jobmaster/slotpool/DefaultDeclarativeSlotPoolTest.java
+@@ -195,7 +195,7 @@ public class DefaultDeclarativeSlotPoolTest extends TestLogger {
+     }
+ 
+     @Test
+-    public void testOfferingTooManySlots() {
++    public void testOfferingTooManySlotsWillRejectSuperfluousSlots() {
+         final NewSlotsService notifyNewSlots = new NewSlotsService();
+         final DefaultDeclarativeSlotPool slotPool =
+                 createDefaultDeclarativeSlotPoolWithNewSlotsListener(notifyNewSlots);

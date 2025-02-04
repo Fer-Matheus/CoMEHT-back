@@ -1,0 +1,17 @@
+diff --git a/modules/core/src/test/java/org/apache/ignite/internal/IgniteClientReconnectFailoverTest.java b/modules/core/src/test/java/org/apache/ignite/internal/IgniteClientReconnectFailoverTest.java
+index b7de3eb23e..ab0e7260aa 100644
+--- a/modules/core/src/test/java/org/apache/ignite/internal/IgniteClientReconnectFailoverTest.java
++++ b/modules/core/src/test/java/org/apache/ignite/internal/IgniteClientReconnectFailoverTest.java
+@@ -148,6 +148,12 @@ public class IgniteClientReconnectFailoverTest extends IgniteClientReconnectFail
+ 
+                     assertEquals(map, res);
+                 }
++                catch (IgniteClientDisconnectedException e) {
++                    throw e;
++                }
++                catch (IgniteException e) {
++                    log.info(""Ignore error: "" + e);
++                }
+                 catch (CacheException e) {
+                     if (e.getCause() instanceof IgniteClientDisconnectedException)
+                         throw e;

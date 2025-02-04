@@ -1,0 +1,22 @@
+diff --git a/bootstrap-partition/src/main/java/org/apache/directory/server/schema/bootstrap/partition/DbFileListing.java b/bootstrap-partition/src/main/java/org/apache/directory/server/schema/bootstrap/partition/DbFileListing.java
+index bcd3417317..f0eff8c5fa 100644
+--- a/bootstrap-partition/src/main/java/org/apache/directory/server/schema/bootstrap/partition/DbFileListing.java
++++ b/bootstrap-partition/src/main/java/org/apache/directory/server/schema/bootstrap/partition/DbFileListing.java
+@@ -112,14 +112,17 @@ public class DbFileListing
+     {
+         Set<String> attributes = new HashSet<String>();
+         Iterator<String> ii = iterator();
++        
+         while( ii.hasNext() )
+         {
+             String name = ii.next();
++            
+             if ( name2type.get( name ) == DbFileType.USER_INDEX )
+             {
+                 attributes.add( getIndexAttributeName( name ) );
+             }
+         }
++        
+         return attributes;
+     }
+ }

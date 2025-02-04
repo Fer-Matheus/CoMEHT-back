@@ -1,21 +1,16 @@
-diff --git a/flink-tests/src/test/java/org/apache/flink/test/checkpointing/ProcessingTimeWindowCheckpointingITCase.java b/flink-tests/src/test/java/org/apache/flink/test/checkpointing/ProcessingTimeWindowCheckpointingITCase.java
-index 0146fc012ce..27b7811f215 100644
---- a/flink-tests/src/test/java/org/apache/flink/test/checkpointing/ProcessingTimeWindowCheckpointingITCase.java
-+++ b/flink-tests/src/test/java/org/apache/flink/test/checkpointing/ProcessingTimeWindowCheckpointingITCase.java
-@@ -332,9 +332,14 @@ public class ProcessingTimeWindowCheckpointingITCase extends TestLogger {
-                 return false;
-             }
+diff --git a/sdks/java/io/google-cloud-platform/src/main/java/org/apache/beam/sdk/io/gcp/bigquery/PassThroughThenCleanup.java b/sdks/java/io/google-cloud-platform/src/main/java/org/apache/beam/sdk/io/gcp/bigquery/PassThroughThenCleanup.java
+index 75f7b93b4a1..f49c4e1954f 100644
+--- a/sdks/java/io/google-cloud-platform/src/main/java/org/apache/beam/sdk/io/gcp/bigquery/PassThroughThenCleanup.java
++++ b/sdks/java/io/google-cloud-platform/src/main/java/org/apache/beam/sdk/io/gcp/bigquery/PassThroughThenCleanup.java
+@@ -53,9 +53,9 @@ class PassThroughThenCleanup<T> extends PTransform<PCollection<T>, PCollection<T
+     PCollectionTuple outputs = input.apply(ParDo.of(new IdentityFn<T>())
+         .withOutputTags(mainOutput, TupleTagList.of(cleanupSignal)));
  
--            for (int i : windowCounts.values()) {
--                if (countPerElementExpected != i) {
-+            for (Map.Entry<Long, Integer> e : windowCounts.entrySet()) {
-+                if (e.getValue() < countPerElementExpected) {
-                     return false;
-+                } else if (e.getValue() > countPerElementExpected) {
-+                    fail(
-+                            String.format(
-+                                    ""counter too big for %d: %d (expected %d)"",
-+                                    e.getKey(), e.getValue(), countPerElementExpected));
-                 }
-             }
+-    PCollectionView<Void> cleanupSignalView = outputs.get(cleanupSignal)
++    PCollectionView<Iterable<Void>> cleanupSignalView = outputs.get(cleanupSignal)
+         .setCoder(VoidCoder.of())
+-        .apply(View.<Void>asSingleton().withDefaultValue(null));
++        .apply(View.<Void>asIterable());
  
+     input.getPipeline()
+         .apply(""Create(CleanupOperation)"", Create.of(cleanupOperation))

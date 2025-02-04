@@ -1,15 +1,36 @@
-diff --git a/modules/tomcat/src/java/org/apache/geronimo/tomcat/ValveGBean.java b/modules/tomcat/src/java/org/apache/geronimo/tomcat/ValveGBean.java
-index 1644a100de..46227f8a74 100644
---- a/modules/tomcat/src/java/org/apache/geronimo/tomcat/ValveGBean.java
-+++ b/modules/tomcat/src/java/org/apache/geronimo/tomcat/ValveGBean.java
-@@ -54,9 +54,8 @@ public class ValveGBean extends BaseGBean implements GBeanLifecycle, ObjectRetri
-         
-         if (nextValve != null){
-             if (!(nextValve.getInternalObject() instanceof Valve)){
--                throw new IllegalArgumentException(""className cannot be null."");                
-+                throw new IllegalArgumentException(""The class given as the NextValve attribute does not wrap an object of org.apache.catalina.Valve type."");                
-             }
--            
-             this.nextValve = nextValve;
-         } else {
-             this.nextValve = null;
+diff --git a/runners/direct-java/src/test/java/org/apache/beam/runners/direct/DirectRunnerApiSurfaceTest.java b/runners/direct-java/src/test/java/org/apache/beam/runners/direct/DirectRunnerApiSurfaceTest.java
+index 6ef93010293..9b8cde168d5 100644
+--- a/runners/direct-java/src/test/java/org/apache/beam/runners/direct/DirectRunnerApiSurfaceTest.java
++++ b/runners/direct-java/src/test/java/org/apache/beam/runners/direct/DirectRunnerApiSurfaceTest.java
+@@ -65,6 +65,7 @@ public class DirectRunnerApiSurfaceTest {
+                 WatermarkManager.class /* TODO: BEAM-4237 Consider moving to local-java */)
+             .pruningPattern(""org[.]apache[.]beam[.].*Test.*"")
+             .pruningPattern(""org[.]apache[.]beam[.].*IT"")
++            .pruningPattern(""org[.]checkerframework[.].*[.]qual[.].*"")
+             .pruningPattern(""java[.]io.*"")
+             .pruningPattern(""java[.]lang.*"")
+             .pruningPattern(""java[.]util.*"");
+diff --git a/sdks/java/extensions/google-cloud-platform-core/src/test/java/org/apache/beam/sdk/extensions/gcp/GcpCoreApiSurfaceTest.java b/sdks/java/extensions/google-cloud-platform-core/src/test/java/org/apache/beam/sdk/extensions/gcp/GcpCoreApiSurfaceTest.java
+index e16e521e867..bb2d4e07b7a 100644
+--- a/sdks/java/extensions/google-cloud-platform-core/src/test/java/org/apache/beam/sdk/extensions/gcp/GcpCoreApiSurfaceTest.java
++++ b/sdks/java/extensions/google-cloud-platform-core/src/test/java/org/apache/beam/sdk/extensions/gcp/GcpCoreApiSurfaceTest.java
+@@ -44,6 +44,7 @@ public class GcpCoreApiSurfaceTest {
+         ApiSurface.ofPackage(thisPackage, thisClassLoader)
+             .pruningPattern(""org[.]apache[.]beam[.].*Test.*"")
+             .pruningPattern(""org[.]apache[.]beam[.].*IT"")
++            .pruningPattern(""org[.]checkerframework[.].*[.]qual[.].*"")
+             .pruningPattern(""java[.]lang.*"")
+             .pruningPattern(""java[.]util.*"");
+ 
+diff --git a/sdks/java/io/google-cloud-platform/src/test/java/org/apache/beam/sdk/io/gcp/GcpApiSurfaceTest.java b/sdks/java/io/google-cloud-platform/src/test/java/org/apache/beam/sdk/io/gcp/GcpApiSurfaceTest.java
+index 704212b1bcc..825542a87ad 100644
+--- a/sdks/java/io/google-cloud-platform/src/test/java/org/apache/beam/sdk/io/gcp/GcpApiSurfaceTest.java
++++ b/sdks/java/io/google-cloud-platform/src/test/java/org/apache/beam/sdk/io/gcp/GcpApiSurfaceTest.java
+@@ -51,6 +51,7 @@ public class GcpApiSurfaceTest {
+             .pruningPattern(BigqueryClient.class.getName())
+             .pruningPattern(""org[.]apache[.]beam[.].*Test.*"")
+             .pruningPattern(""org[.]apache[.]beam[.].*IT"")
++            .pruningPattern(""org[.]checkerframework[.].*[.]qual[.].*"")
+             .pruningPattern(""java[.]lang.*"")
+             .pruningPattern(""java[.]util.*"");
+ 

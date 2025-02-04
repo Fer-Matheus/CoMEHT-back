@@ -1,0 +1,12 @@
+diff --git a/blocks/cocoon-xsp/cocoon-xsp-impl/src/main/java/org/apache/cocoon/components/language/markup/xsp/XSPSessionFwHelper.java b/blocks/cocoon-xsp/cocoon-xsp-impl/src/main/java/org/apache/cocoon/components/language/markup/xsp/XSPSessionFwHelper.java
+index b51fcdce2e..befbcb05c3 100644
+--- a/blocks/cocoon-xsp/cocoon-xsp-impl/src/main/java/org/apache/cocoon/components/language/markup/xsp/XSPSessionFwHelper.java
++++ b/blocks/cocoon-xsp/cocoon-xsp-impl/src/main/java/org/apache/cocoon/components/language/markup/xsp/XSPSessionFwHelper.java
+@@ -28,6 +28,7 @@ import org.w3c.dom.DocumentFragment;
+  * The <code>Session-fw</code> object helper
+  *
+  * @version $Id$
++ * @deprecated This class is deprecated and will be removed in future versions.
+  * @since 2.1.1
+  */
+ public class XSPSessionFwHelper {

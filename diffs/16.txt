@@ -1,47 +1,13 @@
-diff --git a/protocol-dns/src/main/java/org/apache/directory/server/dns/store/jndi/DnsOperation.java b/protocol-dns/src/main/java/org/apache/directory/server/dns/store/jndi/DnsOperation.java
-index ff6c7988ee..9f161ae4b4 100644
---- a/protocol-dns/src/main/java/org/apache/directory/server/dns/store/jndi/DnsOperation.java
-+++ b/protocol-dns/src/main/java/org/apache/directory/server/dns/store/jndi/DnsOperation.java
-@@ -20,7 +20,6 @@
- package org.apache.directory.server.dns.store.jndi;
+diff --git a/archiva-modules/archiva-database/src/main/java/org/apache/maven/archiva/database/browsing/DefaultRepositoryBrowsing.java b/archiva-modules/archiva-database/src/main/java/org/apache/maven/archiva/database/browsing/DefaultRepositoryBrowsing.java
+index 5e75f059d..7b55a3b0f 100644
+--- a/archiva-modules/archiva-database/src/main/java/org/apache/maven/archiva/database/browsing/DefaultRepositoryBrowsing.java
++++ b/archiva-modules/archiva-database/src/main/java/org/apache/maven/archiva/database/browsing/DefaultRepositoryBrowsing.java
+@@ -212,8 +212,6 @@ private void processSnapshots( List<String> versions )
+     {
+         Map<String, String> snapshots = new HashMap<String, String>();
  
- 
--import java.io.Serializable;
- import java.util.Set;
- 
- import javax.naming.Name;
-@@ -34,7 +33,7 @@ import org.apache.directory.server.dns.messages.ResourceRecord;
-  *
-  * @author <a href=""mailto:dev@directory.apache.org"">Apache Directory Project</a>
-  */
--public interface DnsOperation extends Serializable
-+public interface DnsOperation
- {
-     /**
-      * The command pattern execute method.
-diff --git a/protocol-dns/src/main/java/org/apache/directory/server/dns/store/jndi/operations/GetFlatRecord.java b/protocol-dns/src/main/java/org/apache/directory/server/dns/store/jndi/operations/GetFlatRecord.java
-index 576eb14111..81d5f87cb8 100644
---- a/protocol-dns/src/main/java/org/apache/directory/server/dns/store/jndi/operations/GetFlatRecord.java
-+++ b/protocol-dns/src/main/java/org/apache/directory/server/dns/store/jndi/operations/GetFlatRecord.java
-@@ -49,8 +49,6 @@ import org.apache.directory.server.dns.store.jndi.DnsOperation;
-  */
- public class GetFlatRecord implements DnsOperation
- {
--    private static final long serialVersionUID = 4931303293468915435L;
+-        log.info( ""Processing snapshots."" );
 -
-     /** The name of the question to get. */
-     private final QuestionRecord question;
- 
-diff --git a/protocol-dns/src/main/java/org/apache/directory/server/dns/store/jndi/operations/GetRecords.java b/protocol-dns/src/main/java/org/apache/directory/server/dns/store/jndi/operations/GetRecords.java
-index 6d1dc9630c..7f3bf41ea1 100644
---- a/protocol-dns/src/main/java/org/apache/directory/server/dns/store/jndi/operations/GetRecords.java
-+++ b/protocol-dns/src/main/java/org/apache/directory/server/dns/store/jndi/operations/GetRecords.java
-@@ -56,8 +56,6 @@ import org.apache.directory.shared.ldap.model.constants.SchemaConstants;
-  */
- public class GetRecords implements DnsOperation
- {
--    private static final long serialVersionUID = 1077580995617778894L;
--
-     /** The name of the question to get. */
-     private final QuestionRecord question;
- 
+         for ( String version : versions )
+         {
+             if ( VersionUtil.isSnapshot( version ) )

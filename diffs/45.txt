@@ -1,23 +1,17 @@
-diff --git a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/namenode/ha/BootstrapStandby.java b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/namenode/ha/BootstrapStandby.java
-index 481dde3cd2d..7943c7be1f3 100644
---- a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/namenode/ha/BootstrapStandby.java
-+++ b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/namenode/ha/BootstrapStandby.java
-@@ -36,6 +36,8 @@
- import org.apache.hadoop.ha.HAServiceProtocol;
- import org.apache.hadoop.ha.HAServiceStatus;
- import org.apache.hadoop.ha.HAServiceProtocol.HAServiceState;
-+import org.apache.hadoop.ha.HAServiceProtocol.RequestSource;
-+import org.apache.hadoop.ha.HAServiceProtocol.StateChangeRequestInfo;
- import org.apache.hadoop.ha.ServiceFailedException;
- import org.apache.hadoop.hdfs.DFSUtil;
- import org.apache.hadoop.hdfs.HAUtil;
-@@ -251,7 +253,8 @@ private int doRun() throws IOException {
-   private void transitionOtherNNActive()
-       throws AccessControlException, ServiceFailedException, IOException {
-     LOG.info(""Transitioning the running namenode to active..."");
--    createHAProtocolProxy().transitionToActive();    
-+    createHAProtocolProxy().transitionToActive(
-+        new StateChangeRequestInfo(RequestSource.REQUEST_BY_USER));
-     LOG.info(""Successful"");
-   }
- 
+diff --git a/src/java/org/apache/cassandra/db/compaction/CompactionTask.java b/src/java/org/apache/cassandra/db/compaction/CompactionTask.java
+index 0b2cb54fbd..cd7d3d9367 100644
+--- a/src/java/org/apache/cassandra/db/compaction/CompactionTask.java
++++ b/src/java/org/apache/cassandra/db/compaction/CompactionTask.java
+@@ -261,8 +261,11 @@ public class CompactionTask extends AbstractCompactionTask
+         Map<Integer, Long> mergedRows = new HashMap<Integer, Long>();
+         for (int i = 0; i < counts.length; i++)
+         {
+-            int rows = i + 1;
+             long count = counts[i];
++            if (count == 0)
++                continue;
++
++            int rows = i + 1;
+             totalSourceRows += rows * count;
+             mergeSummary.append(String.format(""%d:%d, "", rows, count));
+             mergedRows.put(rows, count);

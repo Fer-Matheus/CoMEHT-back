@@ -1,0 +1,22 @@
+diff --git a/flink-yarn-tests/src/test/java/org/apache/flink/yarn/YARNFileReplicationITCase.java b/flink-yarn-tests/src/test/java/org/apache/flink/yarn/YARNFileReplicationITCase.java
+index 50658385d12..85cde8c4c60 100644
+--- a/flink-yarn-tests/src/test/java/org/apache/flink/yarn/YARNFileReplicationITCase.java
++++ b/flink-yarn-tests/src/test/java/org/apache/flink/yarn/YARNFileReplicationITCase.java
+@@ -114,7 +114,16 @@ public class YARNFileReplicationITCase extends YarnTestBase {
+                 final JobResult jobResult = jobResultCompletableFuture.get();
+ 
+                 assertThat(jobResult, is(notNullValue()));
+-                assertThat(jobResult.getSerializedThrowable().isPresent(), is(false));
++                jobResult
++                        .getSerializedThrowable()
++                        .ifPresent(
++                                serializedThrowable -> {
++                                    throw new AssertionError(
++                                            ""Job failed"",
++                                            serializedThrowable.deserializeError(
++                                                    YARNFileReplicationITCase.class
++                                                            .getClassLoader()));
++                                });
+ 
+                 extraVerification(configuration, applicationId);
+ 

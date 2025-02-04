@@ -1,29 +1,12 @@
-diff --git a/core-integ/src/test/java/org/apache/directory/server/core/jndi/AddIT.java b/core-integ/src/test/java/org/apache/directory/server/core/operations/add/AddIT.java
-similarity index 98%
-rename from core-integ/src/test/java/org/apache/directory/server/core/jndi/AddIT.java
-rename to core-integ/src/test/java/org/apache/directory/server/core/operations/add/AddIT.java
-index a8984c7610..a0894e0e0e 100644
---- a/core-integ/src/test/java/org/apache/directory/server/core/jndi/AddIT.java
-+++ b/core-integ/src/test/java/org/apache/directory/server/core/operations/add/AddIT.java
-@@ -17,7 +17,7 @@
-  *  under the License.
-  *
-  */
--package org.apache.directory.server.core.jndi;
-+package org.apache.directory.server.core.operations.add;
- 
- 
- import static org.apache.directory.server.core.integ.IntegrationUtils.getAdminConnection;
-diff --git a/core-integ/src/test/java/org/apache/directory/server/core/suites/MigratedStockCoreISuite.java b/core-integ/src/test/java/org/apache/directory/server/core/suites/MigratedStockCoreISuite.java
-index 1c5f2272b8..34d1bb44c0 100644
---- a/core-integ/src/test/java/org/apache/directory/server/core/suites/MigratedStockCoreISuite.java
-+++ b/core-integ/src/test/java/org/apache/directory/server/core/suites/MigratedStockCoreISuite.java
-@@ -39,7 +39,7 @@ import org.apache.directory.server.core.collective.CollectiveAttributeServiceIT;
- import org.apache.directory.server.core.event.EventServiceIT;
- import org.apache.directory.server.core.exception.ExceptionServiceIT;
- import org.apache.directory.server.core.integ.FrameworkSuite;
--import org.apache.directory.server.core.jndi.AddIT;
-+import org.apache.directory.server.core.operations.add.AddIT;
- import org.apache.directory.server.core.operations.add.PasswordHashingInterceptorTest;
- import org.apache.directory.server.core.operations.move.MoveIT;
- import org.junit.runner.RunWith;
+diff --git a/archiva-modules/archiva-web/archiva-rest/archiva-rest-api/src/main/java/org/apache/archiva/rest/api/services/RepositoriesService.java b/archiva-modules/archiva-web/archiva-rest/archiva-rest-api/src/main/java/org/apache/archiva/rest/api/services/RepositoriesService.java
+index 8272f2701..359f9e73a 100644
+--- a/archiva-modules/archiva-web/archiva-rest/archiva-rest-api/src/main/java/org/apache/archiva/rest/api/services/RepositoriesService.java
++++ b/archiva-modules/archiva-web/archiva-rest/archiva-rest-api/src/main/java/org/apache/archiva/rest/api/services/RepositoriesService.java
+@@ -100,6 +100,7 @@ Boolean scheduleDownloadRemoteIndex( @QueryParam( ""repositoryId"" ) String reposi
+     @RedbackAuthorization( noPermission = true )
+     /**
+      * permission are checked in impl
++     * @since 1.4-M2
+      */
+     Boolean deleteArtifact( @QueryParam( """" ) Artifact artifact, @QueryParam( ""repositoryId"" ) String repositoryId )
+         throws ArchivaRestServiceException;

@@ -1,14 +1,12 @@
-diff --git a/modules/core/src/main/java/org/apache/ignite/util/AttributeNodeFilter.java b/modules/core/src/main/java/org/apache/ignite/util/AttributeNodeFilter.java
-index e2b972be46..fed0d43f26 100644
---- a/modules/core/src/main/java/org/apache/ignite/util/AttributeNodeFilter.java
-+++ b/modules/core/src/main/java/org/apache/ignite/util/AttributeNodeFilter.java
-@@ -65,6 +65,9 @@ import org.jetbrains.annotations.Nullable;
-  * {@code cpu-group} and {@code memory-group} attributes set to value {@code high}.
-  */
- public class AttributeNodeFilter implements IgnitePredicate<ClusterNode> {
-+    /** */
-+    private static final long serialVersionUID = 0L;
-+
-     /** Attributes. */
-     private final Map<String, Object> attrs;
- 
+diff --git a/test/unit/org/apache/cassandra/config/DatabaseDescriptorRefTest.java b/test/unit/org/apache/cassandra/config/DatabaseDescriptorRefTest.java
+index b91585411d..b50a050bba 100644
+--- a/test/unit/org/apache/cassandra/config/DatabaseDescriptorRefTest.java
++++ b/test/unit/org/apache/cassandra/config/DatabaseDescriptorRefTest.java
+@@ -70,6 +70,7 @@ public class DatabaseDescriptorRefTest
+     ""org.apache.cassandra.config.Config$DiskOptimizationStrategy"",
+     ""org.apache.cassandra.config.Config$InternodeCompression"",
+     ""org.apache.cassandra.config.Config$MemtableAllocationType"",
++    ""org.apache.cassandra.config.Config$RepairCommandPoolFullStrategy"",
+     ""org.apache.cassandra.config.Config$UserFunctionTimeoutPolicy"",
+     ""org.apache.cassandra.config.ParameterizedClass"",
+     ""org.apache.cassandra.config.EncryptionOptions"",

@@ -1,26 +1,24 @@
-diff --git a/core-api/src/main/java/org/apache/directory/server/core/LdapCoreSessionConnection.java b/core-api/src/main/java/org/apache/directory/server/core/LdapCoreSessionConnection.java
-index 39394b6541..98d0935e57 100644
---- a/core-api/src/main/java/org/apache/directory/server/core/LdapCoreSessionConnection.java
-+++ b/core-api/src/main/java/org/apache/directory/server/core/LdapCoreSessionConnection.java
-@@ -60,7 +60,7 @@ import org.apache.directory.shared.ldap.model.message.CompareRequestImpl;
- import org.apache.directory.shared.ldap.model.message.CompareResponse;
- import org.apache.directory.shared.ldap.model.message.CompareResponseImpl;
- import org.apache.directory.shared.ldap.model.message.DeleteRequest;
--import org.apache.directory.shared.ldap.message.DeleteRequestImpl;
-+import org.apache.directory.shared.ldap.model.message.DeleteRequestImpl;
- import org.apache.directory.shared.ldap.model.message.DeleteResponse;
- import org.apache.directory.shared.ldap.message.DeleteResponseImpl;
- import org.apache.directory.shared.ldap.model.message.ExtendedRequest;
-diff --git a/ldap-client-test/src/test/java/org/apache/directory/shared/client/api/operations/ClientDeleteRequestTest.java b/ldap-client-test/src/test/java/org/apache/directory/shared/client/api/operations/ClientDeleteRequestTest.java
-index dc1b5b83d3..ed6ab9d90c 100644
---- a/ldap-client-test/src/test/java/org/apache/directory/shared/client/api/operations/ClientDeleteRequestTest.java
-+++ b/ldap-client-test/src/test/java/org/apache/directory/shared/client/api/operations/ClientDeleteRequestTest.java
-@@ -43,7 +43,7 @@ import org.apache.directory.server.core.integ.AbstractLdapTestUnit;
- import org.apache.directory.server.core.integ.FrameworkRunner;
- import org.apache.directory.shared.ldap.model.exception.LdapException;
- import org.apache.directory.shared.ldap.model.message.DeleteRequest;
--import org.apache.directory.shared.ldap.message.DeleteRequestImpl;
-+import org.apache.directory.shared.ldap.model.message.DeleteRequestImpl;
- import org.apache.directory.shared.ldap.model.message.DeleteResponse;
- import org.apache.directory.shared.ldap.model.message.ResultCodeEnum;
- import org.apache.directory.shared.ldap.model.name.Dn;
+diff --git a/src/main/org/apache/tools/ant/taskdefs/EchoXML.java b/src/main/org/apache/tools/ant/taskdefs/EchoXML.java
+index f2cecfd77..185a0d539 100755
+--- a/src/main/org/apache/tools/ant/taskdefs/EchoXML.java
++++ b/src/main/org/apache/tools/ant/taskdefs/EchoXML.java
+@@ -32,10 +32,8 @@ import org.w3c.dom.Element;
+ 
+ /**
+  * Echo XML.
+- * Notice how this is a ProjectComponent and not a task, which means that certain
+- * well-known task operations (such as {@link org.apache.tools.ant.Task#getLocation()}) do not work.
+  *
+- * Other limitations
++ * Known limitations:
+  * <ol>
+  * <li>Currently no XMLNS support</li>
+  * <li>Processing Instructions get ignored</li>
+@@ -46,7 +44,6 @@ import org.w3c.dom.Element;
+  */
+ public class EchoXML extends XMLFragment {
+ 
+-
+     private File file;
+     private boolean append;
+     public static final String ERROR_NO_XML = ""No nested XML specified"";

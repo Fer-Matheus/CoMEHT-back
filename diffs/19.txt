@@ -1,40 +1,13 @@
-diff --git a/core-api/src/main/java/org/apache/directory/server/core/api/LdapCoreSessionConnection.java b/core-api/src/main/java/org/apache/directory/server/core/api/LdapCoreSessionConnection.java
-index 397e9f51ea..d237ab48ac 100644
---- a/core-api/src/main/java/org/apache/directory/server/core/api/LdapCoreSessionConnection.java
-+++ b/core-api/src/main/java/org/apache/directory/server/core/api/LdapCoreSessionConnection.java
-@@ -154,7 +154,7 @@ public class LdapCoreSessionConnection extends AbstractLdapConnection
-     /**
-      * {@inheritDoc}
-      */
--    public boolean connect() throws LdapException, IOException
-+    public boolean connect() throws LdapException
-     {
-         return true;
+diff --git a/src/tests/junit/org/apache/tools/ant/taskdefs/optional/PropertyFileTest.java b/src/tests/junit/org/apache/tools/ant/taskdefs/optional/PropertyFileTest.java
+index b972eaaf5..71af44f66 100644
+--- a/src/tests/junit/org/apache/tools/ant/taskdefs/optional/PropertyFileTest.java
++++ b/src/tests/junit/org/apache/tools/ant/taskdefs/optional/PropertyFileTest.java
+@@ -158,7 +158,7 @@ public class PropertyFileTest {
+ 
+         Properties props = getTestProperties();
+         LocalDate currentDate = LocalDate.now().plusDays(delta);
+-        assertEquals(String.format(""%d/%02d/%d"", currentDate.getYear(), currentDate.getMonthValue(),
++        assertEquals(String.format(""%d/%02d/%02d"", currentDate.getYear(), currentDate.getMonthValue(),
+                 currentDate.getDayOfMonth()), props.getProperty(""date""));
      }
-@@ -1152,7 +1152,7 @@ public class LdapCoreSessionConnection extends AbstractLdapConnection
-     /**
-      * {@inheritDoc}
-      */
--    public void bind() throws LdapException, IOException
-+    public void bind() throws LdapException
-     {
-         throw new UnsupportedOperationException(
-             ""Bind operation using LdapConnectionConfig are not supported on CoreSession based connection"" );
-@@ -1162,7 +1162,7 @@ public class LdapCoreSessionConnection extends AbstractLdapConnection
-     /**
-      * {@inheritDoc}
-      */
--    public void anonymousBind() throws LdapException, IOException
-+    public void anonymousBind() throws LdapException
-     {
-         BindRequest bindRequest = new BindRequestImpl();
-         bindRequest.setName( """" );
-@@ -1177,7 +1177,7 @@ public class LdapCoreSessionConnection extends AbstractLdapConnection
-     /**
-      * {@inheritDoc}
-      */
--    public BindResponse bind( BindRequest bindRequest ) throws LdapException, IOException
-+    public BindResponse bind( BindRequest bindRequest ) throws LdapException
-     {
-         if ( bindRequest == null )
-         {
+ 
