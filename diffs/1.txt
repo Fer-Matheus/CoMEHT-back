@@ -1,12 +1,14 @@
-diff --git a/src/blocks/scratchpad/java/org/apache/cocoon/transformation/IncludeTransformer.java b/src/blocks/scratchpad/java/org/apache/cocoon/transformation/IncludeTransformer.java
-index 709ce4b1ff..e3562b7001 100644
---- a/src/blocks/scratchpad/java/org/apache/cocoon/transformation/IncludeTransformer.java
-+++ b/src/blocks/scratchpad/java/org/apache/cocoon/transformation/IncludeTransformer.java
-@@ -49,6 +49,7 @@ import java.util.HashMap;
- import java.util.Map;
+diff --git a/providers/gogrid/src/test/java/org/jclouds/gogrid/GoGridLiveTestDisabled.java b/providers/gogrid/src/test/java/org/jclouds/gogrid/GoGridLiveTestDisabled.java
+index 8648076e32..962891d560 100644
+--- a/providers/gogrid/src/test/java/org/jclouds/gogrid/GoGridLiveTestDisabled.java
++++ b/providers/gogrid/src/test/java/org/jclouds/gogrid/GoGridLiveTestDisabled.java
+@@ -354,8 +354,7 @@ public class GoGridLiveTestDisabled extends BaseVersionedServiceLiveTest {
  
- /**
-+ * @cocoon.sitemap.component.documentation
-  * <p>A simple transformer including resolvable sources (accessed through
-  * Cocoon's {@link SourceResolver} from its input.</p>
-  *
+       socketOpen.apply(socket);
+ 
+-      SshClient sshClient = new SshjSshClient(new BackoffLimitedRetryHandler(), socket, 60000,
+-               instanceCredentials.identity, instanceCredentials.credential, null);
++      SshClient sshClient = context.utils().injector().getInstance(SshClient.Factory.class).create(socket, instanceCredentials);
+       sshClient.connect();
+       String output = sshClient.exec(""df"").getOutput();
+       assertTrue(output.contains(""Filesystem""),

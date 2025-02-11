@@ -1,24 +1,19 @@
-diff --git a/core/src/main/java/org/apache/ldap/server/jndi/ContextFactoryConfiguration.java b/core/src/main/java/org/apache/ldap/server/jndi/ContextFactoryConfiguration.java
-index 1748e0afa5..7baf918ecd 100644
---- a/core/src/main/java/org/apache/ldap/server/jndi/ContextFactoryConfiguration.java
-+++ b/core/src/main/java/org/apache/ldap/server/jndi/ContextFactoryConfiguration.java
-@@ -27,6 +27,7 @@ import org.apache.ldap.server.configuration.StartupConfiguration;
- import org.apache.ldap.server.invocation.Invocation;
- import org.apache.ldap.server.schema.GlobalRegistries;
- 
-+/** FIXME Rename to ContextFactoryContext */
- public interface ContextFactoryConfiguration
- {
-     /**
-diff --git a/core/src/main/java/org/apache/ldap/server/jndi/DefaultContextFactoryConfiguration.java b/core/src/main/java/org/apache/ldap/server/jndi/DefaultContextFactoryConfiguration.java
-index bc9954a1d2..4b9b91369f 100644
---- a/core/src/main/java/org/apache/ldap/server/jndi/DefaultContextFactoryConfiguration.java
-+++ b/core/src/main/java/org/apache/ldap/server/jndi/DefaultContextFactoryConfiguration.java
-@@ -66,6 +66,7 @@ import org.apache.ldap.server.schema.bootstrap.BootstrapSchemaLoader;
- 
- /**
-  * Provides everything required to {@link AbstractContextFactory}.
-+ * FIXME Rename to DefaultContextFactoryContext
-  * 
-  * @author <a href=""mailto:dev@directory.apache.org"">Apache Directory Project</a>
-  * @version $Rev$
+diff --git a/apis/openstack-nova/src/main/java/org/jclouds/openstack/nova/v2_0/options/CreateServerOptions.java b/apis/openstack-nova/src/main/java/org/jclouds/openstack/nova/v2_0/options/CreateServerOptions.java
+index 3f5347c360..3d13d553c8 100644
+--- a/apis/openstack-nova/src/main/java/org/jclouds/openstack/nova/v2_0/options/CreateServerOptions.java
++++ b/apis/openstack-nova/src/main/java/org/jclouds/openstack/nova/v2_0/options/CreateServerOptions.java
+@@ -292,13 +292,10 @@ public class CreateServerOptions implements MapBinder {
+     * Custom cloud server metadata can also be supplied at launch time. This
+     * metadata is stored in the API system where it is retrievable by querying
+     * the API for server status. The maximum size of the metadata key and value
+-    * is each 255 bytes and the maximum number of key-value pairs that can be
+-    * supplied per server is 5.
++    * is each 255 bytes.
+     */
+    public CreateServerOptions metadata(Map<String, String> metadata) {
+       checkNotNull(metadata, ""metadata"");
+-      checkArgument(metadata.size() <= 5,
+-            ""you cannot have more then 5 metadata values.  You specified: "" + metadata.size());
+       for (Entry<String, String> entry : metadata.entrySet()) {
+          checkArgument(
+                entry.getKey().getBytes().length < 255,

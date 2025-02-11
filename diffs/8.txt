@@ -1,13 +1,13 @@
-diff --git a/core-plugin/src/main/java/org/apache/directory/server/core/tools/schema/DirectorySchemaToolMojo.java b/core-plugin/src/main/java/org/apache/directory/server/core/tools/schema/DirectorySchemaToolMojo.java
-index 6074c2bda0..56a5a5c90a 100644
---- a/core-plugin/src/main/java/org/apache/directory/server/core/tools/schema/DirectorySchemaToolMojo.java
-+++ b/core-plugin/src/main/java/org/apache/directory/server/core/tools/schema/DirectorySchemaToolMojo.java
-@@ -152,7 +152,7 @@ public class DirectorySchemaToolMojo extends AbstractMojo
-         ProducerTypeEnum type = null;
-         for ( int ii = 0; ii < types.size(); ii++ )
-         {
--            type = ( ProducerTypeEnum ) types.get( ii );
-+            type = types.get( ii );
- 
-             if ( exists( schema.getFullDefaultBaseClassName( type ), type ) )
-             {
+diff --git a/jena-arq/src/main/java/org/apache/jena/riot/web/HttpOp.java b/jena-arq/src/main/java/org/apache/jena/riot/web/HttpOp.java
+index 292b7311f9..2bd02fedcc 100644
+--- a/jena-arq/src/main/java/org/apache/jena/riot/web/HttpOp.java
++++ b/jena-arq/src/main/java/org/apache/jena/riot/web/HttpOp.java
+@@ -241,7 +241,7 @@ public class HttpOp
+     {
+         try {
+             long id = counter.incrementAndGet() ;
+-            String requestURI = determineBaseIRI(url) ;
++            String requestURI = determineRequestURI(url) ;
+             String baseIRI = determineBaseIRI(requestURI) ;
+             
+             HttpPost httppost = new HttpPost(requestURI);

@@ -1,13 +1,28 @@
-diff --git a/core/src/main/java/org/apache/directory/server/core/referral/ReferralLut.java b/core/src/main/java/org/apache/directory/server/core/referral/ReferralLut.java
-index 15321bd07f..e1ab28d7f0 100644
---- a/core/src/main/java/org/apache/directory/server/core/referral/ReferralLut.java
-+++ b/core/src/main/java/org/apache/directory/server/core/referral/ReferralLut.java
-@@ -99,7 +99,7 @@ public class ReferralLut
-         
-         for ( int ii = 0; ii < dn.size(); ii++ )
-         {
--            farthest.add( dn.getRdn( ii ) );
-+            farthest.addNormalized( dn.getRdn( ii ) );
+diff --git a/core/src/main/java/org/jclouds/reflect/Reflection2.java b/core/src/main/java/org/jclouds/reflect/Reflection2.java
+index bfd39b46be..4c08b08eee 100644
+--- a/core/src/main/java/org/jclouds/reflect/Reflection2.java
++++ b/core/src/main/java/org/jclouds/reflect/Reflection2.java
+@@ -71,6 +71,23 @@ public class Reflection2 {
+       return (TypeToken<T>) get(typeTokenForClass, checkNotNull(in, ""class""));
+    }
  
-             // do not return dn if it is the farthest referral
-             if ( isReferral( farthest ) && ( farthest.size() != dn.size() ) )
++   /**
++    * returns an {@link Invokable} object that reflects a constructor present in the {@link TypeToken} type.
++    * 
++    * @param ownerType
++    *           corresponds to {@link Invokable#getOwnerType()}
++    * @param parameterTypes
++    *           corresponds to {@link Constructor#getParameterTypes()}
++    * 
++    * @throws IllegalArgumentException
++    *            if the constructor doesn't exist or a security exception occurred
++    */
++   @SuppressWarnings(""unchecked"")
++   public static <T> Invokable<T, T> constructor(Class<T> ownerType, Class<?>... parameterTypes) {
++      return (Invokable<T, T>) get(constructorForParams, new TypeTokenAndParameterTypes(typeToken(ownerType),
++            parameterTypes));
++   }
++
+    /**
+     * return all constructors present in the class as {@link Invokable}s.
+     * 
