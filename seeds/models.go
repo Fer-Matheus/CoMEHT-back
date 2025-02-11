@@ -16,6 +16,9 @@ func SeedModels() {
 		{
 			Name: "OMG",
 		},
+		{
+			Name: "NNGen",
+		},
 	}
 	_ = database.Db.SaveModels(&models)
 }
