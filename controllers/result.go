@@ -72,7 +72,10 @@ func GetAllResults(w http.ResponseWriter, r *http.Request) {
 		"model_name_A",
 		"model_name_B",
 		"model_name_winner",
+		"time",
 	})
+
+	timeSum := 0
 
 	for _, result := range results {
 
@@ -98,6 +101,8 @@ func GetAllResults(w http.ResponseWriter, r *http.Request) {
 			winner = commitMessageB.Model.Name
 		}
 
+		timeSum += int(result.ChoiceTime)
+
 		write.Write([]string{
 			user.Username,
 			strconv.Itoa(result.DuelId),
@@ -105,15 +110,30 @@ func GetAllResults(w http.ResponseWriter, r *http.Request) {
 			commitMessageA.Model.Name,
 			commitMessageB.Model.Name,
 			winner,
+			strconv.Itoa(int(result.ChoiceTime) / 60) +	"m and " + strconv.Itoa(int(result.ChoiceTime) % 60) +"s",	
 		})
 	}
 
-	write.Flush()
+	days := timeSum / 86400
+	timeSum = timeSum % 86400
 
-	// w.WriteHeader(http.StatusOK)
-	// w.Header().Set("Content-Type", "text/csv")
-	// w.Header().Set("Content-Length", strconv.Itoa(buffer.Len()))
-	// w.Write(buffer.Bytes())
+	hours := timeSum / 3600
+	timeSum = timeSum % 3600
+
+	minutes := timeSum / 60
+	seconds := timeSum % 60
+
+	write.Write([]string{
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		strconv.Itoa(days) + "d, " + strconv.Itoa(hours) + "h, " + strconv.Itoa(minutes) + "m, " + strconv.Itoa(seconds) +"s",	
+	})
+
+	write.Flush()
 
 	timestamp := time.Now().UTC().String()
 
