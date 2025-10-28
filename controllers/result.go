@@ -2,10 +2,10 @@ package controllers
 
 import (
 	"bytes"
-	"commitinder/database"
-	"commitinder/models"
-	"commitinder/utils"
-	"commitinder/views"
+	"comeht/database"
+	"comeht/models"
+	"comeht/utils"
+	"comeht/views"
 	"encoding/csv"
 	"encoding/json"
 	"net/http"

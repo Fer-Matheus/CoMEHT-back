@@ -1,6 +1,6 @@
-# Commitinder 
+# comeht 
 
-Commitinder is a duel arena where you evaluate commit messages for each code change (diff). The goal is to select the commit message that best describes the change.
+comeht is a duel arena where you evaluate commit messages for each code change (diff). The goal is to select the commit message that best describes the change.
 
 ## Technologies
 - **Golang**
@@ -15,8 +15,8 @@ Make sure you have the following tools installed on your machine:
 
 ### Step 1: Clone the repository
 ```bash
-git clone https://github.com/Fer-Matheus/commitinder-back.git
-cd commitinder-back
+git clone https://github.com/Fer-Matheus/comeht-back.git
+cd comeht-back
 ```
 
 ### Step 2: Start the docker components

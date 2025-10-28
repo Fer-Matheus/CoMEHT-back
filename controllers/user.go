@@ -1,11 +1,11 @@
 package controllers
 
 import (
-	"commitinder/database"
-	"commitinder/models"
-	"commitinder/seeds"
-	"commitinder/utils"
-	"commitinder/views"
+	"comeht/database"
+	"comeht/models"
+	"comeht/seeds"
+	"comeht/utils"
+	"comeht/views"
 	"encoding/json"
 	"fmt"
 	"net/http"

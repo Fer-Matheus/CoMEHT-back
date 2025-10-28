@@ -1,6 +1,6 @@
 package views
 
-import "commitinder/models"
+import "comeht/models"
 
 type ModelRequest struct {
 	Name string `json:"name"`

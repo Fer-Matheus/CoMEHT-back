@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"commitinder/database"
-	"commitinder/models"
-	"commitinder/views"
+	"comeht/database"
+	"comeht/models"
+	"comeht/views"
 	"encoding/json"
 	"net/http"
 	"strconv"

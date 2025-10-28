@@ -1,7 +1,7 @@
 package views
 
 import (
-	"commitinder/models"
+	"comeht/models"
 )
 
 type UserRequest struct {

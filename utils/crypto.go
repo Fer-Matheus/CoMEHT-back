@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"commitinder/models"
+	"comeht/models"
 	"fmt"
 	"os"
 	"strings"

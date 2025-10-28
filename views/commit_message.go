@@ -1,6 +1,6 @@
 package views
 
-import "commitinder/models"
+import "comeht/models"
 
 type CommitMessageRequest struct {
 	Message string `json:"message"`

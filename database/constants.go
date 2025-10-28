@@ -1,7 +1,7 @@
 package database
 
 import (
-	"commitinder/models"
+	"comeht/models"
 	"log"
 
 	"gorm.io/driver/postgres"

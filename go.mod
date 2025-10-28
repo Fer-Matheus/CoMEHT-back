@@ -1,4 +1,4 @@
-module commitinder
+module comeht
 
 go 1.23.2
 

@@ -1,9 +1,9 @@
 package main
 
 import (
-	"commitinder/controllers"
-	_ "commitinder/docs"
-	"commitinder/seeds"
+	"comeht/controllers"
+	_ "comeht/docs"
+	"comeht/seeds"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -30,9 +30,9 @@ func init() {
 	}
 }
 
-//	@title			Commitinder Server
+//	@title			comeht Server
 //	@version		1.0
-//	@description	This is the commitinder server api.
+//	@description	This is the comeht server api.
 //
 // @securityDefinitions.apikey Bearer
 // @in header

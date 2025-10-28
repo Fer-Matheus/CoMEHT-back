@@ -1,6 +1,6 @@
 package views
 
-import "commitinder/models"
+import "comeht/models"
 
 type DuelResponse struct {
 	DuelId         int    `json:"duel_id"`

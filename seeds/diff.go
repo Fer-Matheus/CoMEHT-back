@@ -1,8 +1,8 @@
 package seeds
 
 import (
-	"commitinder/database"
-	"commitinder/models"
+	"comeht/database"
+	"comeht/models"
 )
 
 func SeedDiffs() {
